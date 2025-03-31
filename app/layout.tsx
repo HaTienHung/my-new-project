@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { lusitana } from "@/app/ui/font";
 import "./globals.css";
 import Header from "./ui/header/header";
 import Footer from "./ui/footer/footer";
@@ -26,9 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${lusitana} antialiased`}>
         <div className="flex flex-col min-h-screen">
-
           {/* Header */}
           <Header />
 

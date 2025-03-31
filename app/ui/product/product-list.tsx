@@ -1,18 +1,24 @@
 import Link from "next/link";
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function ProductList({ products }: { products: any[] }) {
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <Link key={product.id} href={`/product/${product.slug}`} className="block">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-105">
-              <div className="relative w-full h-64">
-                {/* <Image src={product.image} alt={product.name} layout="fill" objectFit="cover" /> */}
+          <Link key={product.id} href={`/products/${product.slug}`} className="block">
+            <div className="relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl group">
+              {/* Hình ảnh sản phẩm */}
+              <div className="relative w-full h-64 bg-gray-300">
+                <img src="https://13demarzo.net/cdn/shop/files/FR25X18551.png?v=1742525628&width=600" className="object-cover" />
               </div>
+
+              {/* Thông tin sản phẩm */}
               <div className="p-4">
-                <h2 className="text-lg font-semibold">{product.name}</h2>
-                <p className="text-gray-600 mt-1">{product.price} VNĐ</p>
+                <h2 className="text-lg font-semibold truncate group-hover:underline">
+                  {product.name}
+                </h2>
+                <p className="text-xl font-extralight mt-2">{product.price} VNĐ</p>
               </div>
             </div>
           </Link>
