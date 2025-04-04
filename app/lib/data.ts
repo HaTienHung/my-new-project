@@ -1,5 +1,7 @@
 export async function getProducts() {
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
       cache: "no-cache", // Luôn lấy dữ liệu mới từ API
     });
@@ -13,8 +15,11 @@ export async function getProducts() {
     return []; // Trả về mảng rỗng nếu lỗi
   }
 }
+
 export async function getLastestProducts() {
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`, {
       cache: "no-cache", // Luôn lấy dữ liệu mới từ API
     });
@@ -31,6 +36,7 @@ export async function getLastestProducts() {
 
 export async function getProductsByCategory(slug: string): Promise<any[]> {
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${slug}`, {
       cache: "no-cache", // Luôn lấy dữ liệu mới từ API
     });
@@ -47,6 +53,8 @@ export async function getProductsByCategory(slug: string): Promise<any[]> {
 }
 export async function getProductBySlug(slug: string): Promise<any> {
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${slug}`, {
       cache: "no-cache", // Luôn lấy dữ liệu mới từ API
     });
@@ -69,6 +77,7 @@ export const getCategories = async () => {
   const data = await res.json();
   return data?.data ?? [];
 };
+
 
 
 

@@ -6,14 +6,21 @@ import SearchBar from "../search-bar";
 import Image from "next/image";
 import CategoryDropdown from "../category-dropdown"; // Import component mới
 import Link from "next/link";
-import slugify from "slugify";
+// import slugify from "slugify";
+const slugify = require("slugify");
 const unidecode = require("unidecode");
 import { getCategories } from "@/app/lib/data"; // Import hàm fetch API
+import LoginModal from "../login-modal";
+import CartQuantity from "../cart/cart-quantity";
 
+
+interface HeaderProps {
+  cartItemCount: number;  // Nhận số lượng sản phẩm trong giỏ hàng
+}
 
 const categories = await getCategories();
 
-const Header = () => {
+const Header: React.FC<HeaderProps> = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -33,7 +40,7 @@ const Header = () => {
           {/* Hiện logo NextJS trên desktop */}
           <Link href={"/"} className="cursor-pointer hidden md:block">
             <Image
-              className=" hidden md:block md:w-32 lg:w-40"
+              className=" hidden md:block md:w-32 lg:w-40 cursor-pointer"
               src="/next.svg"
               alt="Next.js logo"
               width={140}
@@ -63,7 +70,7 @@ const Header = () => {
           </div>
 
           {/* Icons */}
-          <div className="flex space-x-4 items-center">
+          <div className="flex items-center">
             {/* Icon tìm kiếm trên mobile */}
             <button
               className="md:hidden text-lg transition-transform duration-300 hover:scale-110"
@@ -72,17 +79,9 @@ const Header = () => {
               <FaSearch />
             </button>
 
-            <button className="flex items-center md:space-x-1  text-lg ">
-              <FaUser className="hover:scale-110 transition-transform duration-300" />
-              <span className="hidden md:hidden lg:inline text-base ml-1 hover:underline underline-offset-4">Tài khoản</span>
-            </button>
+            <LoginModal />
 
-            <button className="relative text-lg transition-transform duration-300 hover:scale-110">
-              <FaShoppingCart />
-              <span className="absolute -top-2 -right-2 text-white bg-[rgb(121,100,73)] text-xs px-1 rounded-full">
-                0
-              </span>
-            </button>
+            <CartQuantity />
           </div>
         </div>
 

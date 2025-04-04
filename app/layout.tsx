@@ -4,6 +4,9 @@ import { lusitana } from "@/app/ui/font";
 import "./globals.css";
 import Header from "./ui/header/header";
 import Footer from "./ui/footer/footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lusitana} antialiased`}>
         <div className="flex flex-col min-h-screen">
+          <ToastContainer position="bottom-right" autoClose={3000} />
           {/* Header */}
           <Header />
 

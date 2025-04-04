@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import slugify from "slugify";
+const slugify = require("slugify");
 const unidecode = require("unidecode");
 
 

@@ -1,12 +1,41 @@
-import { getProductBySlug } from "@/app/lib/data";
+'use client';
 
-interface ProductDetailProps {
-  params: { slug: string };
-}
+import { useState } from "react";
+import { toast } from "react-toastify";
 
-export default async function ProductDetail({ params }: ProductDetailProps) {
-  const product = await getProductBySlug(params.slug);
-  console.log(product);
+const ProductDetail = ({ product }: { product: any }) => {
+  const [quantity, setQuantity] = useState(1);
+
+  const handleIncrease = () => {
+    setQuantity(prevQuantity => prevQuantity + 1);
+  };
+
+  const handleDecrease = () => {
+    setQuantity(prevQuantity => Math.max(1, prevQuantity - 1));
+  };
+
+  const addToCart = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/store`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ product_id: product.id, quantity }),
+      });
+      console.log(product.id);
+      if (!res.ok) throw new Error('Failed to add to cart');
+
+      const data = await res.json();
+      console.log('Cart updated:', data);
+      toast.success("Đặt hàng thành công!");
+      // Optionally, show a success message or update cart UI
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+  };
+
   return (
     <>
       <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)] flex flex-col md:flex-row gap-4 md:gap-10">
@@ -31,17 +60,29 @@ export default async function ProductDetail({ params }: ProductDetailProps) {
           <div className="flex items-center mt-6">
             <span className="mr-4 font-medium">Quantity</span>
             <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2">
-              <button className="text-gray-600 hover:text-gray-900">−</button>
-              <span className="mx-3 font-medium">1</span>
-              <button className="text-gray-600 hover:text-gray-900">+</button>
+              <button
+                className="text-[rgb(121,100,73)] hover:text-gray-900"
+                onClick={handleDecrease}
+              >
+                −
+              </button>
+              <span className="mx-3 font-medium">{quantity}</span>
+              <button
+                className="text-[rgb(121,100,73)] hover:text-gray-900"
+                onClick={handleIncrease}
+              >
+                +
+              </button>
             </div>
           </div>
 
           {/* Nút mua hàng */}
-          <button className="w-full mt-6 py-3 text-lg font-semibold border border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)]">
+          <button className="w-full mt-6 py-3 text-lg font-semibold border border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)]" onClick={addToCart}>
             Add to cart
           </button>
-          <button className="w-full mt-3 py-3 text-lg font-semibold bg-yellow-400 rounded-lg transition hover:bg-yellow-500">
+          <button className="w-full mt-3 py-3 text-lg font-semibold bg-yellow-400 rounded-lg transition hover:bg-yellow-500"
+            onClick={() => { toast.info("Xin thứ lỗi , chúng tôi đang phát triển tính năng này !") }}
+          >
             Pay with <span className="font-bold">PayPal</span>
           </button>
 
@@ -83,3 +124,4 @@ export default async function ProductDetail({ params }: ProductDetailProps) {
     </>
   );
 }
+export default ProductDetail;
