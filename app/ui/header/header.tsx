@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { FaAngleDown, FaBars, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaAngleDown, FaBars, FaFileContract, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import SearchBar from "../search-bar";
 import Image from "next/image";
 import CategoryDropdown from "../category-dropdown"; // Import component mới
@@ -10,17 +10,13 @@ import Link from "next/link";
 const slugify = require("slugify");
 const unidecode = require("unidecode");
 import { getCategories } from "@/app/lib/data"; // Import hàm fetch API
-import LoginModal from "../login-modal";
 import CartQuantity from "../cart/cart-quantity";
-
-
-interface HeaderProps {
-  cartItemCount: number;  // Nhận số lượng sản phẩm trong giỏ hàng
-}
+import OrderModal from "../modals/app/orderList-modal";
+import AuthModal from "@/app/ui/auth-modal";
 
 const categories = await getCategories();
 
-const Header: React.FC<HeaderProps> = () => {
+const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -70,7 +66,7 @@ const Header: React.FC<HeaderProps> = () => {
           </div>
 
           {/* Icons */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-5">
             {/* Icon tìm kiếm trên mobile */}
             <button
               className="md:hidden text-lg transition-transform duration-300 hover:scale-110"
@@ -79,8 +75,8 @@ const Header: React.FC<HeaderProps> = () => {
               <FaSearch />
             </button>
 
-            <LoginModal />
-
+            <AuthModal />
+            <OrderModal />
             <CartQuantity />
           </div>
         </div>

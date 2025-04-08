@@ -1,38 +1,45 @@
 'use client';
 
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { addToCart as addToCartAction } from "@/app/lib/redux/cart-slice";
 
 const ProductDetail = ({ product }: { product: any }) => {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1); // Quản lý số lượng tại component này
 
   const handleIncrease = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
 
   const handleDecrease = () => {
-    setQuantity(prevQuantity => Math.max(1, prevQuantity - 1));
+    setQuantity(prevQuantity => Math.max(1, prevQuantity - 1)); // Giới hạn số lượng >= 1
   };
 
+  const dispatch = useDispatch();
   const addToCart = async () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/store`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({ product_id: product.id, quantity }),
       });
-      console.log(product.id);
-      if (!res.ok) throw new Error('Failed to add to cart');
+
+      if (!res.ok) throw new Error("Failed to add to cart");
 
       const data = await res.json();
-      console.log('Cart updated:', data);
-      toast.success("Đặt hàng thành công!");
-      // Optionally, show a success message or update cart UI
+      console.log("API response:", data);
+
+      // ✅ Gọi dispatch ở đây, SAU khi API thành công
+      dispatch(addToCartAction({ product_id: product.id, quantity }));
+
+      toast.success("Thêm vào giỏ hàng thành công!");
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error("Lỗi khi thêm giỏ hàng:", error);
+      toast.error("Thêm giỏ hàng thất bại");
     }
   };
 

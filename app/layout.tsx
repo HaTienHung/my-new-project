@@ -1,22 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { lusitana } from "@/app/ui/font";
 import "./globals.css";
 import Header from "./ui/header/header";
 import Footer from "./ui/footer/footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Providers } from "@/app/provider";
 
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,20 +18,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={`${lusitana} antialiased`}>
-        <div className="flex flex-col min-h-screen">
-          <ToastContainer position="bottom-right" autoClose={3000} />
-          {/* Header */}
-          <Header />
-
-          {/* Thêm class flex-grow để đẩy footer xuống */}
-          <main className="flex-grow">{children}</main>
-
-          {/* Footer */}
-          <Footer />
-        </div>
+        <Providers>
+          <div className="flex flex-col min-h-screen">
+            <ToastContainer position="bottom-right" autoClose={1800} />
+            {/* Header */}
+              
+            {/* Thêm class flex-grow để đẩy footer xuống */}
+            <main className="flex-grow">{children}</main>
+            {/* Footer */}
+          </div>
+        </Providers>
       </body>
     </html>
   );

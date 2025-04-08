@@ -1,12 +1,17 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaMinus, FaPlus, FaTrashCan } from "react-icons/fa6";
 import { CartItemsSkeleton } from "../skeletons";
-import Header from "../header/header";
+import { useDispatch } from "react-redux";
+import { decreaseQuantity, increaseQuantity, setCartQuantity } from "@/app/lib/redux/cart-slice";
+import { toast } from "react-toastify";
+import { removeFromCart } from "@/app/lib/redux/cart-slice";
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState<{ id: number; product: any; quantity: number }[]>([]);
+
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -36,16 +41,142 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  const getTotalItemsInCart = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  const handleDelete = async (productId: number) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/delete/${productId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      if (res.ok) {
+        toast.success("Sản phẩm đã được xóa khỏi giỏ hàng!");
+        // Sau khi xóa thành công, cập nhật lại giỏ hàng
+        setCartItems(cartItems.filter(item => item.product.id !== productId));
+        dispatch(removeFromCart({ product_id: productId }));
+      } else {
+        throw new Error("Không thể xóa sản phẩm");
+      }
+    } catch (error) {
+      toast.error("Xóa sản phẩm thất bại");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const handleIncrease = (id: number) => {
+    let newQuantity = 0;
+
+    // Cập nhật số lượng trong giỏ hàng
+    const updatedCart = cartItems.map((item) => {
+      if (item.product.id === id) {
+        newQuantity = item.quantity + 1;
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+
+    // Cập nhật UI giỏ hàng
+    setCartItems(updatedCart);
+    dispatch(increaseQuantity({ product_id: id }));
+
+    // Nếu có timeout cũ, hủy nó đi
+    if (updateTimeoutRef.current) {
+      clearTimeout(updateTimeoutRef.current);
+    }
+
+    // Đặt timeout mới để gọi updateCartOnSever sau 1.5 giây nếu không có thao tác nữa
+    updateTimeoutRef.current = setTimeout(() => {
+      // Gọi hàm updateCartOnSever để cập nhật giỏ hàng lên server
+      updateCartOnSever(id, newQuantity);
+    }, 1500); // 1.5 giây
   };
 
+  const handleDecrease = (id: number) => {
+    const updatedCart = cartItems.map((item) =>
+      item.product.id === id && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    );
+    console.log(updatedCart);
+    setCartItems(updatedCart);
+    dispatch(decreaseQuantity({ product_id: id }));
+  };
+  const updateCartOnSever = async (productId: number, quantity: number) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/update`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              product_id: productId,
+              quantity: quantity,
+            },
+          ],
+        }),
+      });
+
+      if (res.ok) {
+        toast.success("Sản phẩm đã được cập nhật thành công!");
+        // Sau khi xóa thành công, cập nhật lại giỏ hàng
+        // setCartItems(cartItems.filter(item => item.product.id !== productId));
+        // dispatch(removeFromCart({ product_id: productId }));
+      } else {
+        throw new Error("Không thể cập nhật sản phẩm");
+      }
+    } catch (error) {
+      toast.error("Cập nhật sản phẩm thất bại");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  const handleCheckout = async () => {
+    const productIds = cartItems.map(item => item.product.id);
+    console.log(productIds);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          product_ids:
+            productIds
+        }),
+      });
+
+      if (res.ok) {
+        toast.success("Đặt hàng thành công!");
+        // Xóa sản phẩm khỏi cartItems
+        const updatedCartItems = cartItems.filter(item => !productIds.includes(item.product.id));
+        setCartItems(updatedCartItems);  // Cập nhật lại giỏ hàng
+
+        // Xóa sản phẩm khỏi Redux
+        productIds.forEach(productId => {
+          dispatch(removeFromCart({ product_id: productId }));
+        });
+      } else {
+        const errorData = await res.json();
+        console.log(errorData);
+        throw new Error("Không thể đặt hàng");
+      }
+    } catch (error) {
+      toast.error("Đặt hàng thất bại");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <div className="mx-auto">
-      {/* Truyền số lượng sản phẩm trong giỏ vào Header */}
-      {/* <div className="hidden">
-        <Header cartItemCount={getTotalItemsInCart()} />
-      </div> */}
       {loading ? (
         // Hiển thị skeleton khi đang tải dữ liệu
         <CartItemsSkeleton />
@@ -75,7 +206,14 @@ const Cart = () => {
                   </div>
                   <div className="flex justify-center cursor-pointer mt-2">
                     <div className="flex items-center">
-                      <FaTrashCan className="mr-2" /> Xoá
+                      <button
+                        onClick={() => handleDelete(item.product.id)}
+                        disabled={loading}
+                        className="flex items-center cursor-pointer"
+                      >
+                        <FaTrashCan className="mr-2" />
+                        {loading ? "Đang xóa..." : "Xóa"}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -92,7 +230,16 @@ const Cart = () => {
                     <h1 className="mb-4 font-light">{item.product.price} VNĐ</h1>
                     <div className="flex items-center space-x-2 border p-1 rounded-md">
                       {/* Nút Giảm (-) */}
-                      <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200">
+                      <button
+                        className={`w-8 h-8 flex items-center justify-center rounded-md transition
+                            ${item.quantity <= 1
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'
+                            : 'hover:bg-gray-200 '}
+                            `}
+                        onClick={() => handleDecrease(item.product.id)}
+                        disabled={item.quantity <= 1}
+                        title={item.quantity <= 1 ? "Số lượng tối thiểu là 1" : ""}
+                      >
                         <FaMinus className="text-sm" />
                       </button>
 
@@ -100,7 +247,8 @@ const Cart = () => {
                       <span className="text-lg font-semibold">{item.quantity}</span>
 
                       {/* Nút Tăng (+) */}
-                      <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200">
+                      <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200"
+                        onClick={() => handleIncrease(item.product.id)}>
                         <FaPlus className="text-sm" />
                       </button>
                     </div>
@@ -114,9 +262,10 @@ const Cart = () => {
           <section className="">
             <div className="flex items-center justify-between mt-6">
               <h2 className="text-xl font-semibold">
-                {/* Tổng cộng: {cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString()} VND */}
+                Tổng cộng: {cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0).toLocaleString()} VND
               </h2>
-              <button className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600">
+              <button className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600"
+                onClick={() => handleCheckout()}>
                 Thanh toán
               </button>
             </div>
