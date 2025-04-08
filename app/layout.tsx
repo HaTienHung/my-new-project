@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { lusitana } from "@/app/ui/font";
 import "./globals.css";
-import Header from "./ui/header/header";
-import Footer from "./ui/footer/footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Providers } from "@/app/provider";
@@ -25,11 +23,9 @@ export default function RootLayout({
         <Providers>
           <div className="flex flex-col min-h-screen">
             <ToastContainer position="bottom-right" autoClose={1800} />
-            {/* Header */}
-              
+
             {/* Thêm class flex-grow để đẩy footer xuống */}
             <main className="flex-grow">{children}</main>
-            {/* Footer */}
           </div>
         </Providers>
       </body>

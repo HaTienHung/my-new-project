@@ -1,17 +1,17 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import { FaAngleDown, FaBars, FaFileContract, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
-import SearchBar from "../search-bar";
+import React, { useState } from "react";
+import { FaAngleDown, FaBars, FaSearch } from "react-icons/fa";
+import SearchBar from "../../search-bar";
 import Image from "next/image";
-import CategoryDropdown from "../category-dropdown"; // Import component mới
+import CategoryDropdown from "../../category-dropdown"; // Import component mới
 import Link from "next/link";
 // import slugify from "slugify";
 const slugify = require("slugify");
 const unidecode = require("unidecode");
 import { getCategories } from "@/app/lib/data"; // Import hàm fetch API
-import CartQuantity from "../cart/cart-quantity";
-import OrderModal from "../modals/app/orderList-modal";
+import CartQuantity from "@/app/ui/app/cart/cart-quantity";
+import OrderModal from "../../modals/app/orderList-modal";
 import AuthModal from "@/app/ui/auth-modal";
 
 const categories = await getCategories();

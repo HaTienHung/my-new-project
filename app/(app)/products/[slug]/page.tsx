@@ -1,5 +1,5 @@
 import { getProductBySlug } from "@/app/lib/data";
-import ProductDetail from "@/app/ui/product/product-detail";
+import ProductDetail from "@/app/ui/app/product/product-detail";
 
 interface ProductDetailProps {
   params: { slug: string };

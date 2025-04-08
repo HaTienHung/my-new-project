@@ -1,0 +1,74 @@
+'use client';
+
+import Image from 'next/image';
+import NavLinks from './nav-links';
+import Link from 'next/link';
+import { IoLogOut } from 'react-icons/io5';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { useState } from 'react';
+
+export default function SideNav() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      {/* Nút mở (hamburger) - chỉ hiện ở sm */}
+      <div className="md:hidden p-4">
+        <button
+          onClick={() => setOpen(true)}
+          className="text-2xl text-[rgb(121,100,73)]"
+        >
+          <FaBars />
+        </button>
+      </div>
+
+      {/* Overlay khi mở sidebar (chỉ ở mobile) */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={`
+          fixed top-0 left-0 z-50 h-full w-64 bg-white shadow-md p-4 flex flex-col
+          transition-transform duration-300 ease-in-out
+          ${open ? 'translate-x-0' : '-translate-x-full'}
+          md:static md:translate-x-0 md:h-screen
+        `}
+      >
+        {/* Nút đóng - chỉ hiện ở mobile */}
+        <div className="md:hidden mb-4 flex justify-end">
+          <button
+            onClick={() => setOpen(false)}
+            className="text-2xl text-[rgb(121,100,73)]"
+          >
+            <FaTimes />
+          </button>
+        </div>
+
+        {/* Logo */}
+        <div className="mb-8 flex items-center justify-center">
+          <Image src="/next.svg" alt="Logo" width={120} height={40} />
+        </div>
+
+        {/* Nav links */}
+        <div className="flex-1">
+          <NavLinks onClickLink={() => setOpen(false)} />
+        </div>
+
+        {/* Logout */}
+        <Link
+          href="/"
+          onClick={() => setOpen(false)}
+          className="mt-auto text-lg flex h-[48px] items-center justify-start gap-2 rounded-md p-3 font-medium hover:bg-gray-100 text-[rgb(121,100,73)]"
+        >
+          <IoLogOut className="w-6" />
+          Đăng xuất
+        </Link>
+      </div>
+    </>
+  );
+}

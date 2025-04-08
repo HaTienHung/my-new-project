@@ -1,4 +1,4 @@
-import Cart from "@/app/ui/cart/cart-list";
+import Cart from "@/app/ui/app/cart/cart-list";
 
 export default async function CartPage() {
   return (

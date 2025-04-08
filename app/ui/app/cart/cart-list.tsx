@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
 import { FaMinus, FaPlus, FaTrashCan } from "react-icons/fa6";
-import { CartItemsSkeleton } from "../skeletons";
+import { CartItemsSkeleton } from "@/app/ui/skeletons";
 import { useDispatch } from "react-redux";
 import { decreaseQuantity, increaseQuantity, setCartQuantity } from "@/app/lib/redux/cart-slice";
 import { toast } from "react-toastify";

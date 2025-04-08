@@ -1,7 +1,7 @@
-import ProductList from "@/app/ui/product/product-list";
+import ProductList from "@/app/ui/app/product/product-list";
 import { getLastestProducts } from "@/app/lib/data";
-import Header from "./ui/header/header";
-import Footer from "./ui/footer/footer";
+import Header from "./ui/app/header/header";
+import Footer from "./ui/app/footer/footer";
 
 
 export default async function ProductPage() {
