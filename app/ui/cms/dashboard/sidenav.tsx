@@ -50,7 +50,7 @@ export default function SideNav() {
         </div>
 
         {/* Logo */}
-        <div className="mb-8 flex items-center justify-center">
+        <div className="mb-8 flex items-center justify-center mt-4">
           <Image src="/next.svg" alt="Logo" width={120} height={40} />
         </div>
 

@@ -47,10 +47,10 @@ const ProductDetail = ({ product }: { product: any }) => {
     <>
       <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)] flex flex-col md:flex-row gap-4 md:gap-10">
         {/* Hình ảnh sản phẩm - mở rộng tối đa */}
-        <div className="flex-1 rounded-lg flex justify-center items-center border-[1.5px]">
-          <div className="max-w-[600px] w-full bg-gray-100 p-6 rounded-lg">
+        <div className="flex-1 rounded-lg flex justify-center items-center border-[1.5px] bg-white">
+          <div className="max-w-[600px] w-full bg-white p-6 rounded-lg">
             <img
-              src="https://13demarzo.net/cdn/shop/files/FR25X18551.png?v=1742525628&width=600"
+              src={product.image_url}
               alt="Product Name"
               className="w-full h-auto rounded-lg object-cover"
             />
@@ -107,7 +107,11 @@ const ProductDetail = ({ product }: { product: any }) => {
       </div>
       <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
         <span className="text-3xl font-bold">Mô tả sản phẩm</span>
-        <h1 className="mt-4">{product.description}</h1>
+        <div
+          className="whitespace-pre-line mt-4"
+        >
+          {product.description}
+        </div>
       </div>
       <div className="container mx-auto px-4 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

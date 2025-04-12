@@ -6,10 +6,10 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
 const links = [
-  { name: 'Tổng quan', href: '/dashboard', icon: FaHome },
-  { name: 'Quản lí sản phẩm', href: '/dashboard/products', icon: FaBox },
-  { name: 'Quản lí đơn hàng', href: '/dashboard/orders', icon: FaShoppingCart },
-  { name: 'Quản lí danh mục', href: '/dashboard/categories', icon: FaList },
+  { name: 'Tổng quan', href: '/cms/dashboard', icon: FaHome },
+  { name: 'Quản lí sản phẩm', href: '/cms/products', icon: FaBox },
+  { name: 'Quản lí đơn hàng', href: '/cms/orders', icon: FaShoppingCart },
+  { name: 'Quản lí danh mục', href: '/cms/categories', icon: FaList },
 ];
 
 export default function NavLinks({ onClickLink }: { onClickLink?: () => void }) {
@@ -25,8 +25,8 @@ export default function NavLinks({ onClickLink }: { onClickLink?: () => void }) 
             href={link.href}
             onClick={onClickLink}
             className={clsx(
-              'flex h-[48px] items-center gap-3 rounded-md p-3 text-lg font-medium hover:bg-gray-100 text-[rgb(121,100,73)]',
-              { 'bg-sky-100 text-blue-600': pathname === link.href }
+              'flex h-[48px] items-center gap-3 rounded-md p-3 text-base font-medium hover:bg-gray-100 text-[rgb(121,100,73)]',
+              { 'bg-gray-200 ': pathname === link.href }
             )}
           >
             <LinkIcon className="w-6" />

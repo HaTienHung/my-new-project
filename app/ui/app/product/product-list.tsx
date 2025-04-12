@@ -10,10 +10,10 @@ export default function ProductList({ products }: { products: any[] }) {
             <div className="relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-102 hover:shadow-xl group">
 
               {/* Hình ảnh sản phẩm */}
-              <div className="relative w-full aspect-[4/3] bg-gray-200">
+              <div className="relative w-full aspect-square  bg-gray-200">
                 <Image
                   alt="none"
-                  src="https://13demarzo.net/cdn/shop/files/FR25X18551.png?v=1742525628&width=600"
+                  src={product.image_url}
                   layout="fill"
                   objectFit="cover"
                   className="rounded-t-xl"

@@ -1,0 +1,26 @@
+import CardWrapper from "@/app/ui/cms/dashboard/cards";
+import LatestInvoices from "@/app/ui/cms/dashboard/lastest-invoices";
+import RevenueChart from "@/app/ui/cms/dashboard/revenue-chart";
+import { CardsSkeleton, LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
+import { Suspense } from "react";
+
+export default function CmsPage() {
+  return (
+    <main>
+      <h1 className="mb-4 text-xl md:text-2xl text-[rgb(121,100,73)]">Tổng quan</h1>
+      <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-3">
+        <Suspense fallback={<CardsSkeleton />} >
+          <CardWrapper />
+        </Suspense>
+      </div>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        <Suspense fallback={<RevenueChartSkeleton />} >
+          <RevenueChart />
+        </Suspense>
+        <Suspense fallback={<LatestInvoicesSkeleton />} >
+          <LatestInvoices />
+        </Suspense>
+      </div>
+    </main>
+  )
+}

@@ -20,14 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${lusitana} antialiased`}>
-        <Providers>
-          <div className="flex flex-col min-h-screen">
-            <ToastContainer position="bottom-right" autoClose={1800} />
+        {/* <Providers> */}
+        <div className="flex flex-col min-h-screen">
+          <ToastContainer position="bottom-right" autoClose={1800} />
 
-            {/* Thêm class flex-grow để đẩy footer xuống */}
-            <main className="flex-grow">{children}</main>
-          </div>
-        </Providers>
+          {/* Thêm class flex-grow để đẩy footer xuống */}
+          <main className="flex-grow">{children}</main>
+        </div>
+        {/* </Providers> */}
       </body>
     </html>
   );
