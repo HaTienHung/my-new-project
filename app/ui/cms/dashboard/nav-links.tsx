@@ -1,6 +1,6 @@
 'use client';
 
-import { FaHome, FaBox, FaShoppingCart, FaList } from 'react-icons/fa';
+import { FaHome, FaBox, FaShoppingCart, FaList, FaWarehouse } from 'react-icons/fa';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
@@ -10,6 +10,7 @@ const links = [
   { name: 'Quản lí sản phẩm', href: '/cms/products', icon: FaBox },
   { name: 'Quản lí đơn hàng', href: '/cms/orders', icon: FaShoppingCart },
   { name: 'Quản lí danh mục', href: '/cms/categories', icon: FaList },
+  { name: 'Quản lí kho', href: '/cms/inventories', icon: FaWarehouse },
 ];
 
 export default function NavLinks({ onClickLink }: { onClickLink?: () => void }) {

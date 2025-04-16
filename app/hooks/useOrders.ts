@@ -1,40 +1,36 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const useProducts = ({ prefix = '' }) => {
-  const [products, setProducts] = useState([]);
+export const useOrders = () => {
+  const [orders, setOrders] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const endpoint = `${prefix}/products`;
 
   const [formSearch, setFormSearch] = useState({
     search: "",
     searchField: "",
-    category: "",
+    status: "",
     sortBy: "",
     page: 1,
-    limit: 8,
   });
 
   const [queryParams, setQueryParams] = useState(formSearch);
 
   // Gọi API sản phẩm
-  const fetchProducts = async () => {
+  const fetchOrders = async () => {
     try {
       setIsLoading(true);
       const filter: Record<string, any> = {};
 
-      if (queryParams.category) {
-        filter.category_id_IN = [queryParams.category];
+      if (queryParams.status) {
+        filter.status_IN = [queryParams.status];
       }
       console.log("URL API:", process.env.NEXT_PUBLIC_API_URL);
 
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/orders`, {
         params: {
           search: queryParams.search || "",
-          "searchFields[]": [queryParams.searchField || "name"],
+          "searchFields[]": [queryParams.searchField || "user.name"],
           filter: JSON.stringify(filter),
           "sort[]": queryParams.sortBy ? [queryParams.sortBy] : [],
           page: queryParams.page || 1,
@@ -43,10 +39,10 @@ export const useProducts = ({ prefix = '' }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
-      setProducts(res.data?.data?.data || []);
-      setTotalPages(res.data?.data?.last_page || 1);
-      setCurrentPage(res.data?.data?.current_page || 1);
+      console.log('query', queryParams.status);
+      console.log("filter", filter);
+      setOrders(res.data?.data || []);
+      console.log(orders);
     } catch (err: any) {
       console.error("Lỗi fetchProducts:", err?.response?.data || err.message);
     } finally {
@@ -56,7 +52,7 @@ export const useProducts = ({ prefix = '' }) => {
 
   // Trigger lại khi queryParams thay đổi
   useEffect(() => {
-    fetchProducts();
+    fetchOrders();
   }, [queryParams]);
 
 
@@ -76,14 +72,12 @@ export const useProducts = ({ prefix = '' }) => {
   };
 
   return {
-    totalPages,
-    currentPage,
-    products,
+    orders,
     categories,
     formSearch,
     setFormSearch,
     submitFilters,
     isLoading,
-    refetch: fetchProducts,
+    refetch: fetchOrders,
   };
 };

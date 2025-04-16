@@ -11,7 +11,7 @@ const slugify = require("slugify");
 const unidecode = require("unidecode");
 import { getCategories } from "@/app/lib/data"; // Import hàm fetch API
 import CartQuantity from "@/app/ui/app/cart/cart-quantity";
-import OrderModal from "../../modals/app/orderList-modal";
+import OrderModal from "../../modals/app/order/orderList-modal";
 import AuthModal from "@/app/ui/auth-modal";
 
 const categories = await getCategories();

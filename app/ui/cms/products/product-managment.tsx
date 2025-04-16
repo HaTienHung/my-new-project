@@ -3,11 +3,15 @@ import { useProducts } from "@/app/hooks/useProducts"; // nhớ import đúng pa
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { Product } from "@/app/lib/definitions";
 import { ProductTableSkeleton } from "@/app/ui/skeletons";
-import { useState } from "react";
-import EditProductModal from "@/app/ui/modals/cms/editProduct-form";
+import { useEffect, useState } from "react";
+import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
+import CreateProductModal from "../../modals/cms/product/createProduct-modal";
+import Pagination from "../../pagination";
 
-export default function CmsProductsPage() {
+export default function ProductMagmamemt() {
   const {
+    currentPage,
+    totalPages,
     products,
     categories, // có luôn danh mục ở đây
     formSearch,
@@ -15,18 +19,32 @@ export default function CmsProductsPage() {
     submitFilters,
     isLoading,
     refetch
-  } = useProducts();
+  } = useProducts({ prefix: '/cms' });
 
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(formSearch);
     submitFilters();
   };
 
   const handleEdit = (id: number) => {
     setEditingProductId(id);
   };
+
+  const handlePageChange = (page: number) => {
+    setFormSearch((prev) => ({
+      ...prev,
+      page, // Cập nhật lại giá trị page
+    }));
+  };
+
+  useEffect(() => {
+    submitFilters();  // Gọi lại API khi page thay đổi
+  }, [formSearch.page]);  // Theo dõi sự thay đổi của formSearch.page
 
   return (
     <>
@@ -42,6 +60,7 @@ export default function CmsProductsPage() {
             onChange={(e) => setFormSearch((prev) => ({ ...prev, searchField: e.target.value }))}
             className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           >
+            <option value="">-- Tìm kiếm theo --</option>
             <option value="name">Tên sản phẩm</option>
             <option value="description">Mô tả</option>
           </select>
@@ -51,7 +70,7 @@ export default function CmsProductsPage() {
             type="text"
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
-            placeholder="Tìm kiếm..."
+            placeholder="Tìm kiếm theo tên sản phẩm..."
             className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
@@ -61,7 +80,7 @@ export default function CmsProductsPage() {
             onChange={(e) => setFormSearch((prev) => ({ ...prev, category: e.target.value }))}
             className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           >
-            <option value="">Tất cả danh mục</option>
+            <option value="">-- Tất cả danh mục --</option>
             {categories.map((cat: any) => (
               <option key={cat.id} value={cat.id}>
                 {cat.name}
@@ -92,18 +111,36 @@ export default function CmsProductsPage() {
             </button>
           </div>
         </form>
-
+        <div className="sm:col-span-2 flex gap-4 justify-start  ">
+          <button
+            onClick={() => setIsCreateModalOpen(true)}
+            className=" cursor-pointer bg-[#796449] hover:bg-[#5f4f3a] text-white text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
+          >
+            Thêm sản phẩm
+          </button>
+          <button
+            className=" cursor-pointer bg-white border border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
+          >
+            Import (.xlsx)
+          </button>
+        </div>
       </div>
+      {isCreateModalOpen && (
+        <CreateProductModal
+          onClose={() => setIsCreateModalOpen(false)}
+          onCreated={refetch}
+        />
+      )}
 
       <div className="overflow-x-auto rounded-xl shadow-md">
         <table className="min-w-full divide-y divide-gray-300 bg-white rounded-xl overflow-hidden">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">STT</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tên sản phẩm</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tên danh mục</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Giá</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Hành động</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">STT</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tên sản phẩm</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden md:table-cell">Danh mục</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden md:table-cell">Giá</th>
+              <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Hành động</th>
             </tr>
           </thead>
 
@@ -113,19 +150,21 @@ export default function CmsProductsPage() {
             ) : (
               products.map((product: Product, i: number) => (
                 <tr key={product.id} className="hover:bg-gray-50 transition duration-150">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{i + 1}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{product.category?.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600">
+                  <td className="px-4 py-3 text-sm text-gray-700">{(formSearch.page - 1) * formSearch.limit + i + 1}</td>
+                  <td className="px-4 py-3 text-sm font-medium text-gray-900">{product.name}</td>
+                  <td className="px-4 py-3 text-sm text-gray-700 hidden md:table-cell">{product.category?.name}</td>
+                  <td className="px-4 py-3 text-sm text-green-600 hidden md:table-cell">
                     {Number(product.price).toLocaleString()} VND
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm flex gap-3">
-                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-blue-600 transition duration-200 ease-in-out"
-                      onClick={() => handleEdit(product.id)}>
+                  <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3">
+                    <button
+                      className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-blue-600 transition"
+                      onClick={() => handleEdit(product.id)}
+                    >
                       <FaEdit className="text-sm" />
                       Sửa
                     </button>
-                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition duration-200 ease-in-out">
+                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition">
                       <FaTrash className="text-sm" />
                       Xoá
                     </button>
@@ -143,6 +182,11 @@ export default function CmsProductsPage() {
           />
         )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }

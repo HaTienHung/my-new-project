@@ -4,7 +4,7 @@ import RevenueChart from "@/app/ui/cms/dashboard/revenue-chart";
 import { CardsSkeleton, LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 
-export default function CmsPage() {
+export default function CMSDashboardPage() {
   return (
     <main>
       <h1 className="mb-4 text-xl md:text-2xl text-[rgb(121,100,73)]">Tổng quan</h1>

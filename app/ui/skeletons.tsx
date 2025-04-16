@@ -1,24 +1,21 @@
 
-const shimmer =
-  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
-
 export function ProductListSkeleton() {
   return (
     <>
       <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {[...Array(8)].map((_, index) => (
             <div
               key={index}
-              className="block bg-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer animate-pulse"
+              className="block bg-white rounded-xl shadow-md overflow-hidden cursor-pointer animate-pulse"
             >
               {/* Skeleton hình ảnh */}
-              <div className="w-full h-48 bg-gray-300"></div>
+              <div className="relative w-full aspect-square bg-gray-300 rounded-t-xl"></div>
 
               {/* Skeleton thông tin sản phẩm */}
-              <div className="p-3">
-                <div className="h-4 bg-gray-400 rounded w-5/6 mb-2"></div>
-                <div className="h-3 bg-gray-400 rounded w-3/5"></div>
+              <div className="p-4">
+                <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
+                <div className="h-3 bg-gray-300 rounded w-1/2"></div>
               </div>
             </div>
           ))}
@@ -31,7 +28,7 @@ export function ProductListSkeleton() {
 export function LatestInvoicesSkeleton() {
   return (
     <div
-      className={`${shimmer} relative flex w-full flex-col overflow-hidden md:col-span-4`}
+      className={`relative flex w-full flex-col overflow-hidden md:col-span-4`}
     >
       <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
@@ -64,7 +61,8 @@ export function InvoiceSkeleton() {
     </div>
   );
 }
-export const ProductTableSkeleton = ({ rows = 5 }) => {
+
+export const ProductTableSkeleton = ({ rows = 5 }: { rows?: number }) => {
   return (
     <>
       {Array.from({ length: rows }).map((_, i) => (
@@ -80,11 +78,95 @@ export const ProductTableSkeleton = ({ rows = 5 }) => {
   );
 };
 
+export const InventoryTableSkeleton = ({ rows = 6 }: { rows?: number }) => {
+  return (
+    <>
+      {Array.from({ length: rows }).map((_, i) => (
+        <tr key={i}>
+          <td className="px-4 py-3">
+            <div className="h-4 bg-gray-200 rounded w-8 animate-pulse"></div>
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 bg-gray-200 rounded w-40 animate-pulse"></div>
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 bg-gray-200 rounded w-16 animate-pulse"></div>
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 bg-gray-200 rounded w-40 animate-pulse"></div>
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+};
+
+export const CategoryTableSkeleton = ({ rows = 6 }: { rows?: number }) => {
+  return (
+    <>
+      {Array.from({ length: rows }).map((_, i) => (
+        <tr key={i} className="animate-pulse">
+          <td className="px-4 py-3">
+            <div className="h-4 bg-gray-200 rounded w-6"></div>
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 bg-gray-200 rounded w-32"></div>
+          </td>
+          <td className="px-4 py-3 hidden md:table-cell">
+            <div className="h-4 bg-gray-200 rounded w-40"></div>
+          </td>
+          <td className="px-4 py-3">
+            <div className="flex gap-2">
+              <div className="h-4 bg-gray-200 rounded w-16"></div>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+};
+
+
+export const OrderTableSkeleton = ({ rows = 5 }: { rows?: number }) => {
+  return (
+    <>
+      {Array.from({ length: rows }).map((_, i) => (
+        <tr key={i} className="animate-pulse">
+          <td className="px-4 py-2">
+            <div className="h-4 bg-gray-200 rounded w-6"></div>
+          </td>
+          <td className="px-4 py-2">
+            <div className="h-4 bg-gray-200 rounded w-20"></div>
+          </td>
+          <td className="px-4 py-2">
+            <div className="h-4 bg-gray-200 rounded w-24"></div>
+          </td>
+          <td className="px-4 py-2 hidden md:table-cell">
+            <div className="h-4 bg-gray-200 rounded w-24"></div>
+          </td>
+          <td className="px-4 py-2 hidden md:table-cell">
+            <div className="h-4 bg-gray-200 rounded w-32"></div>
+          </td>
+          <td className="px-4 py-2">
+            <div className="h-4 bg-gray-200 rounded w-20"></div>
+          </td>
+          <td className="px-4 py-2">
+            <div className="h-4 bg-gray-200 rounded w-16"></div>
+          </td>
+          <td className="px-4 py-2">
+            <div className="h-4 bg-gray-200 rounded w-16"></div>
+          </td>
+        </tr>
+      ))}
+    </>
+  )
+}
+
 export default function DashboardSkeleton() {
   return (
     <>
       <div
-        className={`${shimmer} relative mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
+        className={`animate-pulse relative mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
       />
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <CardSkeleton />
@@ -101,7 +183,7 @@ export default function DashboardSkeleton() {
 }
 export function RevenueChartSkeleton() {
   return (
-    <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>
+    <div className={`animate-pulse relative w-full overflow-hidden md:col-span-4`}>
       <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
       <div className="rounded-xl bg-gray-100 p-4">
         <div className="sm:grid-cols-13 mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4" />
@@ -118,7 +200,7 @@ export function RevenueChartSkeleton() {
 export function CardSkeleton() {
   return (
     <div
-      className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
+      className={`animate-pulse relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
     >
       <div className="flex p-4">
         <div className="h-5 w-5 rounded-md bg-gray-200" />

@@ -1,4 +1,4 @@
-import { Providers } from "../provider";
+import { Providers } from "../providers";
 import Footer from "../ui/app/footer/footer";
 import Header from "../ui/app/header/header";
 

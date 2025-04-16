@@ -1,4 +1,4 @@
-import ProductList from "@/app/ui/app/product/product-list";
+import ProductList from "@/app/ui/app/products/product-list";
 import { getProductsByCategory } from "@/app/lib/data";
 
 

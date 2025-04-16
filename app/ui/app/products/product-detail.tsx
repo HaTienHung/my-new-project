@@ -59,8 +59,10 @@ const ProductDetail = ({ product }: { product: any }) => {
 
         {/* Thông tin sản phẩm - chỉ chiếm 1/3 chiều rộng */}
         <div className="w-full md:w-1/3">
-          <h1 className="text-5xl font-bold ">{product.name}</h1>
-          <p className="text-3xl font-extralight  mt-4">{product.price} VNĐ</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">{product.name}</h1>
+          <p className="text-lg sm:text-xl md:text-2xl font-extralight mt-4">
+            {product.price} VNĐ
+          </p>
           <p className="text-[rgb(121,100,73)] text-sm mt-2">Phí vận chuyển sẽ được tính khi đặt hàng!</p>
 
           {/* Số lượng */}

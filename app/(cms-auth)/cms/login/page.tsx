@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-export default function LoginPage() {
+export default function CMSLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +32,7 @@ export default function LoginPage() {
       }
 
       localStorage.setItem('token', data?.data?.token || '');
-      router.push('/dashboard');
+      router.push('cms/dashboard');
       toast.success('Đăng nhập thành công');
     } catch (err: any) {
       setError(err.message || 'Đã có lỗi xảy ra');

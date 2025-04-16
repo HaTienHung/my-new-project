@@ -1,0 +1,136 @@
+'use client';
+import { useCategories } from "@/app/hooks/useCategories"; // nhớ import đúng path nhé
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { Category, Order, Product } from "@/app/lib/definitions";
+import { CategoryTableSkeleton, OrderTableSkeleton, ProductTableSkeleton } from "@/app/ui/skeletons";
+import { useState } from "react";
+import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
+import CreateProductModal from "../../modals/cms/product/createProduct-modal";
+import EditCategoryModal from "../../modals/cms/category/editCategory-modal";
+import CreateCategoryModal from "../../modals/cms/category/createCategory";
+
+export default function CategoryManament() {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [editingCategoryId, setEditingCategoryId] = useState<number | null>(null);
+
+  const {
+    categories,
+    formSearch,
+    setFormSearch,
+    submitFilters,
+    isLoading,
+    refetch
+  } = useCategories();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitFilters();
+  };
+
+  const handleEdit = (id: number) => {
+    setEditingCategoryId(id);
+  };
+  return (
+    <>
+      <h1 className="text-2xl font-semibold mb-4 text-[rgb(121,100,73)]">Quản lí danh mục</h1>
+      <div className="mb-4">
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center"
+        >
+          {/* Từ khoá tìm kiếm */}
+          <input
+            type="text"
+            value={formSearch.search}
+            onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
+            placeholder="Tìm kiếm theo tên danh mục..."
+            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+          />
+
+          {/* Sắp xếp */}
+          <select
+            value={formSearch.sortBy}
+            onChange={(e) => setFormSearch((prev) => ({ ...prev, sortBy: e.target.value }))}
+            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+          >
+            <option value="">-- Sắp xếp --</option>
+            <option value="+name">Tên A-Z</option>
+            <option value="-name">Tên Z-A</option>
+          </select>
+
+          {/* Nút tìm kiếm */}
+          <div className="sm:col-span-2 flex justify-end">
+            <button
+              type="submit"
+              className="bg-[rgb(121,100,73)] hover:bg-opacity-90 text-white text-sm px-5 py-2 rounded-xl shadow transition-all duration-200 hover:underline cursor-pointer"
+            >
+              Tìm kiếm
+            </button>
+          </div>
+        </form>
+        <div className="sm:col-span-2 flex gap-4 justify-start  ">
+          <button
+            onClick={() => setIsCreateModalOpen(true)}
+            className=" cursor-pointer bg-[#796449] hover:bg-[#5f4f3a] text-white text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
+          >
+            Thêm danh mục
+          </button>
+          {/* <button
+            className=" cursor-pointer bg-white border border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
+          >
+            Export (.xlsx)
+          </button> */}
+        </div>
+      </div>
+      {isCreateModalOpen && (
+        <CreateCategoryModal
+          onClose={() => setIsCreateModalOpen(false)}
+          onCreated={refetch}
+        />
+      )}
+      <div className="overflow-x-auto rounded-xl shadow-md">
+        <table className="min-w-full divide-y divide-gray-300 bg-white rounded-xl overflow-hidden">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">STT</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tên danh mục</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden md:table-cell">Slug</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Hành động</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {isLoading ? (
+              <CategoryTableSkeleton rows={6} />
+            ) : (
+              categories.map((cat: Category, i: number) => (
+                <tr key={cat.id} className="hover:bg-gray-50 transition">
+                  <td className="px-4 py-3 text-sm">{i + 1}</td>
+                  <td className="px-4 py-3 text-sm">{cat.name}</td>
+                  <td className="px-4 py-3 text-sm hidden md:table-cell">{cat.slug}</td>
+                  <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3">
+                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-blue-600 transition"
+                      onClick={() => handleEdit(cat.id)}>
+                      <FaEdit className="text-sm" />
+                      Sửa
+                    </button>
+                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition">
+                      <FaTrash className="text-sm" />
+                      Xoá
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+        {editingCategoryId && (
+          <EditCategoryModal
+            id={editingCategoryId}
+            onClose={() => setEditingCategoryId(null)}
+            onUpdated={refetch}
+          />
+        )}
+      </div>
+    </>
+  );
+}

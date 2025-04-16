@@ -1,6 +1,12 @@
+'use client';
 import { useEffect, useState } from "react";
 import { FaFileContract, FaInfoCircle, FaTimes } from "react-icons/fa";
-import ProductModal from "@/app/ui/modals/app/productDetail-modal";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/lib/redux/store";
+import { openAuthModal } from "@/app/lib/redux/authModal-slice";
+import OrderDetailModal from "@/app/ui/modals/app/order/orderDetail-modal";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+
 
 type ModalState = "orderList" | "productDetail" | null;
 
@@ -9,8 +15,11 @@ const OrderModal = () => {
   const [loading, setLoading] = useState(true);
   const [modalState, setModalState] = useState<ModalState>(null); // Sử dụng 1 state
   const [productsInOrder, setProductsInOrder] = useState<any[]>([]);
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
 
   const fetchOrders = async () => {
+    if (!isAuthenticated) { console.log('Do not fetch orders'); return };
     setLoading(true);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/orders/show`, {
@@ -37,28 +46,38 @@ const OrderModal = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [isAuthenticated]);
 
   const openProductModal = (products: any[]) => {
     setProductsInOrder(products);
     setModalState("productDetail");
   };
-
+  const handleClick = () => {
+    console.log(isAuthenticated);
+    if (!isAuthenticated) {
+      dispatch(openAuthModal());
+      return;
+    }
+    else {
+      setModalState("orderList");
+    }
+  }
   return (
     <>
       <button
-        onClick={() => setModalState("orderList")}
+        onClick={() => handleClick()}
         className="text-[rgb(121,100,73)] text-lg transition-transform duration-300 hover:scale-110"
       >
         <FaFileContract />
       </button>
 
       {/* Order Modal */}
-      {modalState === "orderList" && (
-        <div className="fixed inset-0 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg w-[450px] max-w-lg p-6">
+      <Dialog open={modalState === "orderList"} onClose={() => setModalState(null)} className="relative z-50">
+        {/* Modal content */}
+        <div className="fixed inset-0 flex justify-center items-center p-4">
+          <DialogPanel className="bg-white rounded-lg shadow-lg w-[450px] max-w-lg p-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold">Thông tin đơn hàng</h2>
+              <DialogTitle className="text-2xl font-semibold">Thông tin đơn hàng</DialogTitle>
               <button onClick={() => setModalState(null)}>
                 <FaTimes className="text-gray-600 text-xl hover:text-red-500" />
               </button>
@@ -74,8 +93,8 @@ const OrderModal = () => {
                 <p className="text-center">Bạn không có đơn hàng nào</p>
               ) : (
                 orders.map((item: any) => (
-                  <div key={item.id} className="flex justify-between items-center">
-                    <table className="w-full border-collapse">
+                  <div key={item.id}>
+                    <table className="w-full border-collapse text-sm">
                       <thead>
                         <tr className="bg-gray-100 text-left">
                           <th className="p-2 border">Mã đơn hàng</th>
@@ -87,11 +106,11 @@ const OrderModal = () => {
                       <tbody>
                         <tr className="hover:bg-gray-50">
                           <td className="p-2 border">{item.id}</td>
-                          <td className="p-2 border">{item.total_price}</td>
-                          <td className="p-2 border">{item.status}</td>
+                          <td className="p-2 border">{Number(item.total_price).toLocaleString()} VNĐ</td>
+                          <td className="p-2 border capitalize">{item.status}</td>
                           <td className="p-2 border text-center">
                             <button onClick={() => openProductModal(item.items)}>
-                              <FaInfoCircle className="hover:scale-110 transition-transform" />
+                              <FaInfoCircle className="hover:scale-110 transition-transform text-blue-600" />
                             </button>
                           </td>
                         </tr>
@@ -101,12 +120,12 @@ const OrderModal = () => {
                 ))
               )}
             </div>
-          </div>
+          </DialogPanel>
         </div>
-      )}
+      </Dialog>
 
       {/* Product Modal */}
-      <ProductModal
+      <OrderDetailModal
         isOpen={modalState === "productDetail"}
         onClose={() => setModalState("orderList")}
         products={productsInOrder}

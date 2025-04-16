@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Dialog } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 interface EditProductModalProps {
   id: number;
@@ -121,8 +121,8 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   return (
     <Dialog open={true} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4">
-        <Dialog.Panel className="w-full max-w-lg bg-white rounded-xl p-6 shadow-xl relative">
-          <Dialog.Title className="text-lg font-semibold mb-4">Chỉnh sửa sản phẩm</Dialog.Title>
+        <DialogPanel className="w-full max-w-lg bg-white rounded-xl p-6 shadow-xl relative">
+          <DialogTitle className="text-lg font-semibold mb-4">Chỉnh sửa sản phẩm</DialogTitle>
 
           {loading ? (
             <div className="text-center py-10">Đang tải dữ liệu...</div>
@@ -238,7 +238,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             </form>
 
           )}
-        </Dialog.Panel>
+        </DialogPanel>
       </div>
     </Dialog>
   );

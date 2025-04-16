@@ -3,7 +3,7 @@
 import { Provider } from 'react-redux';
 import { store } from '@/app/lib/redux/store';
 import { ReactNode } from 'react';
-import CartProvider from './cart-provider';
+import AppProvider from './app-provider';
 
 interface ProvidersProps {
   children: ReactNode; // Chỉ định kiểu dữ liệu cho 'children'
@@ -11,7 +11,8 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   return <Provider store={store}>
-    <CartProvider>{children}
-    </CartProvider>
+    <AppProvider>
+      {children}
+    </AppProvider>
   </Provider>;
 }
