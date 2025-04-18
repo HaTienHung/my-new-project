@@ -77,7 +77,7 @@ const OrderModal = () => {
         <div className="fixed inset-0 flex justify-center items-center p-4">
           <DialogPanel className="bg-white rounded-lg shadow-lg w-[450px] max-w-lg p-6">
             <div className="flex justify-between items-center mb-4">
-              <DialogTitle className="text-2xl font-semibold">Thông tin đơn hàng</DialogTitle>
+              <DialogTitle className="text-2xl font-semibold text-[rgb(121,100,73)]">Thông tin đơn hàng  </DialogTitle>
               <button onClick={() => setModalState(null)}>
                 <FaTimes className="text-gray-600 text-xl hover:text-red-500" />
               </button>
@@ -90,7 +90,7 @@ const OrderModal = () => {
                   <p className="mt-2 text-sm text-gray-600">Đang tải đơn hàng...</p>
                 </div>
               ) : orders.length === 0 ? (
-                <p className="text-center">Bạn không có đơn hàng nào</p>
+                <p className="text-center text-[rgb(121,100,73)] ">Bạn không có đơn hàng nào</p>
               ) : (
                 orders.map((item: any) => (
                   <div key={item.id}>

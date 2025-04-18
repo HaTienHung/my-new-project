@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 const isEqual = require('lodash.isequal');
 
 export const useProducts = ({ prefix = '' }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -15,16 +14,14 @@ export const useProducts = ({ prefix = '' }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const endpoint = `${prefix}/products`;
 
-
   // 🆕 Tạo hàm chuyển URL params thành object
   const getParamsFromURL = () => ({
     search: searchParams.get("search") || "",
     searchField: searchParams.get("searchField") || "",
     category: searchParams.get("category") || "",
-    minPrice: searchParams.get("minPrice") || "",
-    maxPrice: searchParams.get("maxPrice") || "",
     sortBy: searchParams.get("sortBy") || "",
     page: Number(searchParams.get("page") || 1),
+    limit: Number(searchParams.get("limit") || 8),
   });
 
   const [formSearch, setFormSearch] = useState(getParamsFromURL());
@@ -41,15 +38,11 @@ export const useProducts = ({ prefix = '' }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-
         setIsLoading(true);
 
         const filter: Record<string, any> = {};
         if (queryParams.category) {
           filter.category_id_IN = [queryParams.category];
-        }
-        if (queryParams.minPrice && queryParams.maxPrice) {
-          filter.price_RANGE = [queryParams.minPrice, queryParams.maxPrice];
         }
 
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
@@ -59,13 +52,13 @@ export const useProducts = ({ prefix = '' }) => {
             filter: JSON.stringify(filter),
             "sort[]": queryParams.sortBy ? [queryParams.sortBy] : [],
             page: queryParams.page,
+            limit: queryParams.limit,
           },
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 
-        // console.log('Filter:', filter);
         setProducts(res.data?.data?.data || []);
         setTotalPages(res.data?.data?.last_page || 1);
         setCurrentPage(res.data?.data?.current_page || 1);
@@ -80,32 +73,18 @@ export const useProducts = ({ prefix = '' }) => {
   }, [queryParams]);
 
   // ✅ Cập nhật URL và trigger update
-
   const submitFilters = () => {
     const params = new URLSearchParams();
 
-    // Lặp qua các bộ lọc và chỉ thêm vào URL nếu giá trị không phải là null hoặc rỗng
     Object.entries(formSearch).forEach(([key, value]) => {
       if (value !== "" && value !== null) {
         params.set(key, value.toString());
       }
     });
-    if (pathname.startsWith('/cms')) {
-      router.push(`${pathname}?${params.toString()}`);
-    } else {
-      router.push(`/products?${params.toString()}`);
-    }
+
+    router.push(`?${params.toString()}`);
+    // Không cần setQueryParams ở đây nữa — sẽ tự động trong useEffect khi URL đổi
   };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
-      console.log(res);
-      setCategories(res.data?.data || []); // tuỳ cấu trúc, bạn có thể cần `.data.data`
-    };
-
-    fetchCategories();
-  }, []);
 
   return {
     searchParams,
@@ -114,7 +93,6 @@ export const useProducts = ({ prefix = '' }) => {
     products,
     categories,
     formSearch,
-    setQueryParams,
     setFormSearch,
     submitFilters,
     isLoading,

@@ -18,6 +18,7 @@ export default function AppProvider({ children }: Props) {
     const token = localStorage.getItem('token');
     if (token) {
       dispatch(loginSuccess({ token, user: null }));
+      console.log('dispatch login');
     }
   }, [dispatch]);
 

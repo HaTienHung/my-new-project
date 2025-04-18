@@ -23,7 +23,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
   };
 
   return (
-    <div className="flex items-center justify-center mt-4 space-x-2">
+    <div className="flex items-center justify-center mt-10 space-x-2">
       {/* Nút "Previous" */}
       <button
         className="px-3 py-1 rounded-md border bg-white text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"

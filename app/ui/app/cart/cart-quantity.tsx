@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { openAuthModal } from "@/app/lib/redux/authModal-slice";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function CartQuantity() {
   const quantity = useSelector((state: RootState) => state.cart.quantity);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  // console.log('Cart Quantity:', quantity);
+  const [isOpen,setIsOpen] = useState()
   const dispatch = useDispatch();
 
   const handleCartClick = () => {

@@ -40,8 +40,8 @@ export function LatestInvoicesSkeleton() {
           <InvoiceSkeleton />
         </div>
         <div className="flex items-center pb-2 pt-6">
-          <div className="h-5 w-5 rounded-full bg-gray-200" />
-          <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
+          <div className="h-5 w-5 rounded-full bg-gray-300" />
+          <div className="ml-2 h-4 w-20 rounded-md bg-gray-300" />
         </div>
       </div>
     </div>
@@ -51,13 +51,13 @@ export function InvoiceSkeleton() {
   return (
     <div className="flex flex-row items-center justify-between border-b border-gray-100 py-4">
       <div className="flex items-center">
-        <div className="mr-2 h-8 w-8 rounded-full bg-gray-200" />
+        <div className="mr-2 h-8 w-8 rounded-full bg-gray-300" />
         <div className="min-w-0">
-          <div className="h-5 w-40 rounded-md bg-gray-200" />
-          <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
+          <div className="h-5 w-40 rounded-md bg-gray-300" />
+          <div className="mt-2 h-4 w-12 rounded-md bg-gray-300" />
         </div>
       </div>
-      <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
+      <div className="mt-2 h-4 w-12 rounded-md bg-gray-300" />
     </div>
   );
 }
@@ -69,7 +69,7 @@ export const ProductTableSkeleton = ({ rows = 5 }: { rows?: number }) => {
         <tr key={i} className="hover:bg-gray-50 transition duration-150 animate-pulse">
           {Array.from({ length: 5 }).map((__, j) => (
             <td key={j} className="px-6 py-4 whitespace-nowrap">
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4"></div>
             </td>
           ))}
         </tr>
@@ -84,16 +84,16 @@ export const InventoryTableSkeleton = ({ rows = 6 }: { rows?: number }) => {
       {Array.from({ length: rows }).map((_, i) => (
         <tr key={i}>
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-200 rounded w-8 animate-pulse"></div>
+            <div className="h-4 bg-gray-300 rounded w-8 animate-pulse"></div>
           </td>
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-200 rounded w-40 animate-pulse"></div>
+            <div className="h-4 bg-gray-300 rounded w-40 animate-pulse"></div>
           </td>
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-200 rounded w-16 animate-pulse"></div>
+            <div className="h-4 bg-gray-300 rounded w-16 animate-pulse"></div>
           </td>
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-200 rounded w-40 animate-pulse"></div>
+            <div className="h-4 bg-gray-300 rounded w-40 animate-pulse"></div>
           </td>
         </tr>
       ))}
@@ -107,17 +107,17 @@ export const CategoryTableSkeleton = ({ rows = 6 }: { rows?: number }) => {
       {Array.from({ length: rows }).map((_, i) => (
         <tr key={i} className="animate-pulse">
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-200 rounded w-6"></div>
+            <div className="h-4 bg-gray-300 rounded w-6"></div>
           </td>
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-200 rounded w-32"></div>
+            <div className="h-4 bg-gray-300 rounded w-32"></div>
           </td>
           <td className="px-4 py-3 hidden md:table-cell">
-            <div className="h-4 bg-gray-200 rounded w-40"></div>
+            <div className="h-4 bg-gray-300 rounded w-40"></div>
           </td>
           <td className="px-4 py-3">
             <div className="flex gap-2">
-              <div className="h-4 bg-gray-200 rounded w-16"></div>
+              <div className="h-4 bg-gray-300 rounded w-16"></div>
             </div>
           </td>
         </tr>
@@ -133,28 +133,28 @@ export const OrderTableSkeleton = ({ rows = 5 }: { rows?: number }) => {
       {Array.from({ length: rows }).map((_, i) => (
         <tr key={i} className="animate-pulse">
           <td className="px-4 py-2">
-            <div className="h-4 bg-gray-200 rounded w-6"></div>
+            <div className="h-4 bg-gray-300 rounded w-6"></div>
           </td>
           <td className="px-4 py-2">
-            <div className="h-4 bg-gray-200 rounded w-20"></div>
+            <div className="h-4 bg-gray-300 rounded w-20"></div>
           </td>
           <td className="px-4 py-2">
-            <div className="h-4 bg-gray-200 rounded w-24"></div>
+            <div className="h-4 bg-gray-300 rounded w-24"></div>
           </td>
           <td className="px-4 py-2 hidden md:table-cell">
-            <div className="h-4 bg-gray-200 rounded w-24"></div>
+            <div className="h-4 bg-gray-300 rounded w-24"></div>
           </td>
           <td className="px-4 py-2 hidden md:table-cell">
-            <div className="h-4 bg-gray-200 rounded w-32"></div>
+            <div className="h-4 bg-gray-300 rounded w-32"></div>
           </td>
           <td className="px-4 py-2">
-            <div className="h-4 bg-gray-200 rounded w-20"></div>
+            <div className="h-4 bg-gray-300 rounded w-20"></div>
           </td>
           <td className="px-4 py-2">
-            <div className="h-4 bg-gray-200 rounded w-16"></div>
+            <div className="h-4 bg-gray-300 rounded w-16"></div>
           </td>
           <td className="px-4 py-2">
-            <div className="h-4 bg-gray-200 rounded w-16"></div>
+            <div className="h-4 bg-gray-300 rounded w-16"></div>
           </td>
         </tr>
       ))}
@@ -188,8 +188,8 @@ export function RevenueChartSkeleton() {
       <div className="rounded-xl bg-gray-100 p-4">
         <div className="sm:grid-cols-13 mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4" />
         <div className="flex items-center pb-2 pt-6">
-          <div className="h-5 w-5 rounded-full bg-gray-200" />
-          <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
+          <div className="h-5 w-5 rounded-full bg-gray-300" />
+          <div className="ml-2 h-4 w-20 rounded-md bg-gray-300" />
         </div>
       </div>
     </div>
@@ -203,11 +203,11 @@ export function CardSkeleton() {
       className={`animate-pulse relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
     >
       <div className="flex p-4">
-        <div className="h-5 w-5 rounded-md bg-gray-200" />
-        <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
+        <div className="h-5 w-5 rounded-md bg-gray-300" />
+        <div className="ml-2 h-6 w-16 rounded-md bg-gray-300 text-sm font-medium" />
       </div>
       <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
-        <div className="h-7 w-20 rounded-md bg-gray-200" />
+        <div className="h-7 w-20 rounded-md bg-gray-300" />
       </div>
     </div>
   );
@@ -228,34 +228,34 @@ export function ProductDetailSkeleton() {
     <>
       <div className="container mx-auto px-4 py-10 flex flex-col md:flex-row gap-4 md:gap-10">
         {/* Skeleton Hình ảnh sản phẩm */}
-        <div className="flex-1 rounded-lg flex justify-center items-center bg-gray-200 animate-pulse opacity-70 transition-all duration-500 ease-in-out">
-          <div className="max-w-[600px] w-full bg-gray-200 p-6 rounded-lg h-[400px]"></div>
+        <div className="flex-1 rounded-lg flex justify-center items-center bg-gray-300 animate-pulse opacity-70 transition-all duration-500 ease-in-out">
+          <div className="max-w-[600px] w-full bg-gray-300 p-6 rounded-lg h-[400px]"></div>
         </div>
 
         {/* Skeleton Thông tin sản phẩm */}
         <div className="w-full md:w-1/3">
-          <div className="h-10 bg-gray-200 rounded w-3/4 mb-4 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
-          <div className="h-6 bg-gray-200 rounded w-1/2 mb-4 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
-          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+          <div className="h-10 bg-gray-300 rounded w-3/4 mb-4 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+          <div className="h-6 bg-gray-300 rounded w-1/2 mb-4 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+          <div className="h-4 bg-gray-300 rounded w-3/4 mb-2 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
 
           {/* Skeleton Số lượng */}
           <div className="flex items-center mt-6">
-            <div className="h-4 bg-gray-200 rounded w-20 mr-4 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+            <div className="h-4 bg-gray-300 rounded w-20 mr-4 animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
             <div className="flex items-center rounded-lg px-3 py-2">
-              <div className="w-6 h-6 bg-gray-200 rounded-full animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
-              <div className="w-6 h-6 bg-gray-200 rounded animate-pulse opacity-70 transition-all duration-500 ease-in-out mx-3"></div>
-              <div className="w-6 h-6 bg-gray-200 rounded-full animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+              <div className="w-6 h-6 bg-gray-300 rounded-full animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+              <div className="w-6 h-6 bg-gray-300 rounded animate-pulse opacity-70 transition-all duration-500 ease-in-out mx-3"></div>
+              <div className="w-6 h-6 bg-gray-300 rounded-full animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
             </div>
           </div>
 
           {/* Skeleton Nút mua hàng */}
-          <div className="w-full mt-6 h-12 bg-gray-200 rounded-lg animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
-          <div className="w-full mt-3 h-12 bg-gray-200 rounded-lg animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/3 mt-4 mx-auto animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+          <div className="w-full mt-6 h-12 bg-gray-300 rounded-lg animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+          <div className="w-full mt-3 h-12 bg-gray-300 rounded-lg animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/3 mt-4 mx-auto animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
 
           {/* Skeleton Nút share */}
           <div className="mt-6 flex justify-center">
-            <div className="h-6 w-24 bg-gray-200 rounded animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
+            <div className="h-6 w-24 bg-gray-300 rounded animate-pulse opacity-70 transition-all duration-500 ease-in-out"></div>
           </div>
         </div>
       </div>
@@ -275,13 +275,13 @@ export function CartItemsSkeleton() {
         {/* Danh sách sản phẩm */}
         <section className="py-4 flex flex-col space-y-14 border-t border-b">
           {/* Skeleton loading */}
-          {[1, 2, 3].map((_, index) => (
+          {[1, 2, 3, 4].map((_, index) => (
             <div key={index} className="flex container mb-10">
               {/* Hình ảnh sản phẩm (Skeleton) */}
               <div className="w-20 min-h-[100px] flex flex-col">
-                <div className="bg-gray-200 w-full h-full animate-pulse rounded"></div>
+                <div className="bg-gray-300 w-full h-full animate-pulse rounded"></div>
                 <div className="flex justify-center cursor-pointer mt-2">
-                  <div className="bg-gray-200 w-16 h-4 animate-pulse rounded"></div>
+                  <div className="bg-gray-300 w-16 h-4 animate-pulse rounded"></div>
                 </div>
               </div>
 
@@ -289,21 +289,21 @@ export function CartItemsSkeleton() {
               <div className="ml-2 flex flex-grow">
                 {/* Phần mô tả sản phẩm (Skeleton) */}
                 <div className="w-[70%] pr-5">
-                  <div className="bg-gray-200 w-full h-5 animate-pulse rounded"></div>
+                  <div className="bg-gray-300 w-full h-5 animate-pulse rounded"></div>
                 </div>
 
                 {/* Phần giá và nút tăng giảm (Skeleton) */}
                 <div className="w-[30%] flex flex-col items-end">
-                  <div className="bg-gray-200 w-24 h-4 animate-pulse rounded mb-4"></div>
+                  <div className="bg-gray-300 w-24 h-4 animate-pulse rounded mb-4"></div>
                   <div className="flex items-center space-x-2 p-1 rounded-md">
                     {/* Nút Giảm (-) Skeleton */}
-                    <div className="w-8 h-8 bg-gray-200 animate-pulse rounded-md"></div>
+                    <div className="w-8 h-8 bg-gray-300 animate-pulse rounded-md"></div>
 
                     {/* Hiển thị số lượng Skeleton */}
-                    <div className="w-12 h-6 bg-gray-200 animate-pulse rounded-md"></div>
+                    <div className="w-12 h-6 bg-gray-300 animate-pulse rounded-md"></div>
 
                     {/* Nút Tăng (+) Skeleton */}
-                    <div className="w-8 h-8 bg-gray-200 animate-pulse rounded-md"></div>
+                    <div className="w-8 h-8 bg-gray-300 animate-pulse rounded-md"></div>
                   </div>
                 </div>
               </div>

@@ -17,12 +17,15 @@ export default function ProductMagmamemt() {
     formSearch,
     setFormSearch,
     submitFilters,
+    setQueryParams,
     isLoading,
+    searchParams,
     refetch
   } = useProducts({ prefix: '/cms' });
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
+  const perPage = 8;
 
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -44,7 +47,7 @@ export default function ProductMagmamemt() {
 
   useEffect(() => {
     submitFilters();  // Gọi lại API khi page thay đổi
-  }, [formSearch.page]);  // Theo dõi sự thay đổi của formSearch.page
+  }, [formSearch.page]);
 
   return (
     <>
@@ -101,6 +104,22 @@ export default function ProductMagmamemt() {
             <option value="-price">Giá giảm dần</option>
           </select>
 
+          <input
+            type="text"
+            value={formSearch.minPrice || ""}
+            onChange={(e) => setFormSearch((prev: any) => ({ ...prev, minPrice: e.target.value }))}
+            placeholder="Giá từ (VNĐ)"
+            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+          />
+
+          <input
+            type="text"
+            value={formSearch.maxPrice || ""}
+            onChange={(e) => setFormSearch((prev: any) => ({ ...prev, maxPrice: e.target.value }))}
+            placeholder="Giá đến (VNĐ)"
+            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+          />
+
           {/* Nút tìm kiếm */}
           <div className="sm:col-span-2 flex justify-end">
             <button
@@ -146,11 +165,11 @@ export default function ProductMagmamemt() {
 
           <tbody className="divide-y divide-gray-100">
             {isLoading ? (
-              <ProductTableSkeleton rows={6} />
+              <ProductTableSkeleton rows={8} />
             ) : (
               products.map((product: Product, i: number) => (
                 <tr key={product.id} className="hover:bg-gray-50 transition duration-150">
-                  <td className="px-4 py-3 text-sm text-gray-700">{(formSearch.page - 1) * formSearch.limit + i + 1}</td>
+                  <td className="px-4 py-3 text-sm text-gray-700">{(currentPage - 1) * perPage + i + 1}</td>
                   <td className="px-4 py-3 text-sm font-medium text-gray-900">{product.name}</td>
                   <td className="px-4 py-3 text-sm text-gray-700 hidden md:table-cell">{product.category?.name}</td>
                   <td className="px-4 py-3 text-sm text-green-600 hidden md:table-cell">

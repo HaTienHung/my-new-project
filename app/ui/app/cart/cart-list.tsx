@@ -186,7 +186,7 @@ const Cart = () => {
             Giỏ hàng của bạn hiện tại không có sản phẩm nào.
           </div>
           <div>
-            <button className="border bg-gray-200 font-light rounded-lg px-3 py-2 cursor-pointer hover:bg-[rgb(121,100,73)] hover:text-white transition duration-300"><a href="/">Tiếp tục mua sắm</a></button>
+            <button className="border bg-gray-200 font-light rounded-lg px-3 py-2 cursor-pointer hover:bg-[rgb(121,100,73)] hover:text-white transition duration-300"><a href="/products">Tiếp tục mua sắm</a></button>
           </div>
         </div>
       ) : (
