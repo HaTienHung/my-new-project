@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { FaInbox, FaUserGroup } from "react-icons/fa6";
+import { CardsSkeleton } from "../../skeletons";
 
 
 
@@ -18,9 +19,11 @@ export default function CardWrapper() {
     total_orders: number;
     total_revenue: number;
   } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/dashboard`, {
           method: "GET",
@@ -38,11 +41,18 @@ export default function CardWrapper() {
         setDashboardData(data?.data);
       } catch (err) {
         console.error("Lỗi khi lấy dữ liệu dashboard:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchDashboardData();
   }, []);
+
+
+  if (isLoading || !dashboardData) {
+    return <CardsSkeleton />;
+  }
 
   const total_customers = dashboardData?.total_customers ?? 0;
   const total_orders = dashboardData?.total_orders ?? 0;
@@ -52,7 +62,7 @@ export default function CardWrapper() {
     <>
       <Card title="Tổng khách hàng" value={total_customers} type="customers" />
       <Card title="Tổng đơn hàng" value={total_orders} type="orders" />
-      <Card title="Tổng doanh thu" value={total_revenue} type="revenue" />
+      <Card title="Tổng doanh thu" value={Number(total_revenue).toLocaleString()} type="revenue" />
     </>
   );
 }

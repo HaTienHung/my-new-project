@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { toast } from "react-toastify";
 
 interface UpdateOrderStatusModalProps {
   id: number;
@@ -66,6 +67,7 @@ const UpdateOrderStatusModal: React.FC<UpdateOrderStatusModalProps> = ({
 
       onUpdated();
       onClose();
+      toast.success("Cập nhật trạng thái thành công !");
     } catch (error: any) {
       if (error.response) {
         console.log("Lỗi từ backend:", error.response.data);

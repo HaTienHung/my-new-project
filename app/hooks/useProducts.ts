@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-const isEqual = require('lodash.isequal');
 
 export const useProducts = ({ prefix = '' }) => {
   const router = useRouter();
@@ -101,7 +100,7 @@ export const useProducts = ({ prefix = '' }) => {
     const fetchCategories = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
       console.log(res);
-      setCategories(res.data?.data || []); // tuỳ cấu trúc, bạn có thể cần `.data.data`
+      setCategories(res.data?.data || []);
     };
 
     fetchCategories();

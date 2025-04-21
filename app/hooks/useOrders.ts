@@ -1,20 +1,36 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  const [formSearch, setFormSearch] = useState({
-    search: "",
-    searchField: "",
-    status: "",
-    sortBy: "",
-    page: 1,
+  const getParamsFromURL = () => ({
+    search: searchParams.get("search") || "",
+    searchField: searchParams.get("searchField") || "",
+    status: searchParams.get("status") || "",
+    category: searchParams.get("category") || "",
+    minPrice: searchParams.get("minPrice") || "",
+    maxPrice: searchParams.get("maxPrice") || "",
+    sortBy: searchParams.get("sortBy") || "",
+    page: Number(searchParams.get("page") || 1),
   });
 
-  const [queryParams, setQueryParams] = useState(formSearch);
+
+  const [formSearch, setFormSearch] = useState(getParamsFromURL());
+  const [queryParams, setQueryParams] = useState(getParamsFromURL());
+
+  // ✅ Khi URL đổi → đồng bộ lại formSearch & queryParams
+  useEffect(() => {
+    const newParams = getParamsFromURL();
+    setFormSearch(newParams);
+    setQueryParams(newParams);
+  }, [searchParams]); // <- khi URL đổi
+
 
   // Gọi API sản phẩm
   const fetchOrders = async () => {
@@ -24,6 +40,10 @@ export const useOrders = () => {
 
       if (queryParams.status) {
         filter.status_IN = [queryParams.status];
+      }
+
+      if (queryParams.minPrice && queryParams.maxPrice) {
+        filter.price_RANGE = [queryParams.minPrice, queryParams.maxPrice];
       }
       console.log("URL API:", process.env.NEXT_PUBLIC_API_URL);
 
@@ -39,10 +59,10 @@ export const useOrders = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log('query', queryParams.status);
-      console.log("filter", filter);
+      // console.log('query', queryParams.status);
+      // console.log("filter", filter);
       setOrders(res.data?.data || []);
-      console.log(orders);
+      // console.log(orders);
     } catch (err: any) {
       console.error("Lỗi fetchProducts:", err?.response?.data || err.message);
     } finally {
@@ -56,28 +76,26 @@ export const useOrders = () => {
   }, [queryParams]);
 
 
-  // Gọi API danh mục 1 lần khi mount
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
-      console.log(res);
-      setCategories(res.data?.data || []); // tuỳ cấu trúc, bạn có thể cần `.data.data`
-    };
-
-    fetchCategories();
-  }, []);
 
   const submitFilters = () => {
-    setQueryParams({ ...formSearch });
+    const params = new URLSearchParams();
+
+    const formToSubmit = { ...formSearch, page: 1 };
+
+    Object.entries(formToSubmit).forEach(([key, value]) => {
+      if (value !== "" && value !== null && value !== undefined) {
+        params.set(key, value.toString());
+      }
+    });
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return {
     orders,
-    categories,
     formSearch,
     setFormSearch,
     submitFilters,
     isLoading,
-    refetch: fetchOrders,
+    refetch: () => setQueryParams(getParamsFromURL()),
   };
 };

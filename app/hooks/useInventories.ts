@@ -1,18 +1,33 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const useInventories = () => {
   const [inventories, setInventories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const [formSearch, setFormSearch] = useState({
-    search: "",
-    searchField: "",
-    sortBy: "",
-    page: 1,
+  // 🆕 Tạo hàm chuyển URL params thành object
+  const getParamsFromURL = () => ({
+    search: searchParams.get("search") || "",
+    searchField: searchParams.get("searchField") || "",
+    sortBy: searchParams.get("sortBy") || "",
+    page: Number(searchParams.get("page") || 1),
   });
 
-  const [queryParams, setQueryParams] = useState(formSearch);
+  const [formSearch, setFormSearch] = useState(getParamsFromURL());
+  const [queryParams, setQueryParams] = useState(getParamsFromURL());
+
+  // ✅ Khi URL đổi → đồng bộ lại formSearch & queryParams
+  useEffect(() => {
+    const newParams = getParamsFromURL();
+    setFormSearch(newParams);
+    setQueryParams(newParams);
+  }, [searchParams]); // <- khi URL đổi
 
   // Gọi API sản phẩm
   const fetchInventories = async () => {
@@ -33,6 +48,8 @@ export const useInventories = () => {
       });
 
       setInventories(res.data?.data?.data || []);
+      setTotalPages(res.data?.data?.last_page || 1);
+      setCurrentPage(res.data?.data?.current_page || 1);
     } catch (err: any) {
       console.error("Lỗi fetchProducts:", err?.response?.data || err.message);
     } finally {
@@ -46,15 +63,26 @@ export const useInventories = () => {
   }, [queryParams]);
 
   const submitFilters = () => {
-    setQueryParams({ ...formSearch });
+    const params = new URLSearchParams();
+
+    // Lặp qua các bộ lọc và chỉ thêm vào URL nếu giá trị không phải là null hoặc rỗng
+    Object.entries(formSearch).forEach(([key, value]) => {
+      if (value !== "" && value !== null) {
+        params.set(key, value.toString());
+      }
+    });
+    router.push(`${pathname}?${params.toString()}`);
   };
 
+
   return {
+    currentPage,
+    totalPages,
     inventories,
     formSearch,
     setFormSearch,
     submitFilters,
     isLoading,
-    refetch: fetchInventories,
+    refetch: () => setQueryParams(getParamsFromURL()),
   };
 };

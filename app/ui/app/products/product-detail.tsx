@@ -4,9 +4,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart as addToCartAction } from "@/app/lib/redux/cart-slice";
+import { RootState } from "@/app/lib/redux/store";
+import { openAuthModal } from "@/app/lib/redux/authModal-slice";
 
 const ProductDetail = ({ product }: { product: any }) => {
   const [quantity, setQuantity] = useState(1); // Quản lý số lượng tại component này
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   const handleIncrease = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
@@ -18,6 +21,7 @@ const ProductDetail = ({ product }: { product: any }) => {
 
   const dispatch = useDispatch();
   const addToCart = async () => {
+    if (!isAuthenticated) return dispatch(openAuthModal())
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/store`, {
         method: 'POST',
@@ -31,7 +35,7 @@ const ProductDetail = ({ product }: { product: any }) => {
       if (!res.ok) throw new Error("Failed to add to cart");
 
       const data = await res.json();
-      console.log("API response:", data);
+      // console.log("API response:", data);
 
       // ✅ Gọi dispatch ở đây, SAU khi API thành công
       dispatch(addToCartAction({ product_id: product.id, quantity }));
@@ -61,7 +65,7 @@ const ProductDetail = ({ product }: { product: any }) => {
         <div className="w-full md:w-1/3">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">{product.name}</h1>
           <p className="text-lg sm:text-xl md:text-2xl font-extralight mt-4">
-            {product.price} VNĐ
+            {Number(product.price).toLocaleString()} VNĐ
           </p>
           <p className="text-[rgb(121,100,73)] text-sm mt-2">Phí vận chuyển sẽ được tính khi đặt hàng!</p>
 
@@ -89,6 +93,7 @@ const ProductDetail = ({ product }: { product: any }) => {
           <button className="w-full mt-6 py-3 text-lg font-semibold border border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)]" onClick={addToCart}>
             Add to cart
           </button>
+
           <button className="w-full mt-3 py-3 text-lg font-semibold bg-yellow-400 rounded-lg transition hover:bg-yellow-500"
             onClick={() => { toast.info("Xin thứ lỗi , chúng tôi đang phát triển tính năng này !") }}
           >

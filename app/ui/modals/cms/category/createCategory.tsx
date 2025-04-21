@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { toast } from "react-toastify";
 
 interface CreateCategoryModalProps {
   onClose: () => void;
@@ -46,6 +47,7 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({
 
       onCreated();
       onClose();
+      toast.success("Tạo danh mục thành công !");
     } catch (error: any) {
       console.error("Lỗi khi thêm sản phẩm:", error);
     }

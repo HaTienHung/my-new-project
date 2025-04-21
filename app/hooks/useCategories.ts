@@ -1,18 +1,31 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const useCategories = () => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  const [formSearch, setFormSearch] = useState({
-    search: "",
-    searchField: "",
-    sortBy: "",
-    page: 1,
+  const getParamsFromURL = () => ({
+    search: searchParams.get("search") || "",
+    searchField: searchParams.get("searchField") || "",
+    sortBy: searchParams.get("sortBy") || "",
+    page: Number(searchParams.get("page") || 1),
   });
 
-  const [queryParams, setQueryParams] = useState(formSearch);
+
+  const [formSearch, setFormSearch] = useState(getParamsFromURL());
+  const [queryParams, setQueryParams] = useState(getParamsFromURL());
+
+  // ✅ Khi URL đổi → đồng bộ lại formSearch & queryParams
+  useEffect(() => {
+    const newParams = getParamsFromURL();
+    setFormSearch(newParams);
+    setQueryParams(newParams);
+  }, [searchParams]); // <- khi URL đổi
 
   // Gọi API sản phẩm
   const fetchCategories = async () => {
@@ -46,7 +59,18 @@ export const useCategories = () => {
   }, [queryParams]);
 
   const submitFilters = () => {
-    setQueryParams({ ...formSearch });
+    const params = new URLSearchParams();
+
+    // Lặp qua các bộ lọc và chỉ thêm vào URL nếu giá trị không phải là null hoặc rỗng
+    const formToSubmit = { ...formSearch, page: 1 };
+
+    Object.entries(formToSubmit).forEach(([key, value]) => {
+      if (value !== "" && value !== null && value !== undefined) {
+        params.set(key, value.toString());
+      }
+    });
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return {
@@ -55,6 +79,6 @@ export const useCategories = () => {
     setFormSearch,
     submitFilters,
     isLoading,
-    refetch: fetchCategories,
+    refetch: () => setQueryParams(getParamsFromURL()),
   };
 };

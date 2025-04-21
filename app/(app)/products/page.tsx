@@ -1,6 +1,6 @@
 'use client';
 import ProductList from "@/app/ui/app/products/product-list";
-import { getProducts } from "@/app/lib/data";
+// import { getProducts } from "@/app/lib/data";
 import { useProducts } from "@/app/hooks/useProducts";
 import Pagination from "@/app/ui/pagination";
 import { useEffect, useState } from "react";
@@ -19,7 +19,6 @@ export default function ProductsPage() {
     submitFilters,
     categories,
     isLoading,
-    searchParams
   } = useProducts({ prefix: '' });
 
   const handlePageChange = (page: number) => {

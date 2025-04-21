@@ -116,14 +116,14 @@ export default function OrderManagment() {
       <table className="min-w-full divide-y divide-gray-300 bg-white rounded-xl overflow-hidden">
         <thead className="bg-gray-100">
           <tr>
-            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600">STT</th>
+            <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">STT</th>
             <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden md:table-cell">Mã đơn</th>
-            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600">Tên khách hàng</th>
+            <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Tên khách hàng</th>
             <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden md:table-cell">SĐT</th>
             <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden md:table-cell">Địa chỉ</th>
-            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600">Trạng thái</th>
-            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600">Tổng tiền</th>
-            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600">Hành động</th>
+            <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Trạng thái</th>
+            <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Tổng tiền</th>
+            <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Hành động</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -132,9 +132,9 @@ export default function OrderManagment() {
           ) : (
             orders.map((order: Order, i: number) => (
               <tr key={order.id} className="hover:bg-gray-50 transition">
-                <td className="px-4 py-2 text-sm">{i + 1}</td>
+                <td className="px-2 sm:px-4py-2 text-xs sm:text-sm">{i + 1}</td>
                 <td className="px-4 py-2 text-sm hidden md:table-cell">{order.id}</td>
-                <td className="px-4 py-2 text-sm">{order.user.name}</td>
+                <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{order.user.name}</td>
                 <td className="px-4 py-2 text-sm hidden md:table-cell">{order.user.phone_number}</td>
                 <td className="px-4 py-2 text-sm hidden md:table-cell">{order.user.address}</td>
                 <td className="px-4 py-2 text-sm capitalize">
@@ -151,8 +151,8 @@ export default function OrderManagment() {
                     {order.status}
                   </span>
                 </td>
-                <td className="px-4 py-2 text-sm font-semibold text-green-600 ">{order.total_price.toLocaleString()} VND</td>
-                <td className="px-4 py-2 text-sm flex items-center gap-3">
+                <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-green-600 ">{Number(order.total_price).toLocaleString()} VNĐ</td>
+                <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm flex items-center gap-3">
                   <button
                     onClick={() => handleEdit(order.id)}
                     className={`flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs md:text-sm border border-blue-600 px-2 py-1 rounded-md transition duration-200

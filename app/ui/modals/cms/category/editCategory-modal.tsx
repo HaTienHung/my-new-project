@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { toast } from "react-toastify";
 
 interface EditCategoryModalProps {
   id: number;
@@ -71,6 +72,7 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
 
       onUpdated();
       onClose();
+      toast.success("Sửa danh mục thành công !");
     } catch (error: any) {
       if (error.response) {
         console.log("Lỗi từ backend:", error.response.data);

@@ -1,17 +1,18 @@
 'use client';
-import { Category, Inventory, Order, Product } from "@/app/lib/definitions";
-import { CategoryTableSkeleton, InventoryTableSkeleton, OrderTableSkeleton, ProductTableSkeleton } from "@/app/ui/skeletons";
-import { useState } from "react";
-import CreateCategoryModal from "../../modals/cms/category/createCategory";
+import { Inventory } from "@/app/lib/definitions";
+import { InventoryTableSkeleton } from "@/app/ui/skeletons";
+import { useEffect, useState } from "react";
 import { useInventories } from "@/app/hooks/useInventories";
 import { FaPlus } from "react-icons/fa6";
 import AddToInventoryModal from "../../modals/cms/inventory/AddToInventoryModal";
 import { FaInfoCircle } from "react-icons/fa";
 import InventoryDetailModal from "../../modals/cms/inventory/inventoryDetail-modal";
+import Pagination from "../../pagination";
 
 export default function InventoryManagment() {
   const [productId, setProductId] = useState<number | null>(null);
   const [showInventoryDetail, setShowInventoryDetail] = useState(false);
+  const litmit = 8;
 
   const handleViewDetail = (productId: number) => {
     setProductId(productId);
@@ -24,7 +25,10 @@ export default function InventoryManagment() {
     setProductId(null);
   };
 
+
   const {
+    currentPage,
+    totalPages,
     inventories,
     formSearch,
     setFormSearch,
@@ -35,12 +39,30 @@ export default function InventoryManagment() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitFilters();
+    if (formSearch.page !== 1) {
+      // Reset page về 1 sẽ tự động trigger submitFilters từ useEffect
+      setFormSearch((prev) => ({ ...prev, page: 1 }));
+    } else {
+      // Nếu đã là page 1 thì submit luôn
+      submitFilters();
+    }
   };
 
   const handleAdd = (id: number) => {
     setProductId(id);
   };
+
+  const handlePageChange = (page: number) => {
+    setFormSearch((prev) => ({
+      ...prev,
+      page // Cập nhật lại giá trị page
+    }));
+  };
+
+  useEffect(() => {
+    submitFilters();  // Gọi lại API khi page thay đổi
+  }, [formSearch.page]);
+
   return (
     <>
       <h1 className="text-2xl font-semibold mb-4 text-[rgb(121,100,73)]">Quản lí kho</h1>
@@ -103,7 +125,7 @@ export default function InventoryManagment() {
             ) : (
               inventories.map((inventory: Inventory, i: number) => (
                 <tr key={inventory.product_id} className="hover:bg-gray-50 transition">
-                  <td className="px-4 py-3 text-sm">{i + 1}</td>
+                  <td className="px-4 py-3 text-sm">{(currentPage - 1) * litmit + i + 1}</td>
                   <td className="px-4 py-3 text-sm">{inventory.product_name}</td>
                   <td className="px-4 py-3 text-sm hidden md:table-cell">{inventory.stock}</td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3 items-center">
@@ -142,6 +164,11 @@ export default function InventoryManagment() {
           />
         )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }

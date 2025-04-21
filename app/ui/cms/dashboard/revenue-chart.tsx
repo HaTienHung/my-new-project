@@ -3,6 +3,7 @@ import { generateYAxis } from '@/app/lib/utils';
 
 import { useEffect, useState } from 'react';
 import { FaCalendar } from 'react-icons/fa';
+import { RevenueChartSkeleton } from '../../skeletons';
 
 
 type Revenue = {
@@ -12,9 +13,11 @@ type Revenue = {
 };
 
 export default function RevenueChart() { // Make component async, remove the props
-  const [revenue, setSevenue] = useState<Revenue[]>([]);
+  const [revenue, setRevenue] = useState<Revenue[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchDashboardData = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/dashboard/revenue`, {
           method: "GET",
@@ -29,9 +32,11 @@ export default function RevenueChart() { // Make component async, remove the pro
         }
 
         const data = await response.json();
-        setSevenue(data?.data);
+        setRevenue(data?.data);
       } catch (err) {
         console.error("Lỗi khi lấy dữ liệu dashboard:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -42,16 +47,20 @@ export default function RevenueChart() { // Make component async, remove the pro
 
   const { yAxisLabels, topLabel } = generateYAxis();
 
+  if (isLoading) {
+    return <RevenueChartSkeleton />;
+  }
+
   if (!revenue || revenue.length === 0) {
     return <p className="mt-4 text-gray-400">No data available.</p>;
   }
+
 
   return (
     <div className="w-full md:col-span-4 text-[rgb(121,100,73)]">
       <h2 className={` mb-4 text-xl md:text-2xl`}>
         Doanh thu theo ngày
       </h2>
-      {/* NOTE: Uncomment this code in Chapter 7 */}
 
       <div className="rounded-xl bg-gray-50 p-4">
         <div className="sm:grid-cols-8 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">

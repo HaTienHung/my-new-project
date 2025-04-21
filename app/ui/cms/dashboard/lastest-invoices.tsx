@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { HiArrowPath } from 'react-icons/hi2';
+import { LatestInvoicesSkeleton } from '../../skeletons';
 
 type Invoice = {
   id: number;
@@ -19,8 +20,10 @@ type Invoice = {
 
 export default function LatestInvoices() {
   const [latestInvoices, setLatestInvoices] = useState<Invoice[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchLatestInvoices = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/dashboard/latest-invoices`, {
           method: "GET",
@@ -38,11 +41,15 @@ export default function LatestInvoices() {
         setLatestInvoices(data?.data);
       } catch (err) {
         console.error("Lỗi khi lấy dữ liệu dashboard:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchLatestInvoices();
   }, []);
+
+  if (isLoading) return <LatestInvoicesSkeleton />
 
   return (
     <div className="flex w-full flex-col md:col-span-4 text-[rgb(121,100,73)]">
@@ -83,7 +90,7 @@ export default function LatestInvoices() {
                 <p
                   className={`truncate text-sm font-medium md:text-base`}
                 >
-                  {invoice.total_price}
+                  {Number(invoice.total_price).toLocaleString()} VNĐ
                 </p>
               </div>
             );

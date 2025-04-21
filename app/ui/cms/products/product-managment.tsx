@@ -25,13 +25,18 @@ export default function ProductMagmamemt() {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
-  const perPage = 8;
+  const perPage = 12;
 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formSearch);
-    submitFilters();
+    if (formSearch.page !== 1) {
+      // Reset page về 1 sẽ tự động trigger submitFilters từ useEffect
+      setFormSearch((prev) => ({ ...prev, page: 1 }));
+    } else {
+      // Nếu đã là page 1 thì submit luôn
+      submitFilters();
+    }
   };
 
   const handleEdit = (id: number) => {
@@ -55,7 +60,7 @@ export default function ProductMagmamemt() {
       <div className="mb-4">
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mb-4"
         >
           {/* Chọn trường tìm kiếm */}
           <select
@@ -173,7 +178,7 @@ export default function ProductMagmamemt() {
                   <td className="px-4 py-3 text-sm font-medium text-gray-900">{product.name}</td>
                   <td className="px-4 py-3 text-sm text-gray-700 hidden md:table-cell">{product.category?.name}</td>
                   <td className="px-4 py-3 text-sm text-green-600 hidden md:table-cell">
-                    {Number(product.price).toLocaleString()} VND
+                    {Number(product.price).toLocaleString()} VNĐ
                   </td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3">
                     <button

@@ -80,6 +80,7 @@ export const cartSlice = createSlice({
       console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
     },
     removeFromCart(state, action) {
+      
       const { product_id } = action.payload;
 
       const product = state.items.find(item => item.product_id === product_id);

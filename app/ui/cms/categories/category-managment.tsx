@@ -36,7 +36,7 @@ export default function CategoryManament() {
       <div className="mb-4">
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mb-4"
         >
           {/* Từ khoá tìm kiếm */}
           <input
@@ -95,7 +95,7 @@ export default function CategoryManament() {
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">STT</th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tên danh mục</th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden md:table-cell">Slug</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Hành động</th>
+              <th className="px-4 py-3 md:text-left text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Hành động</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
@@ -108,12 +108,12 @@ export default function CategoryManament() {
                   <td className="px-4 py-3 text-sm">{cat.name}</td>
                   <td className="px-4 py-3 text-sm hidden md:table-cell">{cat.slug}</td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3">
-                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-blue-600 transition"
+                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-blue-600 transition justify-center"
                       onClick={() => handleEdit(cat.id)}>
                       <FaEdit className="text-sm" />
                       Sửa
                     </button>
-                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition">
+                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition justify-center">
                       <FaTrash className="text-sm" />
                       Xoá
                     </button>

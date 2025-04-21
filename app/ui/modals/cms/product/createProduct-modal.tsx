@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { toast } from "react-toastify";
 
 interface CreateProductModalProps {
   onClose: () => void;
@@ -66,6 +67,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
 
       onCreated();
       onClose();
+      toast.success("Thêm sản phẩm thành công !");
     } catch (error: any) {
       console.error("Lỗi khi thêm sản phẩm:", error);
     }

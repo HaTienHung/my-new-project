@@ -4,7 +4,7 @@ export function ProductListSkeleton() {
     <>
       <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {[...Array(8)].map((_, index) => (
+          {[...Array(12)].map((_, index) => (
             <div
               key={index}
               className="block bg-white rounded-xl shadow-md overflow-hidden cursor-pointer animate-pulse"
@@ -28,9 +28,9 @@ export function ProductListSkeleton() {
 export function LatestInvoicesSkeleton() {
   return (
     <div
-      className={`relative flex w-full flex-col overflow-hidden md:col-span-4`}
+      className={`relative flex w-full flex-col overflow-hidden md:col-span-4 animate-pulse`}
     >
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
+      <div className="mb-4 h-6 w-36 rounded-md bg-gray-300" />
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
         <div className="bg-white px-6">
           <InvoiceSkeleton />
@@ -67,11 +67,21 @@ export const ProductTableSkeleton = ({ rows = 5 }: { rows?: number }) => {
     <>
       {Array.from({ length: rows }).map((_, i) => (
         <tr key={i} className="hover:bg-gray-50 transition duration-150 animate-pulse">
-          {Array.from({ length: 5 }).map((__, j) => (
-            <td key={j} className="px-6 py-4 whitespace-nowrap">
-              <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-            </td>
-          ))}
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          </td>
         </tr>
       ))}
     </>
@@ -83,17 +93,17 @@ export const InventoryTableSkeleton = ({ rows = 6 }: { rows?: number }) => {
     <>
       {Array.from({ length: rows }).map((_, i) => (
         <tr key={i}>
-          <td className="px-4 py-3">
-            <div className="h-4 bg-gray-300 rounded w-8 animate-pulse"></div>
+          <td className="px-4 py-6">
+            <div className="h-4 bg-gray-300 rounded w-5 animate-pulse"></div>
           </td>
-          <td className="px-4 py-3">
-            <div className="h-4 bg-gray-300 rounded w-40 animate-pulse"></div>
+          <td className="px-4 py-6">
+            <div className="h-4 bg-gray-300 rounded w-3/4 animate-pulse"></div>
           </td>
-          <td className="px-4 py-3">
-            <div className="h-4 bg-gray-300 rounded w-16 animate-pulse"></div>
+          <td className="px-4 py-6">
+            <div className="h-4 bg-gray-300 rounded w-3/4 animate-pulse "></div>
           </td>
-          <td className="px-4 py-3">
-            <div className="h-4 bg-gray-300 rounded w-40 animate-pulse"></div>
+          <td className="px-4 py-6 hidden md:table-cell">
+            <div className="h-4 bg-gray-300 rounded w-3/4 animate-pulse "></div>
           </td>
         </tr>
       ))}
@@ -101,23 +111,24 @@ export const InventoryTableSkeleton = ({ rows = 6 }: { rows?: number }) => {
   );
 };
 
+
 export const CategoryTableSkeleton = ({ rows = 6 }: { rows?: number }) => {
   return (
     <>
       {Array.from({ length: rows }).map((_, i) => (
         <tr key={i} className="animate-pulse">
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-300 rounded w-6"></div>
+            <div className="h-4 bg-gray-300 rounded w-5"></div>
           </td>
           <td className="px-4 py-3">
-            <div className="h-4 bg-gray-300 rounded w-32"></div>
+            <div className="h-4 bg-gray-300 rounded w-24"></div>
           </td>
           <td className="px-4 py-3 hidden md:table-cell">
-            <div className="h-4 bg-gray-300 rounded w-40"></div>
+            <div className="h-4 bg-gray-300 rounded w-24"></div>
           </td>
           <td className="px-4 py-3">
-            <div className="flex gap-2">
-              <div className="h-4 bg-gray-300 rounded w-16"></div>
+            <div className="flex gap-2 justify-center md:justify-start">
+              <div className="h-4 bg-gray-300 rounded w-30"></div>
             </div>
           </td>
         </tr>
@@ -132,29 +143,29 @@ export const OrderTableSkeleton = ({ rows = 5 }: { rows?: number }) => {
     <>
       {Array.from({ length: rows }).map((_, i) => (
         <tr key={i} className="animate-pulse">
-          <td className="px-4 py-2">
+          <td className="px-4 py-4">
             <div className="h-4 bg-gray-300 rounded w-6"></div>
           </td>
-          <td className="px-4 py-2">
+          <td className="px-4 py-4">
             <div className="h-4 bg-gray-300 rounded w-20"></div>
           </td>
-          <td className="px-4 py-2">
+          <td className="px-4 py-4">
             <div className="h-4 bg-gray-300 rounded w-24"></div>
           </td>
-          <td className="px-4 py-2 hidden md:table-cell">
+          <td className="px-4 py-4 hidden md:table-cell">
             <div className="h-4 bg-gray-300 rounded w-24"></div>
           </td>
-          <td className="px-4 py-2 hidden md:table-cell">
+          <td className="px-4 py-4 hidden md:table-cell">
             <div className="h-4 bg-gray-300 rounded w-32"></div>
           </td>
-          <td className="px-4 py-2">
+          <td className="px-4 py-4 hidden md:table-cell">
             <div className="h-4 bg-gray-300 rounded w-20"></div>
           </td>
-          <td className="px-4 py-2">
-            <div className="h-4 bg-gray-300 rounded w-16"></div>
+          <td className="px-4 py-4">
+            <div className="h-4 bg-gray-300 rounded w-8 sm:w-20"></div>
           </td>
-          <td className="px-4 py-2">
-            <div className="h-4 bg-gray-300 rounded w-16"></div>
+          <td className="px-4 py-4">
+            <div className="h-4 bg-gray-300 rounded w-8 sm:w-20"></div>
           </td>
         </tr>
       ))}
@@ -172,7 +183,6 @@ export default function DashboardSkeleton() {
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
-        <CardSkeleton />
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
         <RevenueChartSkeleton />
@@ -183,13 +193,39 @@ export default function DashboardSkeleton() {
 }
 export function RevenueChartSkeleton() {
   return (
-    <div className={`animate-pulse relative w-full overflow-hidden md:col-span-4`}>
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
-      <div className="rounded-xl bg-gray-100 p-4">
-        <div className="sm:grid-cols-13 mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4" />
+    <div className="w-full md:col-span-4 text-[rgb(121,100,73)] animate-pulse">
+      <h2 className="mb-4 text-xl md:text-2xl bg-gray-300 h-6 w-48 rounded" />
+
+      <div className="rounded-xl bg-gray-50 p-4">
+        <div className="sm:grid-cols-8 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">
+          {/* Y-axis (ẩn ở mobile) */}
+          <div
+            className="mb-6 hidden flex-col justify-between sm:flex"
+            style={{ height: `350px` }}
+          >
+            {Array.from({ length: 5 }).map((_, idx) => (
+              <div
+                key={idx}
+                className="h-4 w-8 bg-gray-200 rounded mb-2"
+              />
+            ))}
+          </div>
+
+          {/* Cột biểu đồ giả */}
+          {Array.from({ length: 7 }).map((_, idx) => (
+            <div key={idx} className="flex flex-col items-center gap-2 w-full">
+              <div
+                className="w-full bg-gray-300 rounded-md"
+                style={{ height: `${40 + Math.random() * 100}px` }}
+              />
+              <div className="h-3 w-6 bg-gray-200 rounded" />
+            </div>
+          ))}
+        </div>
+
         <div className="flex items-center pb-2 pt-6">
-          <div className="h-5 w-5 rounded-full bg-gray-300" />
-          <div className="ml-2 h-4 w-20 rounded-md bg-gray-300" />
+          <div className="h-5 w-5 bg-gray-300 rounded-full" />
+          <div className="ml-2 h-4 w-24 bg-gray-200 rounded" />
         </div>
       </div>
     </div>
@@ -215,7 +251,6 @@ export function CardSkeleton() {
 export function CardsSkeleton() {
   return (
     <>
-      <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />

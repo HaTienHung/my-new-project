@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { toast } from "react-toastify";
 
 interface EditProductModalProps {
   id: number;
@@ -102,7 +103,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
           },
         }
       );
-
+      toast.success("Sửa sản phẩm thành công !");
       onUpdated();
       onClose();
     } catch (error: any) {

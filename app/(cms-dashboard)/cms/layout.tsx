@@ -3,12 +3,14 @@ import SideNav from '@/app/ui/cms/dashboard/sidenav';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoLogOut } from 'react-icons/io5';
+import { ToastContainer } from 'react-toastify';
 
 export default function CmsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Header (mobile) + SideNav */}
       <div className="flex justify-between items-center md:flex-col md:items-start md:justify-start">
+
         <SideNav />
 
         {/* Logo mobile */}
