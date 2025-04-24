@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 interface EditCategoryModalProps {
   id: number;
@@ -29,7 +30,7 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/categories/${id}`, {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
         const category = res.data?.data || [];
@@ -64,7 +65,7 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${Cookies.get("token")}`,
             // Không cần Content-Type, Axios tự set là application/json
           },
         }

@@ -8,12 +8,17 @@ import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
 import CreateProductModal from "../../modals/cms/product/createProduct-modal";
 import UpdateOrderStatusModal from "../../modals/cms/order/updateStatus-modal";
 import OrderDetailModal from "../../modals/app/order/orderDetail-modal";
+import UserInfoModal from "../../modals/cms/order/userInfo-modal";
 
 export default function OrderManagment() {
   const status = ["pending", "completed", "cancelled"];
   const [editingOrderId, setEditingOrderId] = useState<number | null>(null);
   const [productsInOrder, setProductsInOrder] = useState<any[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>();
+
+  const [isOpenOrderDetail, setIsOpenOrderDetail] = useState(false);
+  const [isOpenUserInfo, setIsOpenOpenUserInfo] = useState(false);
+
   const {
     orders,
     formSearch,
@@ -33,7 +38,11 @@ export default function OrderManagment() {
   };
   const openOrderDetailModal = (products: any[]) => {
     setProductsInOrder(products);
-    setIsOpen(true);
+    setIsOpenOrderDetail(true);
+  }
+  const openUserInfo = (user: any) => {
+    setUserInfo(user);
+    setIsOpenOpenUserInfo(true);
   }
   return (
     <>
@@ -132,9 +141,19 @@ export default function OrderManagment() {
           ) : (
             orders.map((order: Order, i: number) => (
               <tr key={order.id} className="hover:bg-gray-50 transition">
-                <td className="px-2 sm:px-4py-2 text-xs sm:text-sm">{i + 1}</td>
+                <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{i + 1}</td>
                 <td className="px-4 py-2 text-sm hidden md:table-cell">{order.id}</td>
-                <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{order.user.name}</td>
+                <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">
+                  <div className="flex items-center gap-1">
+                    {order.user.name}
+                    <button
+                      onClick={() => openUserInfo(order.user)}
+                      className="inline-bloack md:hidden"
+                    >
+                      <FaInfoCircle className="hover:scale-110 transition-transform text-[rgb(121,100,73)]" />
+                    </button>
+                  </div>
+                </td>
                 <td className="px-4 py-2 text-sm hidden md:table-cell">{order.user.phone_number}</td>
                 <td className="px-4 py-2 text-sm hidden md:table-cell">{order.user.address}</td>
                 <td className="px-4 py-2 text-sm capitalize">
@@ -179,9 +198,14 @@ export default function OrderManagment() {
         />
       )}
       <OrderDetailModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        isOpen={isOpenOrderDetail}
+        onClose={() => setIsOpenOrderDetail(false)}
         products={productsInOrder}
+      />
+      <UserInfoModal
+        isOpen={isOpenUserInfo}
+        onClose={() => setIsOpenOpenUserInfo(false)}
+        user={userInfo}
       />
     </>
   );

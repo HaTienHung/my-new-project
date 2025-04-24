@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
+
 
 export const useCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -41,7 +43,7 @@ export const useCategories = () => {
           page: queryParams.page || 1,
         },
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Authorization": `Bearer ${Cookies.get("token")}`,
         },
       });
 

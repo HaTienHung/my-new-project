@@ -9,7 +9,7 @@ import ProductFilter from "@/app/ui/app/products/product-filter";
 import { FaFilter } from "react-icons/fa6";
 
 
-export default function ProductsPage() {
+export default function Page() {
   const {
     currentPage,
     totalPages,

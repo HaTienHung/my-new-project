@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { FaInbox, FaUserGroup } from "react-icons/fa6";
 import { CardsSkeleton } from "../../skeletons";
+import Cookies from "js-cookie";
 
 
 
@@ -29,7 +30,7 @@ export default function CardWrapper() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
 

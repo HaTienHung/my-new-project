@@ -4,6 +4,8 @@ import { generateYAxis } from '@/app/lib/utils';
 import { useEffect, useState } from 'react';
 import { FaCalendar } from 'react-icons/fa';
 import { RevenueChartSkeleton } from '../../skeletons';
+import Cookies from "js-cookie";
+
 
 
 type Revenue = {
@@ -23,7 +25,7 @@ export default function RevenueChart() { // Make component async, remove the pro
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
 

@@ -8,10 +8,12 @@ import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
 import CreateProductModal from "../../modals/cms/product/createProduct-modal";
 import EditCategoryModal from "../../modals/cms/category/editCategory-modal";
 import CreateCategoryModal from "../../modals/cms/category/createCategory";
+import DeleteModal from "../../modals/cms/deleteProduct-modal";
 
 export default function CategoryManament() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState<number | null>(null);
+  const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
 
   const {
     categories,
@@ -30,6 +32,10 @@ export default function CategoryManament() {
   const handleEdit = (id: number) => {
     setEditingCategoryId(id);
   };
+
+  const handleDelete = (id: number) => {
+    setDeleteCategoryId(id);
+  }
   return (
     <>
       <h1 className="text-2xl font-semibold mb-4 text-[rgb(121,100,73)]">Quản lí danh mục</h1>
@@ -113,7 +119,8 @@ export default function CategoryManament() {
                       <FaEdit className="text-sm" />
                       Sửa
                     </button>
-                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition justify-center">
+                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition justify-center"
+                      onClick={() => handleDelete(cat.id)}>
                       <FaTrash className="text-sm" />
                       Xoá
                     </button>
@@ -128,6 +135,16 @@ export default function CategoryManament() {
             id={editingCategoryId}
             onClose={() => setEditingCategoryId(null)}
             onUpdated={refetch}
+          />
+        )}
+        {deleteCategoryId && (
+          <DeleteModal
+            id={deleteCategoryId}
+            onClose={() => setDeleteCategoryId(null)}
+            onDeleted={refetch}
+            title="Xoá danh mục"
+            message="Bạn có chắc chắn muốn xoá danh mục này không ?"
+            endpoint="categories"
           />
         )}
       </div>

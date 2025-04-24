@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
+
 
 export const useInventories = () => {
   const [inventories, setInventories] = useState([]);
@@ -43,7 +45,7 @@ export const useInventories = () => {
           page: queryParams.page || 1,
         },
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${Cookies.get("token")}`,
         },
       });
 

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
 import CreateProductModal from "../../modals/cms/product/createProduct-modal";
 import Pagination from "../../pagination";
+import DeleteModal from "../../modals/cms/deleteProduct-modal";
 
 export default function ProductMagmamemt() {
   const {
@@ -19,12 +20,12 @@ export default function ProductMagmamemt() {
     submitFilters,
     setQueryParams,
     isLoading,
-    searchParams,
     refetch
   } = useProducts({ prefix: '/cms' });
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
+  const [deleteProductId, setDeleteProductId] = useState<number | null>(null);
   const perPage = 12;
 
 
@@ -43,6 +44,10 @@ export default function ProductMagmamemt() {
     setEditingProductId(id);
   };
 
+  const handleDelete = (id: number) => {
+    setDeleteProductId(id);
+  }
+
   const handlePageChange = (page: number) => {
     setFormSearch((prev) => ({
       ...prev,
@@ -53,6 +58,7 @@ export default function ProductMagmamemt() {
   useEffect(() => {
     submitFilters();  // Gọi lại API khi page thay đổi
   }, [formSearch.page]);
+
 
   return (
     <>
@@ -188,7 +194,8 @@ export default function ProductMagmamemt() {
                       <FaEdit className="text-sm" />
                       Sửa
                     </button>
-                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition">
+                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition"
+                      onClick={() => handleDelete(product.id)}>
                       <FaTrash className="text-sm" />
                       Xoá
                     </button>
@@ -203,6 +210,16 @@ export default function ProductMagmamemt() {
             id={editingProductId}
             onClose={() => setEditingProductId(null)}
             onUpdated={refetch}
+          />
+        )}
+        {deleteProductId && (
+          <DeleteModal
+            id={deleteProductId}
+            onClose={() => setDeleteProductId(null)}
+            onDeleted={refetch}
+            title="Xoá sản phẩm"
+            message="Bạn có chắc chắn muốn xoá sản phẩm này không ?"
+            endpoint="products"
           />
         )}
       </div>

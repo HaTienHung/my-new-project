@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { addToCart as addToCartAction } from "@/app/lib/redux/cart-slice";
 import { RootState } from "@/app/lib/redux/store";
 import { openAuthModal } from "@/app/lib/redux/authModal-slice";
+import Cookies from "js-cookie";
+
 
 const ProductDetail = ({ product }: { product: any }) => {
   const [quantity, setQuantity] = useState(1); // Quản lý số lượng tại component này
@@ -27,7 +29,7 @@ const ProductDetail = ({ product }: { product: any }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${Cookies.get('token')}`,
         },
         body: JSON.stringify({ product_id: product.id, quantity }),
       });

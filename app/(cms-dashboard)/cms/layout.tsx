@@ -1,11 +1,12 @@
 // app/cms/layout.tsx
+import LogoutButton from '@/app/ui/cms/auth/logout';
 import SideNav from '@/app/ui/cms/dashboard/sidenav';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoLogOut } from 'react-icons/io5';
-import { ToastContainer } from 'react-toastify';
 
 export default function CmsLayout({ children }: { children: React.ReactNode }) {
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Header (mobile) + SideNav */}
@@ -19,12 +20,7 @@ export default function CmsLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Logout mobile */}
-        <Link
-          href="/"
-          className="text-2xl flex items-center p-3 hover:bg-gray-100 text-[rgb(121,100,73)] md:hidden"
-        >
-          <IoLogOut />
-        </Link>
+        <LogoutButton isMobile={true} />
       </div>
 
       {/* Main content */}

@@ -6,6 +6,7 @@ import { RootState } from "@/app/lib/redux/store";
 import { openAuthModal } from "@/app/lib/redux/authModal-slice";
 import OrderDetailModal from "@/app/ui/modals/app/order/orderDetail-modal";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import Cookies from "js-cookie";
 
 
 type ModalState = "orderList" | "productDetail" | null;
@@ -26,7 +27,7 @@ const OrderModal = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${Cookies.get('token')}`,
         }
       });
 

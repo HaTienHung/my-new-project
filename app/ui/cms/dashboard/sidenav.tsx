@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { IoLogOut } from 'react-icons/io5';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
+import LogoutButton from '../auth/logout';
 
 export default function SideNav() {
   const [open, setOpen] = useState(false);
@@ -60,14 +61,7 @@ export default function SideNav() {
         </div>
 
         {/* Logout */}
-        <Link
-          href="/"
-          onClick={() => setOpen(false)}
-          className="mt-auto text-lg flex h-[48px] items-center justify-start gap-2 rounded-md p-3 font-medium hover:bg-gray-100 text-[rgb(121,100,73)]"
-        >
-          <IoLogOut className="w-6" />
-          Đăng xuất
-        </Link>
+        <LogoutButton isMobile={false} />
       </div>
     </>
   );

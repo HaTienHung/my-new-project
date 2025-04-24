@@ -5,6 +5,7 @@ import { ReactNode, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '@/app/lib/redux/auth-slice';
 import { addToCart, setCartQuantity } from '@/app/lib/redux/cart-slice';
+import Cookies from "js-cookie";
 
 type Props = {
   children: ReactNode;
@@ -15,7 +16,7 @@ export default function AppProvider({ children }: Props) {
 
   // Auto login nếu đã có token
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     if (token) {
       dispatch(loginSuccess({ token, user: null }));
       console.log('dispatch login');
@@ -24,7 +25,7 @@ export default function AppProvider({ children }: Props) {
 
   // Fetch giỏ hàng nếu đã đăng nhập
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     if (!token) return;
 
     const fetchCart = async () => {

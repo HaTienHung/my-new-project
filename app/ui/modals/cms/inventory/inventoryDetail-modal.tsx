@@ -5,6 +5,7 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa"; // Giả sử bạn có type riêng
+import Cookies from "js-cookie";
 
 interface InventoryDetailModalProps {
   id: number,
@@ -30,7 +31,7 @@ export default function InventoryDetailModal({
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
 

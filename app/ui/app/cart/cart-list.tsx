@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { decreaseQuantity, increaseQuantity, setCartQuantity } from "@/app/lib/redux/cart-slice";
 import { toast } from "react-toastify";
 import { removeFromCart } from "@/app/lib/redux/cart-slice";
+import Cookies from "js-cookie";
+
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ const Cart = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
 
@@ -46,7 +48,7 @@ const Cart = () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/delete/${productId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${Cookies.get('token')}`,
         },
       });
 
@@ -110,7 +112,7 @@ const Cart = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${Cookies.get('token')}`,
         },
         body: JSON.stringify({
           items: [
@@ -145,7 +147,7 @@ const Cart = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${Cookies.get('token')}`,
         },
         body: JSON.stringify({
           product_ids:

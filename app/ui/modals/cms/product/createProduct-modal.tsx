@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 interface CreateProductModalProps {
   onClose: () => void;
@@ -60,7 +61,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
 
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cms/products/create`, form, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${Cookies.get("token")}`,
           "Content-Type": "multipart/form-data",
         },
       });

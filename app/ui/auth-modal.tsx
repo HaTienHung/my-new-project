@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, logout } from "../lib/redux/auth-slice";
 import { RootState } from "../lib/redux/store";
 import { closeAuthModal, openAuthModal } from "../lib/redux/authModal-slice";
+import Cookies from "js-cookie";
+
 
 export default function AuthModal() {
   const isOpen = useSelector((state: RootState) => state.authModal.isOpen);
@@ -18,6 +20,7 @@ export default function AuthModal() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+
 
   const [form, setForm] = useState({
     name: "",
@@ -31,8 +34,8 @@ export default function AuthModal() {
   const [user, setUser] = useState<null | typeof form>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
+    const token = Cookies.get("token");
+    const userData = Cookies.get("user");
     if (token && userData) {
       setIsLoggedIn(true);
       setUser(JSON.parse(userData));
@@ -50,8 +53,17 @@ export default function AuthModal() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("user", JSON.stringify(data.data.user));
+      // localStorage.setItem("token", data.data.token);
+      // localStorage.setItem("user", JSON.stringify(data.data.user));
+      const token = data.data.token;
+      const roleId = data.data.user.role_id;  // Lấy role_id từ response
+      const user = data.data.user;
+
+      // Lưu vào cookie
+      Cookies.set("token", token);
+      Cookies.set("role_id", roleId.toString());
+      Cookies.set("user", JSON.stringify(user));
+
       setUser(data.data.user);
       setIsLoggedIn(true);
       dispatch(loginSuccess({ user: data.data.user, token: data.data.token }));
@@ -84,8 +96,8 @@ export default function AuthModal() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    Cookies.remove("token");
+    Cookies.remove("user");
     setUser(null);
     setIsLoggedIn(false);
     toast.success("Đăng xuất thành công");

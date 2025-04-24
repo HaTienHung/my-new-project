@@ -24,7 +24,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
           {/* Header */}
           <div className="flex justify-between items-center mb-4">
             <DialogTitle className="text-2xl font-semibold text-[rgb(121,100,73)]">
-              Chi tiết sản phẩm
+              Chi tiết đơn hàng
             </DialogTitle>
             <button onClick={onClose}>
               <FaTimes className="text-gray-600 text-xl hover:text-red-500" />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 interface EditProductModalProps {
   id: number;
@@ -36,7 +37,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/products/${id}`, {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
         const product = res.data?.product;
@@ -98,7 +99,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
         form,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${Cookies.get("token")}`,
             "Content-Type": "multipart/form-data",
           },
         }

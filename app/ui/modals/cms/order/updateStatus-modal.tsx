@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 interface UpdateOrderStatusModalProps {
   id: number;
@@ -26,7 +27,7 @@ const UpdateOrderStatusModal: React.FC<UpdateOrderStatusModalProps> = ({
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/orders/show/${id}`, {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
         const order = res.data?.data || [];
@@ -59,7 +60,7 @@ const UpdateOrderStatusModal: React.FC<UpdateOrderStatusModalProps> = ({
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${Cookies.get("token")}`,
             // Không cần Content-Type, Axios tự set là application/json
           },
         }

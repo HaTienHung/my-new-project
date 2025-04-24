@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { HiArrowPath } from 'react-icons/hi2';
 import { LatestInvoicesSkeleton } from '../../skeletons';
+import Cookies from "js-cookie";
+
 
 type Invoice = {
   id: number;
@@ -29,7 +31,7 @@ export default function LatestInvoices() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${Cookies.get("token")}`,
           },
         });
 

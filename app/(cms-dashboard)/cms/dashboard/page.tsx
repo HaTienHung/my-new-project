@@ -1,10 +1,13 @@
+'use client';
+
+
 import CardWrapper from "@/app/ui/cms/dashboard/cards";
 import LatestInvoices from "@/app/ui/cms/dashboard/lastest-invoices";
 import RevenueChart from "@/app/ui/cms/dashboard/revenue-chart";
 import { CardsSkeleton, LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 
-export default function CMSDashboardPage() {
+export default function Page() {
   return (
     <main>
       <h1 className="mb-4 text-xl md:text-2xl text-[rgb(121,100,73)]">Tổng quan</h1>

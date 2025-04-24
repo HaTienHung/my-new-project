@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 interface AddToInventoryModalProps {
   id: number;
@@ -41,7 +42,7 @@ const AddToInventoryModal: React.FC<AddToInventoryModalProps> = ({
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${Cookies.get("token")}`,
           },
         }
       );

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
+
 
 export const useProducts = ({ prefix = '' }) => {
   const router = useRouter();
@@ -60,7 +62,7 @@ export const useProducts = ({ prefix = '' }) => {
             page: queryParams.page,
           },
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${Cookies.get("token")}`,
           },
         });
 
