@@ -9,14 +9,15 @@ export default async function Page({
   params: { slug: string };
   searchParams: Record<string, string>;
 }) {
+  const { slug } = await params;
   const initialPage = parseInt(searchParams.page || '1')
-  const initialData = await getProductsByCategory(params.slug, initialPage)
+  const initialData = await getProductsByCategory(slug, initialPage)
   // console.log(products);
   return (
     <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
       <div>
         <ClientProductPagination
-          slug={params.slug}
+          slug={slug}
           initialPage={initialPage}
           initialProducts={initialData.products}
           initialTotalPages={initialData.lastPage}
