@@ -1,12 +1,12 @@
 'use client';
 import ProductList from "@/app/ui/app/products/product-list";
-// import { getProducts } from "@/app/lib/data";
 import { useProducts } from "@/app/hooks/useProducts";
 import Pagination from "@/app/ui/pagination";
 import { useEffect, useState } from "react";
 import { ProductListSkeleton } from "@/app/ui/skeletons";
 import ProductFilter from "@/app/ui/app/products/product-filter";
 import { FaFilter } from "react-icons/fa6";
+export const dynamic = 'force-dynamic';
 
 
 export default function Page() {

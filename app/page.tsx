@@ -3,6 +3,7 @@ import HomeContent from "./home";
 import { Providers } from "./providers";
 
 
+
 export default async function ProductPage() {
   const lastestProducts = await getLastestProducts();
   return (
