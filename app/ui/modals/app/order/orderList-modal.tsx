@@ -7,7 +7,7 @@ import { openAuthModal } from "@/app/lib/redux/authModal-slice";
 import OrderDetailModal from "@/app/ui/modals/app/order/orderDetail-modal";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Cookies from "js-cookie";
-import { Order, OrderItem, Product } from "@/app/lib/definitions";
+import { Order, OrderItem } from "@/app/lib/definitions";
 
 
 type ModalState = "orderList" | "productDetail" | null;

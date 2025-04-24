@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '@/app/lib/redux/auth-slice';
 import { addToCart, setCartQuantity } from '@/app/lib/redux/cart-slice';
 import Cookies from "js-cookie";
-import { CartItem, Product } from './lib/definitions';
+import { CartItem } from './lib/definitions';
 
 type Props = {
   children: ReactNode;
