@@ -85,7 +85,9 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 }
 
 export const getCategories = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {// Cập nhật mỗi 1 giờ
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {
+    next: { revalidate: 3600 },
+    // Cập nhật mỗi 1 giờ
   });
   const data = await res.json();
   return data?.data ?? [];

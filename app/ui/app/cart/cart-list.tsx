@@ -21,6 +21,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart`, {
           method: "GET",
           headers: {
