@@ -1,4 +1,6 @@
 import Cart from "@/app/ui/app/cart/cart-list";
+export const dynamic = "force-dynamic";
+
 
 export default async function Page() {
   return (
