@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from "next/link";
-import Pagination from '../../pagination';
+
 
 export default function ProductList({ products }: { products: any[] }) {
   return (

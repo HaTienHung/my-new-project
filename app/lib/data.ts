@@ -20,7 +20,7 @@ export async function getLastestProducts() {
   try {
     // await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const res = await fetch("https://13022025-production.up.railway.app/api", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
       cache: "no-cache", // Luôn lấy dữ liệu mới từ API
     });
 

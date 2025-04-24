@@ -4,7 +4,7 @@
 import CardWrapper from "@/app/ui/cms/dashboard/cards";
 import LatestInvoices from "@/app/ui/cms/dashboard/lastest-invoices";
 import RevenueChart from "@/app/ui/cms/dashboard/revenue-chart";
-import { CardsSkeleton, LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
+import { LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 
 export default function Page() {

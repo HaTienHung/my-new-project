@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import ProductList from '@/app/ui/app/products/product-list'
 import Pagination from '@/app/ui/pagination'
 import { getProductsByCategory } from '@/app/lib/data'
-import { ProductListSkeleton } from '@/app/ui/skeletons'
 
 export default function ClientProductPagination({
   slug,

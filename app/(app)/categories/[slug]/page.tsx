@@ -1,6 +1,6 @@
-import ProductList from "@/app/ui/app/products/product-list";
 import { getProductsByCategory } from "@/app/lib/data";
 import ClientProductPagination from "./product-pagination";
+
 
 
 export default async function Page({ params, searchParams }: any) {

@@ -1,11 +1,9 @@
 'use client';
 import { useCategories } from "@/app/hooks/useCategories"; // nhớ import đúng path nhé
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { Category, Order, Product } from "@/app/lib/definitions";
-import { CategoryTableSkeleton, OrderTableSkeleton, ProductTableSkeleton } from "@/app/ui/skeletons";
+import { Category } from "@/app/lib/definitions";
+import { CategoryTableSkeleton, } from "@/app/ui/skeletons";
 import { useState } from "react";
-import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
-import CreateProductModal from "../../modals/cms/product/createProduct-modal";
 import EditCategoryModal from "../../modals/cms/category/editCategory-modal";
 import CreateCategoryModal from "../../modals/cms/category/createCategory";
 import DeleteModal from "../../modals/cms/deleteProduct-modal";

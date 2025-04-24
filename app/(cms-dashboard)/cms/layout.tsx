@@ -2,8 +2,7 @@
 import LogoutButton from '@/app/ui/cms/auth/logout';
 import SideNav from '@/app/ui/cms/dashboard/sidenav';
 import Image from 'next/image';
-import Link from 'next/link';
-import { IoLogOut } from 'react-icons/io5';
+
 
 export default function CmsLayout({ children }: { children: React.ReactNode }) {
 

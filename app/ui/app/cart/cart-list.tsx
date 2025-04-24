@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaMinus, FaPlus, FaTrashCan } from "react-icons/fa6";
 import { CartItemsSkeleton } from "@/app/ui/skeletons";
 import { useDispatch } from "react-redux";
-import { decreaseQuantity, increaseQuantity, setCartQuantity } from "@/app/lib/redux/cart-slice";
+import { decreaseQuantity, increaseQuantity } from "@/app/lib/redux/cart-slice";
 import { toast } from "react-toastify";
 import { removeFromCart } from "@/app/lib/redux/cart-slice";
 import Cookies from "js-cookie";

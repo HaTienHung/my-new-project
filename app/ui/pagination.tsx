@@ -11,9 +11,6 @@ type PaginationProps = {
 };
 
 export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
   const pages = generatePagination(currentPage, totalPages);
 
   const handleClick = (page: number | string) => {

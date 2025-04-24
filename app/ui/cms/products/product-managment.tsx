@@ -18,7 +18,6 @@ export default function ProductMagmamemt() {
     formSearch,
     setFormSearch,
     submitFilters,
-    setQueryParams,
     isLoading,
     refetch
   } = useProducts({ prefix: '/cms' });

@@ -1,11 +1,9 @@
 'use client';
 import { useOrders } from "@/app/hooks/useOrders"; // nhớ import đúng path nhé
-import { FaEdit, FaInfoCircle, FaTrash } from 'react-icons/fa';
-import { Order, Product } from "@/app/lib/definitions";
-import { OrderTableSkeleton, ProductTableSkeleton } from "@/app/ui/skeletons";
+import { FaEdit, FaInfoCircle } from 'react-icons/fa';
+import { Order } from "@/app/lib/definitions";
+import { OrderTableSkeleton } from "@/app/ui/skeletons";
 import { useState } from "react";
-import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
-import CreateProductModal from "../../modals/cms/product/createProduct-modal";
 import UpdateOrderStatusModal from "../../modals/cms/order/updateStatus-modal";
 import OrderDetailModal from "../../modals/app/order/orderDetail-modal";
 import UserInfoModal from "../../modals/cms/order/userInfo-modal";

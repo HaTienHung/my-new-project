@@ -2,8 +2,6 @@
 
 import Image from 'next/image';
 import NavLinks from './nav-links';
-import Link from 'next/link';
-import { IoLogOut } from 'react-icons/io5';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
 import LogoutButton from '../auth/logout';
