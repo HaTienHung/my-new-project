@@ -1,6 +1,5 @@
 import { getProductsByCategory } from "@/app/lib/data";
 import ClientProductPagination from "./product-pagination";
-export const dynamic = 'force-dynamic';
 
 type tParams = Promise<{ slug: string }>;
 type tSearchParams = Promise<Record<string, string>>;
