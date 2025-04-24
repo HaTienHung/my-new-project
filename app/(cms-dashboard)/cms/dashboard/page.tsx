@@ -6,6 +6,8 @@ import LatestInvoices from "@/app/ui/cms/dashboard/lastest-invoices";
 import RevenueChart from "@/app/ui/cms/dashboard/revenue-chart";
 import { LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
+export const dynamic = "force-dynamic";
+
 
 export default function Page() {
   return (
