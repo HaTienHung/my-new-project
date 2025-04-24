@@ -23,7 +23,7 @@ export async function getLastestProducts() {
     // await new Promise(resolve => setTimeout(resolve, 1000));
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
-      cache: "no-cache", // Luôn lấy dữ liệu mới từ API
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error('Failed to fetch products');
@@ -44,7 +44,7 @@ export async function getProductsByCategory(
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${slug}?page=${page}`, {
-      cache: "no-cache",
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error('Failed to fetch products');
@@ -86,7 +86,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 export const getCategories = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {
-    next: { revalidate: 3600 },
+
     // Cập nhật mỗi 1 giờ
   });
   const data = await res.json();
