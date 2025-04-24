@@ -1,15 +1,16 @@
 import { getProductsByCategory } from "@/app/lib/data";
 import ClientProductPagination from "./product-pagination";
 
+type tParams = Promise<{ slug: string }>;
 
 export default async function Page({
   params,
   searchParams,
 }: {
-  params: { slug: string };
+  params: tParams;
   searchParams: Record<string, string>;
 }) {
-  const { slug } = await params;
+  const { slug }: { slug: string } = await params;
   const initialPage = parseInt(searchParams.page || '1')
   const initialData = await getProductsByCategory(slug, initialPage)
   // console.log(products);
