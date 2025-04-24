@@ -37,8 +37,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       onClose();
       onDeleted();
       toast.success(`${title} thành công !`);
-    } catch (error: any) {
-      console.error("Lỗi khi xoá", error);
+    } catch (error) {
+      console.error('Đã có lỗi:', error);
+      throw new Error('Xoá sản phẩm thất bại.');
     } finally {
       setLoading(false);
     }

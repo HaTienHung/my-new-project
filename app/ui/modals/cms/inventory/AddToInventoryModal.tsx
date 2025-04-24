@@ -50,8 +50,9 @@ const AddToInventoryModal: React.FC<AddToInventoryModalProps> = ({
       onCreated();
       onClose();
       toast.success("Thêm sản phẩm vào kho thành công !");
-    } catch (error: any) {
-      console.error("Lỗi khi thêm sản phẩm:", error);
+    } catch (error) {
+      console.error('Đã có lỗi:', error);
+      throw new Error('Thêm sản phẩm thất bại.');
     }
   };
 

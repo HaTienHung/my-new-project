@@ -3,6 +3,7 @@ import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 
+type FilterValue = string | number | (string | number)[] | undefined;
 
 export const useOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -38,7 +39,7 @@ export const useOrders = () => {
   const fetchOrders = async () => {
     try {
       setIsLoading(true);
-      const filter: Record<string, any> = {};
+      const filter: Record<string, FilterValue> = {};
 
       if (queryParams.status) {
         filter.status_IN = [queryParams.status];
@@ -65,8 +66,9 @@ export const useOrders = () => {
       // console.log("filter", filter);
       setOrders(res.data?.data || []);
       // console.log(orders);
-    } catch (err: any) {
-      console.error("Lỗi fetchProducts:", err?.response?.data || err.message);
+    } catch (error) {
+      console.error("Đã xảy ra lỗi", error);
+      throw new Error("Lỗi khi fetch dữ liệu");
     } finally {
       setIsLoading(false);
     }

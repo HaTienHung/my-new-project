@@ -7,11 +7,13 @@ import { decreaseQuantity, increaseQuantity } from "@/app/lib/redux/cart-slice";
 import { toast } from "react-toastify";
 import { removeFromCart } from "@/app/lib/redux/cart-slice";
 import Cookies from "js-cookie";
+import { Product } from "@/app/lib/definitions";
+import Link from "next/link";
 
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
-  const [cartItems, setCartItems] = useState<{ id: number; product: any; quantity: number }[]>([]);
+  const [cartItems, setCartItems] = useState<{ id: number; product: Product; quantity: number }[]>([]);
 
   const dispatch = useDispatch();
 
@@ -188,7 +190,7 @@ const Cart = () => {
             Giỏ hàng của bạn hiện tại không có sản phẩm nào.
           </div>
           <div>
-            <button className="border bg-gray-200 font-light rounded-lg px-3 py-2 cursor-pointer hover:bg-[rgb(121,100,73)] hover:text-white transition duration-300"><a href="/products">Tiếp tục mua sắm</a></button>
+            <button className="border bg-gray-200 font-light rounded-lg px-3 py-2 cursor-pointer hover:bg-[rgb(121,100,73)] hover:text-white transition duration-300"><Link href="/products">Tiếp tục mua sắm</Link></button>
           </div>
         </div>
       ) : (

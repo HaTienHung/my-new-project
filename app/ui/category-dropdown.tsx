@@ -1,8 +1,10 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-const slugify = require("slugify");
-const unidecode = require("unidecode");
+import slugify from 'slugify';
+import unidecode from 'unidecode';
+import { Category } from "../lib/definitions";
+
 
 
 const CategoryDropdown = () => {
@@ -44,7 +46,7 @@ const CategoryDropdown = () => {
         ${showMenu ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"}`}
         >
           <span className="block p-2 text-sm">Danh mục sản phẩm</span>
-          {categories.map((category: any) => (
+          {categories.map((category: Category) => (
             <Link
               key={category.id}
               href={`/categories/${slugify(unidecode(category.name), { lower: true, strict: true })}`}

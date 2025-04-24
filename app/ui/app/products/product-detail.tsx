@@ -7,9 +7,10 @@ import { addToCart as addToCartAction } from "@/app/lib/redux/cart-slice";
 import { RootState } from "@/app/lib/redux/store";
 import { openAuthModal } from "@/app/lib/redux/authModal-slice";
 import Cookies from "js-cookie";
+import { Product } from "@/app/lib/definitions";
 
 
-const ProductDetail = ({ product }: { product: any }) => {
+const ProductDetail = ({ product }: { product: Product }) => {
   const [quantity, setQuantity] = useState(1); // Quản lý số lượng tại component này
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
@@ -36,7 +37,6 @@ const ProductDetail = ({ product }: { product: any }) => {
 
       if (!res.ok) throw new Error("Failed to add to cart");
 
-      const data = await res.json();
       // console.log("API response:", data);
 
       // ✅ Gọi dispatch ở đây, SAU khi API thành công

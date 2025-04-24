@@ -1,4 +1,5 @@
 // components/ProductModal.tsx
+import { OrderItem } from "@/app/lib/definitions";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import React from "react";
 import { FaTimes } from "react-icons/fa";
@@ -6,7 +7,7 @@ import { FaTimes } from "react-icons/fa";
 interface OrderDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
-  products: any[];
+  products: OrderItem[];
 }
 
 
@@ -45,7 +46,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
                 </tr>
               </thead>
               <tbody>
-                {products.map((product: any, index: number) => (
+                {products.map((product: OrderItem, index: number) => (
                   <tr key={index} className="hover:bg-gray-50">
                     <td className="p-2 border text-center">{index + 1}</td>
                     <td className="p-2 border">{product.product_name}</td>

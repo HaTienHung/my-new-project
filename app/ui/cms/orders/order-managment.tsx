@@ -1,7 +1,7 @@
 'use client';
 import { useOrders } from "@/app/hooks/useOrders"; // nhớ import đúng path nhé
 import { FaEdit, FaInfoCircle } from 'react-icons/fa';
-import { Order } from "@/app/lib/definitions";
+import { Order, OrderItem, User } from "@/app/lib/definitions";
 import { OrderTableSkeleton } from "@/app/ui/skeletons";
 import { useState } from "react";
 import UpdateOrderStatusModal from "../../modals/cms/order/updateStatus-modal";
@@ -11,8 +11,8 @@ import UserInfoModal from "../../modals/cms/order/userInfo-modal";
 export default function OrderManagment() {
   const status = ["pending", "completed", "cancelled"];
   const [editingOrderId, setEditingOrderId] = useState<number | null>(null);
-  const [productsInOrder, setProductsInOrder] = useState<any[]>([]);
-  const [userInfo, setUserInfo] = useState<any>();
+  const [productsInOrder, setProductsInOrder] = useState<OrderItem[]>([]);
+  const [userInfo, setUserInfo] = useState<User>();
 
   const [isOpenOrderDetail, setIsOpenOrderDetail] = useState(false);
   const [isOpenUserInfo, setIsOpenOpenUserInfo] = useState(false);
@@ -34,11 +34,11 @@ export default function OrderManagment() {
   const handleEdit = (id: number) => {
     setEditingOrderId(id);
   };
-  const openOrderDetailModal = (products: any[]) => {
+  const openOrderDetailModal = (products: OrderItem[]) => {
     setProductsInOrder(products);
     setIsOpenOrderDetail(true);
   }
-  const openUserInfo = (user: any) => {
+  const openUserInfo = (user: User) => {
     setUserInfo(user);
     setIsOpenOpenUserInfo(true);
   }
@@ -78,7 +78,7 @@ export default function OrderManagment() {
             className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           >
             <option value="">-- Tất cả trạng thái --</option>
-            {status.map((status: any, i: number) => (
+            {status.map((status: string, i: number) => (
               <option key={i} value={status}>
                 {status}
               </option>
@@ -203,7 +203,7 @@ export default function OrderManagment() {
       <UserInfoModal
         isOpen={isOpenUserInfo}
         onClose={() => setIsOpenOpenUserInfo(false)}
-        user={userInfo}
+        user={userInfo!}
       />
     </>
   );

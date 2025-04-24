@@ -3,6 +3,8 @@ export type Product = {
   name: string;
   price: number;
   slug: string;
+  image_url: string;
+  description: string;
   category: {
     name: string;
   }
@@ -13,6 +15,11 @@ export type Category = {
   name: string;
   slug: string;
 };
+
+export type CartItem = {
+  product_id: number;
+  quantity: number;
+}
 
 export type Inventory = {
   product_id: number;
@@ -42,3 +49,29 @@ export type Order = {
     unit_price: number;
   }[]
 };
+
+export type OrderItem = {
+  quantity: number;
+  product_name: string,
+  unit_price: number;
+};
+
+export type User = {
+  name: string;
+  phone_number: string,
+  address: string;
+  email: string,
+};
+
+export type FormSearch = {
+  search: string;
+  searchField: string;
+  category: string;
+  minPrice: string;
+  maxPrice: string;
+  sortBy: string;
+  page: number;
+}
+
+
+

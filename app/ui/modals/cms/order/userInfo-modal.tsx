@@ -1,13 +1,7 @@
 import React from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { FaTimes } from "react-icons/fa";
-
-interface User {
-  name: string;
-  email: string;
-  phone_number: string;
-  address: string;
-}
+import { User } from "@/app/lib/definitions";
 
 
 interface UserInfoModalProps {
@@ -19,7 +13,6 @@ interface UserInfoModalProps {
 const UserInfoModal: React.FC<UserInfoModalProps> = ({ isOpen, onClose, user }) => {
   if (!isOpen) return null;
 
-  const { name, email, phone_number, address } = user;
 
   return (
     <Dialog open={true} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
@@ -36,16 +29,16 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({ isOpen, onClose, user }) 
 
           <div className="space-y-4 text-base">
             <div>
-              <strong>Tên khách hàng:</strong> {name}
+              <strong>Tên khách hàng:</strong> {user.name}
             </div>
             <div>
-              <strong>Email:</strong> {email}
+              <strong>Email:</strong> {user.email}
             </div>
             <div>
-              <strong>Số điện thoại:</strong> {phone_number}
+              <strong>Số điện thoại:</strong> {user.phone_number}
             </div>
             <div>
-              <strong>Địa chỉ:</strong> {address}
+              <strong>Địa chỉ:</strong> {user.address}
             </div>
           </div>
         </DialogPanel>

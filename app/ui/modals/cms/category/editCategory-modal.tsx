@@ -74,15 +74,9 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
       onUpdated();
       onClose();
       toast.success("Sửa danh mục thành công !");
-    } catch (error: any) {
-      if (error.response) {
-        console.log("Lỗi từ backend:", error.response.data);
-        console.log("Status code:", error.response.status);
-      } else if (error.request) {
-        console.log("Không nhận được phản hồi từ server:", error.request);
-      } else {
-        console.log("Lỗi khi gửi request:", error.message);
-      }
+    } catch (error) {
+      console.error('Đã có lỗi:', error);
+      throw new Error('Cập nhật danh mục thất bại.');
     }
   };
 

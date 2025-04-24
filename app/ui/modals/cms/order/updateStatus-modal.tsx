@@ -69,15 +69,9 @@ const UpdateOrderStatusModal: React.FC<UpdateOrderStatusModalProps> = ({
       onUpdated();
       onClose();
       toast.success("Cập nhật trạng thái thành công !");
-    } catch (error: any) {
-      if (error.response) {
-        console.log("Lỗi từ backend:", error.response.data);
-        console.log("Status code:", error.response.status);
-      } else if (error.request) {
-        console.log("Không nhận được phản hồi từ server:", error.request);
-      } else {
-        console.log("Lỗi khi gửi request:", error.message);
-      }
+    } catch (error) {
+      console.error('Đã có lỗi :', error);
+      throw new Error('Cập nhật trạng thái thất bại.');
     }
   };
 

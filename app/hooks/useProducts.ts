@@ -3,6 +3,7 @@ import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 
+type FilterValue = string | number | (string | number)[] | undefined;
 
 export const useProducts = ({ prefix = '' }) => {
   const router = useRouter();
@@ -15,6 +16,7 @@ export const useProducts = ({ prefix = '' }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const endpoint = `${prefix}/products`;
+
 
 
   // 🆕 Tạo hàm chuyển URL params thành object
@@ -45,7 +47,7 @@ export const useProducts = ({ prefix = '' }) => {
 
         setIsLoading(true);
 
-        const filter: Record<string, any> = {};
+        const filter: Record<string, FilterValue> = {};
         if (queryParams.category) {
           filter.category_id_IN = [queryParams.category];
         }
@@ -70,8 +72,9 @@ export const useProducts = ({ prefix = '' }) => {
         setProducts(res.data?.data?.data || []);
         setTotalPages(res.data?.data?.last_page || 1);
         setCurrentPage(res.data?.data?.current_page || 1);
-      } catch (err: any) {
-        console.error("Lỗi fetchProducts:", err?.response?.data || err.message);
+      } catch (error) {
+        console.error("Đã xảy ra lỗi", error);
+        throw new Error("Lỗi khi fetch dữ liệu");
       } finally {
         setIsLoading(false);
       }

@@ -6,8 +6,9 @@ import ProductList from '@/app/ui/app/products/product-list';
 import Header from './ui/app/header/header';
 import Footer from './ui/app/footer/footer';
 import Link from 'next/link';
+import { Product } from './lib/definitions';
 
-export default function HomeContent({ products }: { products: any[] }) {
+export default function HomeContent({ products }: { products: Product[] }) {
   return (
     <Provider store={store}>
       <Header />

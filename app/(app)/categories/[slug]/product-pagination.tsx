@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import ProductList from '@/app/ui/app/products/product-list'
 import Pagination from '@/app/ui/pagination'
 import { getProductsByCategory } from '@/app/lib/data'
+import { Product } from '@/app/lib/definitions'
 
 export default function ClientProductPagination({
   slug,
@@ -14,7 +15,7 @@ export default function ClientProductPagination({
 }: {
   slug: string
   initialPage: number
-  initialProducts: any[]
+  initialProducts: Product[]
   initialTotalPages: number
 }) {
   const [products, setProducts] = useState(initialProducts)

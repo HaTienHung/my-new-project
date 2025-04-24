@@ -2,8 +2,18 @@ import { getProductsByCategory } from "@/app/lib/data";
 import ClientProductPagination from "./product-pagination";
 
 
+interface PageParams {
+  slug: string;
+  page: number;
+}
 
-export default async function Page({ params, searchParams }: any) {
+interface PageProps {
+  params: PageParams;
+  searchParams: Record<string, string>;
+}
+
+
+export default async function Page({ params, searchParams }: PageProps) {
   const initialPage = parseInt(searchParams.page || '1')
   const initialData = await getProductsByCategory(params.slug, initialPage)
   // console.log(products);

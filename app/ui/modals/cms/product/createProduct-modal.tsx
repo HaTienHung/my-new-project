@@ -5,6 +5,7 @@ import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { Category } from "@/app/lib/definitions";
 
 interface CreateProductModalProps {
   onClose: () => void;
@@ -69,7 +70,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
       onCreated();
       onClose();
       toast.success("Thêm sản phẩm thành công !");
-    } catch (error: any) {
+    } catch (error) {
       console.error("Lỗi khi thêm sản phẩm:", error);
     }
   };
@@ -104,7 +105,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
                 required
               >
                 <option value="">-- Chọn danh mục --</option>
-                {categories.map((cat: any) => (
+                {categories.map((cat: Category) => (
                   <option key={cat.id} value={cat.id}>{cat.name}</option>
                 ))}
               </select>

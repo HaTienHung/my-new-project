@@ -49,8 +49,9 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({
       onCreated();
       onClose();
       toast.success("Tạo danh mục thành công !");
-    } catch (error: any) {
-      console.error("Lỗi khi thêm sản phẩm:", error);
+    } catch (error) {
+      console.error('Đã có lỗi:', error);
+      throw new Error('Thêm danh mục thất bại.');
     }
   };
 

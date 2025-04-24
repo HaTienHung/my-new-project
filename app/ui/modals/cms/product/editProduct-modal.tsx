@@ -3,6 +3,7 @@ import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { Category, Product } from "@/app/lib/definitions";
 
 interface EditProductModalProps {
   id: number;
@@ -30,7 +31,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   });
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -107,15 +108,9 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       toast.success("Sửa sản phẩm thành công !");
       onUpdated();
       onClose();
-    } catch (error: any) {
-      if (error.response) {
-        console.log("Lỗi từ backend:", error.response.data);
-        console.log("Status code:", error.response.status);
-      } else if (error.request) {
-        console.log("Không nhận được phản hồi từ server:", error.request);
-      } else {
-        console.log("Lỗi khi gửi request:", error.message);
-      }
+    } catch (error) {
+      console.error('Đã có lỗi:', error);
+      throw new Error('Cập nhật sản phẩm thất bại.');
     }
   };
 
@@ -168,7 +163,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
                   required
                 >
                   <option value="">-- Chọn danh mục --</option>
-                  {categories.map((cat: any) => (
+                  {categories.map((cat: Category) => (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
                     </option>

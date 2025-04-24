@@ -16,6 +16,8 @@
 //   }
 // }
 
+import { Product } from "./definitions";
+
 export async function getLastestProducts() {
   try {
     // await new Promise(resolve => setTimeout(resolve, 1000));
@@ -37,7 +39,7 @@ export async function getLastestProducts() {
 export async function getProductsByCategory(
   slug: string,
   page: number
-): Promise<{ products: any[]; lastPage: number }> {
+): Promise<{ products: Product[]; lastPage: number }> {
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -63,7 +65,7 @@ export async function getProductsByCategory(
 }
 
 
-export async function getProductBySlug(slug: string): Promise<any> {
+export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -78,7 +80,7 @@ export async function getProductBySlug(slug: string): Promise<any> {
     return data?.product ?? null;
   } catch (error) {
     console.error('Error fetching products:', error);
-    return []; // Trả về mảng rỗng nếu lỗi
+    return null; // Trả về mảng rỗng nếu lỗi
   }
 }
 

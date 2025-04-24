@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '@/app/lib/redux/auth-slice';
 import { addToCart, setCartQuantity } from '@/app/lib/redux/cart-slice';
 import Cookies from "js-cookie";
+import { CartItem, Product } from './lib/definitions';
 
 type Props = {
   children: ReactNode;
@@ -38,9 +39,9 @@ export default function AppProvider({ children }: Props) {
 
         const data = await res.json();
         const cartItems = data.data;
-        const quantity = cartItems.reduce((acc: number, item: any) => acc + item.quantity, 0);
+        const quantity = cartItems.reduce((acc: number, item: CartItem) => acc + item.quantity, 0);
 
-        cartItems.forEach((item: any) => {
+        cartItems.forEach((item: CartItem) => {
           dispatch(addToCart({ product_id: item.product_id, quantity: item.quantity }));
         });
 

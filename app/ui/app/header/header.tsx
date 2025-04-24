@@ -6,13 +6,15 @@ import SearchBar from "../../search-bar";
 import Image from "next/image";
 import CategoryDropdown from "../../category-dropdown"; // Import component mới
 import Link from "next/link";
-// import slugify from "slugify";
-const slugify = require("slugify");
-const unidecode = require("unidecode");
+import slugify from 'slugify';
+import unidecode from 'unidecode';
+
+
 import { getCategories } from "@/app/lib/data"; // Import hàm fetch API
 import CartQuantity from "@/app/ui/app/cart/cart-quantity";
 import OrderModal from "../../modals/app/order/orderList-modal";
 import AuthModal from "@/app/ui/auth-modal";
+import { Category } from "@/app/lib/definitions";
 
 const categories = await getCategories();
 
@@ -111,7 +113,7 @@ const Header = () => {
                 className={`absolute left-0 mt-3 w-56 bg-gray-100 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-1
         ${showMenu ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"}`}
               >
-                {categories.map((category: any) => (
+                {categories.map((category: Category) => (
                   <Link
                     key={category.id}
                     href={`/categories/${slugify(unidecode(category.name), { lower: true, strict: true })}`}
@@ -124,7 +126,7 @@ const Header = () => {
             </div>
             {/* Danh sách danh mục con trải đều*/}
             <div className="flex-1 flex justify-between ml-16 space-x-6">
-              {categories.map((category: any) => (
+              {categories.map((category: Category) => (
                 <Link
                   key={category.id}
                   href={`/categories/${slugify(unidecode(category.name), { lower: true, strict: true })}`}

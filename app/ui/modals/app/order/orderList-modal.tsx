@@ -7,15 +7,16 @@ import { openAuthModal } from "@/app/lib/redux/authModal-slice";
 import OrderDetailModal from "@/app/ui/modals/app/order/orderDetail-modal";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Cookies from "js-cookie";
+import { Order, OrderItem, Product } from "@/app/lib/definitions";
 
 
 type ModalState = "orderList" | "productDetail" | null;
 
 const OrderModal = () => {
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalState, setModalState] = useState<ModalState>(null); // Sử dụng 1 state
-  const [productsInOrder, setProductsInOrder] = useState<any[]>([]);
+  const [productsInOrder, setProductsInOrder] = useState<OrderItem[]>([]);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
@@ -30,7 +31,6 @@ const OrderModal = () => {
           'Authorization': `Bearer ${Cookies.get('token')}`,
         }
       });
-
       if (res.ok) {
         const data = await res.json();
         setOrders(data?.data || []);
@@ -49,7 +49,7 @@ const OrderModal = () => {
     fetchOrders();
   }, [isAuthenticated]);
 
-  const openProductModal = (products: any[]) => {
+  const openProductModal = (products: OrderItem[]) => {
     setProductsInOrder(products);
     setModalState("productDetail");
   };
@@ -93,7 +93,7 @@ const OrderModal = () => {
               ) : orders.length === 0 ? (
                 <p className="text-center text-[rgb(121,100,73)] ">Bạn không có đơn hàng nào</p>
               ) : (
-                orders.map((item: any) => (
+                orders.map((item: Order) => (
                   <div key={item.id}>
                     <table className="w-full border-collapse text-sm">
                       <thead>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-const Cookies = require("js-cookie");
+import Cookies from 'js-cookie';
 
 export default function CMSLoginPage() {
   const router = useRouter();
@@ -43,9 +43,9 @@ export default function CMSLoginPage() {
       Cookies.set("role_id", roleId.toString());  // Lưu role_id vào cookie
       router.push('/cms/dashboard');
       toast.success('Đăng nhập thành công');
-    } catch (err: any) {
-      setError(err.message || 'Đã có lỗi xảy ra');
-      toast.error(err.message || 'Đã có lỗi xảy ra');
+    } catch (error) {
+      console.error("Đã có lỗi", error);
+      throw new Error("Đăng nhập thất bại.");
     } finally {
       setLoading(false);
     }

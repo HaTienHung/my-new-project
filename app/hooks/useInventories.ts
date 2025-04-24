@@ -52,8 +52,9 @@ export const useInventories = () => {
       setInventories(res.data?.data?.data || []);
       setTotalPages(res.data?.data?.last_page || 1);
       setCurrentPage(res.data?.data?.current_page || 1);
-    } catch (err: any) {
-      console.error("Lỗi fetchProducts:", err?.response?.data || err.message);
+    } catch (error) {
+      console.error("Đã xảy ra lỗi", error);
+      throw new Error("Lỗi khi fetch dữ liệu");
     } finally {
       setIsLoading(false);
     }

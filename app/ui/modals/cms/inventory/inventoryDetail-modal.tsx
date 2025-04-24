@@ -18,12 +18,10 @@ export default function InventoryDetailModal({
   isOpen,
   onClose,
 }: InventoryDetailModalProps) {
-  if (!isOpen) return null;
-
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
+    if (!isOpen) return;
     const fetchTransactions = async () => {
       setLoading(true);
       try {
@@ -49,7 +47,10 @@ export default function InventoryDetailModal({
     };
 
     fetchTransactions();
-  }, []);
+  }, [id, isOpen]);
+
+  if (!isOpen) return null;
+
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 flex items-center justify-center px-4">

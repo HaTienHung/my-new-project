@@ -1,7 +1,6 @@
 'use client';
 
 import { generatePagination } from '@/app/lib/utils';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
 type PaginationProps = {

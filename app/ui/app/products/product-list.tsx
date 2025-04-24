@@ -1,8 +1,9 @@
+import { Product } from '@/app/lib/definitions';
 import Image from 'next/image';
 import Link from "next/link";
 
 
-export default function ProductList({ products }: { products: any[] }) {
+export default function ProductList({ products }: { products: Product[] }) {
   return (
     <>
       <div>
