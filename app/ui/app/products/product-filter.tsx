@@ -22,13 +22,13 @@ export default function ProductFilter({
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center my-2"
+      className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center my-2 z-20"
     >
       {/* Danh mục */}
       <select
         value={formSearch.category}
         onChange={(e) => setFormSearch((prev) => ({ ...prev, category: e.target.value }))}
-        className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
       >
         <option value="">-- Tất cả danh mục --</option>
         {categories.map((cat: Category) => (
@@ -42,7 +42,7 @@ export default function ProductFilter({
       <select
         value={formSearch.sortBy}
         onChange={(e) => setFormSearch((prev) => ({ ...prev, sortBy: e.target.value }))}
-        className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
       >
         <option value="">-- Sắp xếp --</option>
         <option value="+name">Tên A → Z</option>
@@ -57,7 +57,7 @@ export default function ProductFilter({
         value={formSearch.minPrice || ""}
         onChange={(e) => setFormSearch((prev) => ({ ...prev, minPrice: e.target.value }))}
         placeholder="Giá từ (VNĐ)"
-        className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
       />
 
       {/* Giá đến */}
@@ -66,7 +66,7 @@ export default function ProductFilter({
         value={formSearch.maxPrice || ""}
         onChange={(e) => setFormSearch((prev) => ({ ...prev, maxPrice: e.target.value }))}
         placeholder="Giá đến (VNĐ)"
-        className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
       />
 
       {/* Nút tìm kiếm */}

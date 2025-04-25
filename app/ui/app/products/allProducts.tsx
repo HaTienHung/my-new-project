@@ -41,7 +41,7 @@ export default function AllProducts() {
   return (
     <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
       <div className="pb-4 flex justify-end">
-        <div className="flex gap-2 border p-2 rounded-lg cursor-pointer items-center" onClick={toggleDropdown}>
+        <div className="flex gap-2 border border-solid p-2 rounded-lg cursor-pointer items-center" onClick={toggleDropdown}>
           <span className="text-sm md:text-base">Lọc</span>
           <FaFilter
             className="text-[rgb(121,100,73)] text-sm md:text-base cursor-pointer"

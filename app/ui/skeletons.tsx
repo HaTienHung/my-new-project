@@ -2,24 +2,22 @@
 export function ProductListSkeleton() {
   return (
     <>
-      <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {[...Array(12)].map((_, index) => (
-            <div
-              key={index}
-              className="block bg-white rounded-xl shadow-md overflow-hidden cursor-pointer animate-pulse"
-            >
-              {/* Skeleton hình ảnh */}
-              <div className="relative w-full aspect-square bg-gray-300 rounded-t-xl"></div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+        {[...Array(12)].map((_, index) => (
+          <div
+            key={index}
+            className="block bg-white rounded-xl shadow-md overflow-hidden cursor-pointer animate-pulse"
+          >
+            {/* Skeleton hình ảnh */}
+            <div className="relative w-full aspect-square bg-gray-300 rounded-t-xl"></div>
 
-              {/* Skeleton thông tin sản phẩm */}
-              <div className="p-4">
-                <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
-                <div className="h-3 bg-gray-300 rounded w-1/2"></div>
-              </div>
+            {/* Skeleton thông tin sản phẩm */}
+            <div className="p-4">
+              <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
+              <div className="h-3 bg-gray-300 rounded w-1/2"></div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </>
   );
