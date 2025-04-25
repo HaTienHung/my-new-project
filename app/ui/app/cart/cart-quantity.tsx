@@ -19,13 +19,18 @@ export default function CartQuantity() {
   };
 
   return (
-    <button onClick={handleCartClick}>
-      <Link href={isAuthenticated ? '/cart' : '#'} passHref className="relative text-lg transition-transform duration-300 hover:scale-110">
-        <FaShoppingCart />
-        <span className="absolute -top-2 -right-2 text-white bg-[rgb(121,100,73)] text-xs px-1 rounded-full">
+    <Link
+      href={isAuthenticated ? "/cart" : "#"}
+      className="relative text-lg transition-transform duration-300 hover:scale-110 flex items-center"
+      passHref
+      onClick={handleCartClick}
+    >
+      <FaShoppingCart />
+      {quantity > 0 && (
+        <span className="absolute -top-2 -right-3 text-white bg-[rgb(121,100,73)] text-xs px-1.5 h-4 min-w-[10px] flex items-center justify-center rounded-lg leading-none">
           {quantity}
         </span>
-      </Link>
-    </button>
+      )}
+    </Link>
   );
 }
