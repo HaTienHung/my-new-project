@@ -18,20 +18,17 @@ export default function SearchBar() {
     console.log("search bar", formSearch, searchParams);
     submitFilters();
   };
-  const inputRef = useRef<HTMLInputElement>(null)
 
   return (
     <form onSubmit={handleSubmit} className="w-full md:max-w-md lg:max-w-lg my-1">
       <div
-        className="flex items-center border border-solid border-gray-300 overflow-hidden bg-white rounded-lg transition-all duration-300 focus-within:ring-1 focus-within:ring-[rgb(121,100,73)]"
-        onClick={() => inputRef.current?.focus()}
+        className="flex items-center border border-solid border-gray-300 overflow-hidden bg-white rounded-lg transition-all duration-300 focus-within:ring-1 focus-within:ring-[rgb(121,100,73)] box-border"
       >
         {/* Ô tìm kiếm */}
         <input
           id="search-input"
           type="text"
           placeholder="Nhập sản phẩm cần tìm..."
-          ref={inputRef}
           value={formSearch.search}
           onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
           className="flex-1 px-4 py-3 sm:py-2 h-full outline-none text-[rgb(121,100,73)] bg-transparent text-base md:text-sm"

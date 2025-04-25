@@ -22,7 +22,7 @@ export default function ProductFilter({
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center my-2 z-50"
+      className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center my-2 "
     >
       {/* Danh mục */}
       <select
