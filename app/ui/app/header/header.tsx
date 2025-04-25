@@ -23,7 +23,7 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <header className="bg-blue-500 text-white text-sm border-b border-gray-300 sticky top-0 z-50 shadow">
+    <header className="bg-blue-500 text-white text-sm border-b border-gray-300 sticky top-0 z-50 border-solid shadow">
       {/* Top bar */}
       <div className="container mx-auto justify-end py-2 px-4 hidden md:flex ">
         <div className="flex space-x-4">

@@ -92,7 +92,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
           </div>
 
           {/* Nút mua hàng */}
-          <button className="w-full mt-6 py-3 text-lg font-semibold border border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)]" onClick={addToCart}>
+          <button className="w-full mt-6 py-3 text-lg font-semibold border border-solid border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)]" onClick={addToCart}>
             Add to cart
           </button>
 
