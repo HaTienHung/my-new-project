@@ -105,7 +105,7 @@ const Cart = () => {
         ? { ...item, quantity: item.quantity - 1 }
         : item
     );
-    console.log(updatedCart);
+    // console.log(updatedCart);
     setCartItems(updatedCart);
     dispatch(decreaseQuantity({ product_id: id }));
   };
@@ -144,7 +144,7 @@ const Cart = () => {
   }
   const handleCheckout = async () => {
     const productIds = cartItems.map(item => item.product.id);
-    console.log(productIds);
+    // console.log(productIds);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/checkout`, {
         method: 'POST',
@@ -170,7 +170,7 @@ const Cart = () => {
         });
       } else {
         const errorData = await res.json();
-        console.log(errorData);
+        // console.log(errorData);
         throw new Error("Không thể đặt hàng");
       }
     } catch (error) {

@@ -15,7 +15,7 @@ export default function SearchBar() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("search bar", formSearch, searchParams);
+    // console.log("search bar", formSearch, searchParams);
     submitFilters();
   };
 

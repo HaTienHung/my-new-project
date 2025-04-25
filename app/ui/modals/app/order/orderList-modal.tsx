@@ -21,7 +21,10 @@ const OrderModal = () => {
   const dispatch = useDispatch();
 
   const fetchOrders = async () => {
-    if (!isAuthenticated) { console.log('Do not fetch orders'); return };
+    if (!isAuthenticated) {
+      //  console.log('Do not fetch orders');
+      return
+    };
     setLoading(true);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/orders/show`, {
@@ -54,7 +57,7 @@ const OrderModal = () => {
     setModalState("productDetail");
   };
   const handleClick = () => {
-    console.log(isAuthenticated);
+    // console.log(isAuthenticated);
     if (!isAuthenticated) {
       dispatch(openAuthModal());
       return;

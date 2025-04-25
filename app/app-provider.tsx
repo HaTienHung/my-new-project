@@ -20,7 +20,7 @@ export default function AppProvider({ children }: Props) {
     const token = Cookies.get('token');
     if (token) {
       dispatch(loginSuccess({ token, user: null }));
-      console.log('dispatch login');
+      // console.log('dispatch login');
     }
   }, [dispatch]);
 

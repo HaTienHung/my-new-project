@@ -33,7 +33,7 @@ export const useCategories = () => {
   const fetchCategories = async () => {
     try {
       setIsLoading(true);
-      console.log("URL API:", process.env.NEXT_PUBLIC_API_URL);
+      // console.log("URL API:", process.env.NEXT_PUBLIC_API_URL);
 
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/categories`, {
         params: {

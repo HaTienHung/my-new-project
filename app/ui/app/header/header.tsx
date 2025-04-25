@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaAngleDown, FaBars, FaSearch } from "react-icons/fa";
 import SearchBar from "../../search-bar";
 import Image from "next/image";
-import CategoryDropdown from "../../category-dropdown"; // Import component mới
+// import CategoryDropdown from "../../category-dropdown"; 
 import Link from "next/link";
 import slugify from 'slugify';
 import unidecode from 'unidecode';

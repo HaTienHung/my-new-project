@@ -48,7 +48,7 @@ export const useOrders = () => {
       if (queryParams.minPrice && queryParams.maxPrice) {
         filter.price_RANGE = [queryParams.minPrice, queryParams.maxPrice];
       }
-      console.log("URL API:", process.env.NEXT_PUBLIC_API_URL);
+      // console.log("URL API:", process.env.NEXT_PUBLIC_API_URL);
 
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/orders`, {
         params: {
