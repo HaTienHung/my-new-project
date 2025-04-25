@@ -116,7 +116,7 @@ export default function AuthModal() {
           onMouseDown={(e) => e.target === e.currentTarget && dispatch(closeAuthModal())}
         >
           <div
-            className="bg-white p-6 sm:p-8 md:p-10 rounded-lg shadow-lg w-full max-w-[90vw] sm:max-w-[450px] relative z-50"
+            className="bg-white p-6 sm:p-8 md:p-10 rounded-lg shadow-lg w-full max-w-[450px] relative z-50"
             onClick={(e) => e.stopPropagation()}
           >
             {isLoggedIn ? (

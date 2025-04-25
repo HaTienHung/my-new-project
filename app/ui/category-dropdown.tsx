@@ -60,7 +60,7 @@ const CategoryDropdown = () => {
 
         {/* Dropdown menu */}
         <div
-          className={`md:hidden absolute -mx-4 mt-3 max-w-[90vw] sm:max-w-[450px] bg-gray-100 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-10 origin-top
+          className={`md:hidden absolute -mx-4 mt-3 w-[90vw] bg-gray-100 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-10 origin-top
           ${showMenu ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"}`}
         >
           <span className="block p-2 text-sm">Danh mục sản phẩm</span>

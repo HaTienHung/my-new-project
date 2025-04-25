@@ -30,7 +30,7 @@ export default function SearchBar() {
           placeholder="Nhập sản phẩm cần tìm..."
           value={formSearch.search}
           onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
-          className="flex-1 px-4 py-3 sm:py-2 h-full outline-none text-[rgb(121,100,73)] transition-all duration-300"
+          className="flex-1 px-4 py-3 sm:py-2 h-full outline-none text-[rgb(121,100,73)] transition-all duration-300 text-base"
         />
 
         {/* Button tìm kiếm */}

@@ -21,7 +21,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
 
       {/* Modal container */}
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="bg-white rounded-lg shadow-lg max-w-[90vw] sm:max-w-[450px] p-6">
+        <DialogPanel className="bg-white rounded-lg shadow-lg max-w-[90vw] p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-4">
             <DialogTitle className="text-2xl font-semibold text-[rgb(121,100,73)]">
