@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaAngleDown, FaBars, FaSearch } from "react-icons/fa";
 import SearchBar from "../../search-bar";
 import Image from "next/image";
-// import CategoryDropdown from "../../category-dropdown"; 
+import CategoryDropdown from "../../category-dropdown";
 import Link from "next/link";
 import slugify from 'slugify';
 import unidecode from 'unidecode';
@@ -48,7 +48,7 @@ const Header = () => {
           </Link>
           {/* Danh mục mobile */}
           <div className="flex items-center justify-center">
-            {/* <CategoryDropdown /> */}
+            <CategoryDropdown />
             {/* Hiện logo Vercel trên mobile */}
             <Link href={"/"} className="curson-pointer">
               <Image

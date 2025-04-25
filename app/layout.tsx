@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lusitana} antialiased`}>
         {/* <Providers> */}
-        <div className="flex flex-col min-h-[100dvh]">
+        <div className="flex flex-col min-h-screen">
           <ToastContainer position="bottom-right" autoClose={800} />
           {/* <Header /> */}
 
