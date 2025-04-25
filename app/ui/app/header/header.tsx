@@ -68,7 +68,7 @@ const Header = () => {
           </div>
 
           {/* Icons */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 mr-2">
             {/* Icon tìm kiếm trên mobile */}
             <button
               className="md:hidden text-lg transition-transform duration-300 hover:scale-110"
