@@ -74,7 +74,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
           {/* Số lượng */}
           <div className="flex items-center mt-6">
             <span className="mr-4 font-medium">Quantity</span>
-            <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2">
+            <div className="flex items-center border  border-[rgb(121,100,73)] rounded-lg px-5 py-2 gap-2">
               <button
                 className="text-[rgb(121,100,73)] hover:text-gray-900"
                 onClick={handleDecrease}
