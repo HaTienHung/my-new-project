@@ -169,7 +169,6 @@ const Cart = () => {
           dispatch(removeFromCart({ product_id: productId }));
         });
       } else {
-        const errorData = await res.json();
         // console.log(errorData);
         throw new Error("Không thể đặt hàng");
       }

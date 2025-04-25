@@ -10,7 +10,6 @@ export default function SearchBar() {
     formSearch,
     setFormSearch,
     submitFilters,
-    searchParams
   } = useProducts({ prefix: '' });
 
   const handleSubmit = (e: React.FormEvent) => {
