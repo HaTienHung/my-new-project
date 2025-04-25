@@ -22,16 +22,23 @@ export default function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full md:max-w-md lg:max-w-lg my-1">
-      <div className="flex items-center border border-gray-300 overflow-hidden bg-white rounded-lg transition-all duration-300 focus-within:ring-1 focus-within:ring-[rgb(121,100,73)]"
-        onClick={() => inputRef.current?.focus()}>
+      <div className="flex items-center border border-gray-300 overflow-hidden bg-white rounded-lg transition-all duration-300 focus-within:ring-1 focus-within:ring-[rgb(121,100,73)]">
+
         {/* Ô tìm kiếm */}
-        <input
-          type="text"
-          placeholder="Nhập sản phẩm cần tìm..."
-          value={formSearch.search}
-          onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
-          className="flex-1 px-4 py-3 sm:py-2 h-full outline-none text-[rgb(121,100,73)] transition-all duration-300 text-base"
-        />
+        <label
+          className="flex-1 px-4 py-3 sm:py-2 h-full cursor-text flex items-center"
+          htmlFor="search-input"
+        >
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Nhập sản phẩm cần tìm..."
+            ref={inputRef}
+            value={formSearch.search}
+            onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
+            className="w-full h-full outline-none text-[rgb(121,100,73)] bg-transparent text-base md:text-sm"
+          />
+        </label>
 
         {/* Button tìm kiếm */}
         <button
@@ -41,6 +48,7 @@ export default function SearchBar() {
           <span className="hidden md:inline">Tìm kiếm</span>
           <FaSearch className="md:ml-2" />
         </button>
+
       </div>
     </form>
   );

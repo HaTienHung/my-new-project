@@ -16,7 +16,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
         <h1 className="text-2xl font-bold mb-10">Danh Sách Sản Phẩm Mới Nhất</h1>
         <ProductList products={products} />
         <div className='flex items-center justify-center '>
-          <button className='border rounded-lg px-4 py-2 mt-10 hover:bg-[rgb(121,100,73)] hover:text-white'>
+          <button className='border border-solid rounded-lg px-4 py-2 mt-10 hover:bg-[rgb(121,100,73)] hover:text-white'>
             <Link href={"/products"}>
               Xem toàn bộ
             </Link>

@@ -19,12 +19,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes" />
-      </head>
       <body className={`${lusitana} antialiased`}>
         {/* <Providers> */}
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-[100dvh]">
           <ToastContainer position="bottom-right" autoClose={800} />
           {/* <Header /> */}
 
