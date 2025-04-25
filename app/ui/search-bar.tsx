@@ -2,7 +2,7 @@
 
 import { FaSearch } from 'react-icons/fa';
 import { useProducts } from '../hooks/useProducts';
-import { useRef } from 'react'
+
 
 export default function SearchBar() {
 
@@ -37,7 +37,7 @@ export default function SearchBar() {
         {/* Button tìm kiếm */}
         <button
           type="submit"
-          className="text-[rgb(121,100,73)] px-4 md:py-2 py-4 flex items-center bg-gray-200 hover:bg-[rgb(121,100,73)] hover:text-white transition-all duration-300"
+          className="text-[rgb(121,100,73)] px-4 md:py-2 py-3 flex items-center bg-gray-200 hover:bg-[rgb(121,100,73)] hover:text-white transition-all duration-300"
         >
           <span className="hidden md:inline">Tìm kiếm</span>
           <FaSearch className="md:ml-2" />
