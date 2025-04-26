@@ -1,8 +1,8 @@
 'use client'
 
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import { FaBars } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 import slugify from 'slugify';
 import unidecode from 'unidecode';
 import { Category } from "../lib/definitions";
@@ -10,7 +10,6 @@ import { Category } from "../lib/definitions";
 const CategoryDropdown = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
-  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -28,40 +27,22 @@ const CategoryDropdown = () => {
     fetchCategories();
   }, []);
 
-  //  Handle click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
-      }
-    };
-
-    if (showMenu) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showMenu]);
-
   return (
-    <div className="flex justify-between">
-      <div className="relative" ref={menuRef}>
-        {/* Burger menu */}
-        <div className="flex items-center justify-between md:hidden">
-          <button
-            className="text-2xl md:hidden pb-2 pt-2 pr-2"
-            onClick={() => setShowMenu(!showMenu)}
-          >
-            <FaBars />
-          </button>
-        </div>
+    <>
+      {/* Burger menu */}
+      <div className="flex items-center justify-between md:hidden">
+        <button
+          className="text-2xl pb-2 pt-2 pr-2"
+          onClick={() => setShowMenu(!showMenu)}
+        >
+          {showMenu ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
 
-        {/* Dropdown menu */}
+      {/* Dropdown menu */}
+      {showMenu && (
         <div
-          className={`md:hidden absolute -mx-4 mt-3 w-[90vw] bg-gray-100 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-10 origin-top
-          ${showMenu ? "scale-y-100 opacity-100 pointer-events-auto" : "scale-y-0 opacity-0 pointer-events-none"}`}
+          className="absolute top-full left-0 w-[80vw] mt-1 ml-1 rounded-xl bg-gray-100 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-20 origin-top md:hidden "
         >
           <span className="block p-2 text-sm">Danh mục sản phẩm</span>
           {categories.map((category: Category) => (
@@ -69,14 +50,14 @@ const CategoryDropdown = () => {
               key={category.id}
               href={`/categories/${slugify(unidecode(category.name), { lower: true, strict: true })}`}
               className="block hover:bg-gray-200 p-2 rounded"
-              onClick={() => setShowMenu(false)} // Đóng menu khi chọn
+              onClick={() => setShowMenu(false)}
             >
               {category.name}
             </Link>
           ))}
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
