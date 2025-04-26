@@ -19,7 +19,7 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full md:max-w-md lg:max-w-lg my-1 flex items-center border border-solid border-gray-300 overflow-hidden bg-white rounded-lg transition-all duration-300 focus-within:ring-1 focus-within:ring-[rgb(121,100,73)] box-border">
+    <form onSubmit={handleSubmit} className="w-full md:max-w-md lg:max-w-lg my-1 flex items-center border border-solid border-gray-300 overflow-hidden bg-white rounded-lg transition-all duration-300 focus-within:ring-1 focus-within:ring-[rgb(121,100,73)] box-border ">
       {/* Ô tìm kiếm */}
       <input
         id="search-input"

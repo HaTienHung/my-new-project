@@ -79,7 +79,7 @@ const OrderModal = () => {
       <Dialog open={modalState === "orderList"} onClose={() => setModalState(null)} className="relative z-50">
         {/* Modal content */}
         <div className="fixed inset-0 flex justify-center items-center p-4">
-          <DialogPanel className="bg-white rounded-lg shadow-lg max-w-[90vw] p-6">
+          <DialogPanel className="bg-white rounded-lg shadow-lg w-[90vw] md:w-[80vw] lg:w-[70vw] p-6">
             <div className="flex justify-between items-center mb-4">
               <DialogTitle className="text-2xl font-semibold text-[rgb(121,100,73)]">Thông tin đơn hàng  </DialogTitle>
               <button onClick={() => setModalState(null)}>

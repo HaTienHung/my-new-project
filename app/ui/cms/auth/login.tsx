@@ -19,18 +19,18 @@ export default function CMSLoginPage() {
     setError('');
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/admin/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const res = await fetch(`https://13022025-production.up.railway.app/api/cms/admin/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+      // console.log(JSON.stringify({ email, password }));
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data?.message || 'Đăng nhập thất bại');
+        const errorMessage = data?.message || 'Đăng nhập thất bại';
+        setError(errorMessage);  // Lấy thông báo lỗi từ server
+        throw new Error(errorMessage); // Ném ra lỗi để bắt và hiển thị
       }
 
       // localStorage.setItem('token', data?.data?.token || '');

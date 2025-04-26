@@ -60,7 +60,7 @@ export const cartSlice = createSlice({
 
       // Log để kiểm tra
       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
-      console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
+      // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
     },
     decreaseQuantity: (state, action) => {
       const { product_id } = action.payload;
@@ -77,10 +77,10 @@ export const cartSlice = createSlice({
 
       // Log để kiểm tra
       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
-      console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
+      // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
     },
     removeFromCart(state, action) {
-      
+
       const { product_id } = action.payload;
 
       const product = state.items.find(item => item.product_id === product_id);

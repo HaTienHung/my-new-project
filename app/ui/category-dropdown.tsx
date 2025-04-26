@@ -42,14 +42,14 @@ const CategoryDropdown = () => {
       {/* Dropdown menu */}
       {showMenu && (
         <div
-          className="absolute top-full left-0 w-[80vw] mt-1 ml-1 rounded-xl bg-gray-100 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-20 origin-top md:hidden "
+          className="absolute top-full left-0 w-[80vw] mt-1 ml-1 rounded-xl bg-gray-200 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-20 origin-top md:hidden "
         >
           <span className="block p-2 text-sm">Danh mục sản phẩm</span>
           {categories.map((category: Category) => (
             <Link
               key={category.id}
               href={`/categories/${slugify(unidecode(category.name), { lower: true, strict: true })}`}
-              className="block hover:bg-gray-200 p-2 rounded"
+              className="block hover:bg-gray-300 p-2 rounded"
               onClick={() => setShowMenu(false)}
             >
               {category.name}

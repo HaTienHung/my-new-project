@@ -91,7 +91,7 @@ const Header = () => {
             className={`md:hidden transition-transform duration-300 ease-in-out overflow-hidden ${showSearch ? "scale-y-100 h-auto opacity-100" : "scale-y-0 h-0 opacity-0"
               }`}
           >
-            <div className="px-3">
+            <div className="px-3 ">
               <SearchBar />
             </div>
           </div>

@@ -104,7 +104,7 @@ export const useProducts = ({ prefix = '' }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
-      console.log(res);
+      // console.log(res);
       setCategories(res.data?.data || []);
     };
 
