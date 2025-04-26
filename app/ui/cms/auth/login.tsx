@@ -19,7 +19,7 @@ export default function CMSLoginPage() {
     setError('');
 
     try {
-      const res = await fetch(`https://13022025-production.up.railway.app/api/cms/admin/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

@@ -21,14 +21,6 @@ export default function SideNav() {
         </button>
       </div>
 
-      {/* Overlay khi mở sidebar (chỉ ở mobile) */}
-      {open && (
-        <div
-          className="fixed inset-0 z-40 bg-black/30 md:hidden"
-          onClick={() => setOpen(false)}
-        />
-      )}
-
       {/* Sidebar */}
       <div
         className={`
@@ -39,10 +31,11 @@ export default function SideNav() {
         `}
       >
         {/* Nút đóng - chỉ hiện ở mobile */}
-        <div className="md:hidden mb-4 flex justify-end">
+        <div className="md:hidden mb-4 flex justify-end box-border "
+          onClick={() => setOpen(false)}>
           <button
             onClick={() => setOpen(false)}
-            className="text-2xl text-[rgb(121,100,73)]"
+            className="text-2xl text-[rgb(121,100,73)] "
           >
             <FaTimes />
           </button>
