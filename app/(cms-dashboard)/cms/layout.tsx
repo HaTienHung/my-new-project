@@ -7,14 +7,14 @@ import Image from 'next/image';
 export default function CmsLayout({ children }: { children: React.ReactNode }) {
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col min-h-screen">
       {/* Header (mobile) + SideNav */}
-      <div className="flex justify-between items-center md:flex-col md:items-start md:justify-start">
+      <div className="flex justify-between items-center">
 
         <SideNav />
 
         {/* Logo mobile */}
-        <div className="md:hidden">
+        <div className="block md:hidden p-1">
           <Image src="/next.svg" alt="Logo" width={120} height={40} />
         </div>
 

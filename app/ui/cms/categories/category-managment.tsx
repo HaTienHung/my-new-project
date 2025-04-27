@@ -48,14 +48,14 @@ export default function CategoryManament() {
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
             placeholder="Tìm kiếm theo tên danh mục..."
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           {/* Sắp xếp */}
           <select
             value={formSearch.sortBy}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, sortBy: e.target.value }))}
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none"
           >
             <option value="">-- Sắp xếp --</option>
             <option value="+name">Tên A-Z</option>

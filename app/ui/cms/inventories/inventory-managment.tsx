@@ -77,14 +77,14 @@ export default function InventoryManagment() {
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
             placeholder="Tìm kiếm theo tên sản phẩm..."
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           {/* Sắp xếp */}
           <select
             value={formSearch.sortBy}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, sortBy: e.target.value }))}
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none"
           >
             <option value="">-- Sắp xếp --</option>
             <option value="-name">Tên Z-A</option>
@@ -103,7 +103,7 @@ export default function InventoryManagment() {
         </form>
         <div className="sm:col-span-2 flex gap-4 justify-start  ">
           <button
-            className=" cursor-pointer bg-white border border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
+            className=" cursor-pointer bg-white border border-solid border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
           >
             Export (.xlsx)
           </button>
@@ -130,7 +130,7 @@ export default function InventoryManagment() {
                   <td className="px-4 py-3 text-sm hidden md:table-cell">{inventory.stock}</td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3 items-center">
                     <button
-                      className="inline-flex items-center gap-1 bg-white text-sm text-[rgb(121,100,73)] font-medium px-3 py-2 rounded cursor-pointer transition border hover:bg-[rgb(121,100,73)] hover:text-white"
+                      className="inline-flex items-center gap-1 bg-white text-sm text-[rgb(121,100,73)] font-medium px-3 py-2 rounded cursor-pointer transition border border-solid hover:bg-[rgb(121,100,73)] hover:text-white"
                       onClick={() => handleAdd(inventory.product_id)}
                     >
                       Thêm vào kho

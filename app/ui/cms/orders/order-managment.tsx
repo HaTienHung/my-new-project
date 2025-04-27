@@ -54,7 +54,7 @@ export default function OrderManagment() {
           <select
             value={formSearch.searchField}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, searchField: e.target.value }))}
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none"
           >
             <option value="">-- Tìm kiếm theo --</option>
             <option value="user.name">Tên khách hàng</option>
@@ -68,14 +68,14 @@ export default function OrderManagment() {
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
             placeholder="Tìm kiếm theo tên khách hàng..."
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className=" border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           {/* Danh mục */}
           <select
             value={formSearch.status}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, status: e.target.value }))}
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none"
           >
             <option value="">-- Tất cả trạng thái --</option>
             {status.map((status: string, i: number) => (
@@ -89,7 +89,7 @@ export default function OrderManagment() {
           <select
             value={formSearch.sortBy}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, sortBy: e.target.value }))}
-            className="border border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none"
           >
             <option value="">-- Sắp xếp --</option>
             <option value="+total_price">Tổng tiền tăng dần</option>
@@ -114,7 +114,7 @@ export default function OrderManagment() {
             Thêm sản phẩm
           </button> */}
           <button
-            className=" cursor-pointer bg-white border border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
+            className=" cursor-pointer bg-white border border-solid border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
           >
             Export (.xlsx)
           </button>
@@ -172,7 +172,7 @@ export default function OrderManagment() {
                 <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm flex items-center gap-3">
                   <button
                     onClick={() => handleEdit(order.id)}
-                    className={`flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs md:text-sm border border-blue-600 px-2 py-1 rounded-md transition duration-200
+                    className={`flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs md:text-sm border border-solid border-blue-600 px-2 py-1 rounded-md transition duration-200
                       ${order.status === 'completed' || order.status === 'cancelled' ? 'opacity-50 cursor-not-allowed' : ''}`}
                     disabled={order.status === 'completed' || order.status === 'cancelled'}
                   >

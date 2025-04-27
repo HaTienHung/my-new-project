@@ -57,7 +57,7 @@ export default function CMSLoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 text-[rgb(121,100,73)]">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+        className="bg-white p-6 rounded-lg shadow-md  max-w-[90vw] md:max-w-md"
       >
         <h2 className="text-2xl font-bold text-center ">Đăng nhập CMS</h2>
 
