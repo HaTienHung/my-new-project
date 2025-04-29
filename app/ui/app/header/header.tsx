@@ -72,7 +72,7 @@ const Header = () => {
             <div className="flex items-center gap-5 mr-3">
               {/* Icon tìm kiếm trên mobile */}
               <button
-                className="md:hidden text-lg transition-transform duration-300 hover:scale-110"
+                className="md:hidden mx-auto text-lg transition-transform duration-300 hover:scale-110"
                 onClick={() => setShowSearch(!showSearch)}
               >
                 <FaSearch />
@@ -88,10 +88,10 @@ const Header = () => {
 
           {/* Search bar mobile */}
           <div
-            className={`md:hidden transition-transform duration-300 ease-in-out overflow-hidden ${showSearch ? "scale-y-100 h-auto opacity-100" : "scale-y-0 h-0 opacity-0"
+            className={`md:hidden  transition-transform duration-300 ease-in-out overflow-hidden ${showSearch ? "scale-y-100 h-auto opacity-100" : "scale-y-0 h-0 opacity-0"
               }`}
           >
-            <div className="px-3 ">
+            <div className="px-4 container mx-auto">
               <SearchBar />
             </div>
           </div>

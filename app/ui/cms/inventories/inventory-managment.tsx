@@ -8,10 +8,13 @@ import AddToInventoryModal from "../../modals/cms/inventory/AddToInventoryModal"
 import { FaInfoCircle } from "react-icons/fa";
 import InventoryDetailModal from "../../modals/cms/inventory/inventoryDetail-modal";
 import Pagination from "../../pagination";
+import SubmitButton from "@/app/ui/components/submit-button";
+import ExportButton from "../../components/export-button";
 
 export default function InventoryManagment() {
   const [productId, setProductId] = useState<number | null>(null);
   const [showInventoryDetail, setShowInventoryDetail] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const litmit = 8;
 
   const handleViewDetail = (productId: number) => {
@@ -44,8 +47,10 @@ export default function InventoryManagment() {
       setFormSearch((prev) => ({ ...prev, page: 1 }));
     } else {
       // Nếu đã là page 1 thì submit luôn
+      // setLoading(true);
       submitFilters();
     }
+    // setLoading(false);
   };
 
   const handleAdd = (id: number) => {
@@ -84,7 +89,7 @@ export default function InventoryManagment() {
           <select
             value={formSearch.sortBy}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, sortBy: e.target.value }))}
-            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none "
           >
             <option value="">-- Sắp xếp --</option>
             <option value="-name">Tên Z-A</option>
@@ -93,20 +98,11 @@ export default function InventoryManagment() {
 
           {/* Nút tìm kiếm */}
           <div className="sm:col-span-2 flex justify-end">
-            <button
-              type="submit"
-              className="bg-[rgb(121,100,73)] hover:bg-opacity-90 text-white text-sm px-5 py-2 rounded-xl shadow transition-all duration-200 hover:underline cursor-pointer"
-            >
-              Tìm kiếm
-            </button>
+            <SubmitButton label={"Tìm kiếm"} />
           </div>
         </form>
         <div className="sm:col-span-2 flex gap-4 justify-start  ">
-          <button
-            className=" cursor-pointer bg-white border border-solid border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
-          >
-            Export (.xlsx)
-          </button>
+          <ExportButton onClick={() => { }} loading={false} />
         </div>
       </div>
       <div className="overflow-x-auto rounded-xl shadow-md">

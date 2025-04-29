@@ -101,10 +101,10 @@ const OrderModal = () => {
                     <table className="w-full border-collapse text-sm">
                       <thead>
                         <tr className="bg-gray-100 text-left">
-                          <th className="p-2 border">Mã đơn hàng</th>
-                          <th className="p-2 border">Tổng tiền</th>
-                          <th className="p-2 border">Trạng thái</th>
-                          <th className="p-2 border">Chi tiết</th>
+                          <th className="p-2 border text-primary">Mã đơn hàng</th>
+                          <th className="p-2 border text-primary">Tổng tiền</th>
+                          <th className="p-2 border text-primary">Trạng thái</th>
+                          <th className="p-2 border text-primary">Chi tiết</th>
                         </tr>
                       </thead>
                       <tbody>

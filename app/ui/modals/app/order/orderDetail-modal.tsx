@@ -36,9 +36,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
           {products.length === 0 ? (
             <p className="text-center">Không có sản phẩm trong đơn này</p>
           ) : (
-            <table className="w-full border border-collapse">
+            <table className="w-full border border-collapse text-sm sm:textbase ">
               <thead>
-                <tr className="bg-gray-100">
+                <tr className="bg-gray-100 text-primary">
                   <th className="p-2 border">STT</th>
                   <th className="p-2 border">Tên sản phẩm</th>
                   <th className="p-2 border">Số lượng</th>
@@ -47,7 +47,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
               </thead>
               <tbody>
                 {products.map((product: OrderItem, index: number) => (
-                  <tr key={index} className="hover:bg-gray-50">
+                  <tr key={index} className="hover:bg-gray-50 text-sm sm:textbase ">
                     <td className="p-2 border text-center">{index + 1}</td>
                     <td className="p-2 border">{product.product_name}</td>
                     <td className="p-2 border text-center">{product.quantity}</td>

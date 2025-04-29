@@ -7,6 +7,8 @@ import { useState } from "react";
 import EditCategoryModal from "../../modals/cms/category/editCategory-modal";
 import CreateCategoryModal from "../../modals/cms/category/createCategory";
 import DeleteModal from "../../modals/cms/deleteProduct-modal";
+import SubmitButton from "../../components/submit-button";
+import AddButton from "../../components/add-button";
 
 export default function CategoryManament() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -64,21 +66,11 @@ export default function CategoryManament() {
 
           {/* Nút tìm kiếm */}
           <div className="sm:col-span-2 flex justify-end">
-            <button
-              type="submit"
-              className="bg-[rgb(121,100,73)] hover:bg-opacity-90 text-white text-sm px-5 py-2 rounded-xl shadow transition-all duration-200 hover:underline cursor-pointer"
-            >
-              Tìm kiếm
-            </button>
+            <SubmitButton label="Tìm kiếm" />
           </div>
         </form>
         <div className="sm:col-span-2 flex gap-4 justify-start  ">
-          <button
-            onClick={() => setIsCreateModalOpen(true)}
-            className=" cursor-pointer bg-[#796449] hover:bg-[#5f4f3a] text-white text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
-          >
-            Thêm danh mục
-          </button>
+          <AddButton onClick={() => setIsCreateModalOpen(true)} label="Thêm danh mục" />
           {/* <button
             className=" cursor-pointer bg-white border border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
           >

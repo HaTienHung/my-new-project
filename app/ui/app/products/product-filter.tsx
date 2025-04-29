@@ -1,4 +1,5 @@
 import { Category, FormSearch } from "@/app/lib/definitions";
+import SubmitButton from "../../components/submit-button";
 
 interface ProductFilterProps {
   formSearch: FormSearch;
@@ -71,12 +72,7 @@ export default function ProductFilter({
 
       {/* Nút tìm kiếm */}
       <div className="sm:col-span-2 flex justify-end mb-2 select-none">
-        <button
-          type="submit"
-          className="bg-[rgb(121,100,73)] hover:bg-opacity-90 text-white text-base sm:text-sm px-5 py-2 rounded-xl shadow transition-all duration-200 hover:underline cursor-pointer underline-offset-4 "
-        >
-          Lọc
-        </button>
+        <SubmitButton label="Lọc" />
       </div>
     </form>
   );

@@ -7,12 +7,18 @@ import { useState } from "react";
 import UpdateOrderStatusModal from "../../modals/cms/order/updateStatus-modal";
 import OrderDetailModal from "../../modals/app/order/orderDetail-modal";
 import UserInfoModal from "../../modals/cms/order/userInfo-modal";
+import { saveAs } from 'file-saver';
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import SubmitButton from "../../components/submit-button";
+import ExportButton from "../../components/export-button";
 
 export default function OrderManagment() {
   const status = ["pending", "completed", "cancelled"];
   const [editingOrderId, setEditingOrderId] = useState<number | null>(null);
   const [productsInOrder, setProductsInOrder] = useState<OrderItem[]>([]);
   const [userInfo, setUserInfo] = useState<User>();
+  const [loading, setLoading] = useState(false);
 
   const [isOpenOrderDetail, setIsOpenOrderDetail] = useState(false);
   const [isOpenUserInfo, setIsOpenOpenUserInfo] = useState(false);
@@ -34,10 +40,40 @@ export default function OrderManagment() {
   const handleEdit = (id: number) => {
     setEditingOrderId(id);
   };
+
+  const handleExport = async () => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    const token = Cookies.get('token');
+    setLoading(true);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/orders/export-excel`, {
+        headers: {
+          method: "GET",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Export failed');
+      }
+
+      const blob = await response.blob();
+      saveAs(blob, `${formattedDate}-exported-data.xlsx`);
+      toast.success("Xuất file Exel thành công!"); // hoặc đổi tên file theo ý bạn
+    } catch (error) {
+      console.error(error);
+      alert('Có lỗi xảy ra khi export');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const openOrderDetailModal = (products: OrderItem[]) => {
     setProductsInOrder(products);
     setIsOpenOrderDetail(true);
   }
+
   const openUserInfo = (user: User) => {
     setUserInfo(user);
     setIsOpenOpenUserInfo(true);
@@ -98,36 +134,21 @@ export default function OrderManagment() {
 
           {/* Nút tìm kiếm */}
           <div className="sm:col-span-2 flex justify-end">
-            <button
-              type="submit"
-              className="bg-[rgb(121,100,73)] hover:bg-opacity-90 text-white text-sm px-5 py-2 rounded-xl shadow transition-all duration-200 hover:underline cursor-pointer"
-            >
-              Tìm kiếm
-            </button>
+            <SubmitButton label="Tìm kiếm" />
           </div>
         </form>
         <div className="sm:col-span-2 flex gap-4 justify-start  ">
-          {/* <button
-            // onClick={() => setIsCreateModalOpen(true)}
-            className=" cursor-pointer bg-[#796449] hover:bg-[#5f4f3a] text-white text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
-          >
-            Thêm sản phẩm
-          </button> */}
-          <button
-            className=" cursor-pointer bg-white border border-solid border-[#796449] text-[#796449] hover:bg-[#f7f4f0] text-sm px-5 py-2 rounded-lg shadow transition-all duration-200"
-          >
-            Export (.xlsx)
-          </button>
+          <ExportButton onClick={handleExport} loading={loading} />
         </div>
       </div>
       <table className="min-w-full divide-y divide-gray-300 bg-white rounded-xl overflow-hidden">
         <thead className="bg-gray-100">
           <tr>
             <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">STT</th>
-            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden md:table-cell">Mã đơn</th>
+            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden xl:table-cell">Mã đơn</th>
             <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Tên khách hàng</th>
             <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden md:table-cell">SĐT</th>
-            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden md:table-cell">Địa chỉ</th>
+            <th className="px-4 py-2 text-left text-sm font-semibold uppercase text-gray-600 hidden xl:table-cell">Địa chỉ</th>
             <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Trạng thái</th>
             <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Tổng tiền</th>
             <th className="px-2 sm:px-4 py-2 text-left text-xs sm:text-sm font-semibold uppercase text-gray-600">Hành động</th>
@@ -140,7 +161,7 @@ export default function OrderManagment() {
             orders.map((order: Order, i: number) => (
               <tr key={order.id} className="hover:bg-gray-50 transition">
                 <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{i + 1}</td>
-                <td className="px-4 py-2 text-sm hidden md:table-cell">{order.id}</td>
+                <td className="px-4 py-2 text-sm hidden xl:table-cell">{order.id}</td>
                 <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">
                   <div className="flex items-center gap-1">
                     {order.user.name}
@@ -153,7 +174,7 @@ export default function OrderManagment() {
                   </div>
                 </td>
                 <td className="px-4 py-2 text-sm hidden md:table-cell">{order.user.phone_number}</td>
-                <td className="px-4 py-2 text-sm hidden md:table-cell">{order.user.address}</td>
+                <td className="px-4 py-2 text-sm hidden xl:table-cell">{order.user.address}</td>
                 <td className="px-4 py-2 text-sm capitalize">
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${order.status === 'completed'

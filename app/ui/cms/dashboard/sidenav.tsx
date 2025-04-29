@@ -12,7 +12,7 @@ export default function SideNav() {
   return (
     <>
       {/* Nút mở (hamburger) - chỉ hiện ở sm */}
-      <div className="md:hidden p-4">
+      <div className="lg:hidden p-4">
         <button
           onClick={() => setOpen(true)}
           className="text-2xl text-[rgb(121,100,73)]"
@@ -21,22 +21,28 @@ export default function SideNav() {
         </button>
       </div>
 
+      {/* Overlay khi mở sidebar (chỉ ở mobile) */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 lg:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <div
         className={`
-          ${!open ? 'hidden' : ''}
           fixed top-0 left-0 z-50 h-full w-64 bg-white shadow-md p-4 flex flex-col
           transition-transform duration-300 ease-in-out
           ${open ? 'translate-x-0' : '-translate-x-full'}
-          md:static md:translate-x-0 md:h-screen
+          lg:static lg:translate-x-0 lg:h-screen
         `}
       >
         {/* Nút đóng - chỉ hiện ở mobile */}
-        <div className="md:hidden mb-4 flex justify-end box-border "
-          onClick={() => setOpen(false)}>
+        <div className="md:hidden mb-4 flex justify-end">
           <button
             onClick={() => setOpen(false)}
-            className="text-2xl text-[rgb(121,100,73)] "
+            className="text-2xl text-[rgb(121,100,73)]"
           >
             <FaTimes />
           </button>

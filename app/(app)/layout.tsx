@@ -8,7 +8,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <div>
       <Providers>
         <Header />
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen ">
           {/* Thêm class flex-grow để đẩy footer xuống */}
           <main className="flex-grow">{children}</main>
         </div>

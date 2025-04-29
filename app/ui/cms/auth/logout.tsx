@@ -37,7 +37,7 @@ export default function LogoutButton({ isMobile = false }: LogoutButtonProps) {
       onClick={() => {
         handleLogout();
       }}
-      className={`flex items-center gap-2 p-3 hover:bg-gray-100 text-[rgb(121,100,73)] ${isMobile ? "text-2xl md:hidden" : "mt-auto text-lg h-[48px] justify-start rounded-md font-medium hidden md:flex"
+      className={`flex items-center gap-2 p-3 hover:bg-gray-100 text-[rgb(121,100,73)] ${isMobile ? "text-2xl lg:hidden" : "mt-auto text-lg h-[48px] justify-start rounded-md font-medium hidden lg:flex"
         }`}
     >
       <IoLogOut className="w-6" />

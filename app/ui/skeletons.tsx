@@ -145,25 +145,25 @@ export const OrderTableSkeleton = ({ rows = 5 }: { rows?: number }) => {
             <div className="h-4 bg-gray-300 rounded w-6"></div>
           </td>
           <td className="px-4 py-4">
-            <div className="h-4 bg-gray-300 rounded w-20"></div>
+            <div className="h-4 bg-gray-300 rounded w-7 sm:w-20"></div>
           </td>
           <td className="px-4 py-4">
+            <div className="h-4 bg-gray-300 rounded w-6 sm:w-24"></div>
+          </td>
+          <td className="px-4 py-4 hidden xl:table-cell">
             <div className="h-4 bg-gray-300 rounded w-24"></div>
           </td>
-          <td className="px-4 py-4 hidden md:table-cell">
-            <div className="h-4 bg-gray-300 rounded w-24"></div>
-          </td>
-          <td className="px-4 py-4 hidden md:table-cell">
+          <td className="px-4 py-4 hidden xl:table-cell">
             <div className="h-4 bg-gray-300 rounded w-32"></div>
           </td>
           <td className="px-4 py-4 hidden md:table-cell">
             <div className="h-4 bg-gray-300 rounded w-20"></div>
           </td>
           <td className="px-4 py-4">
-            <div className="h-4 bg-gray-300 rounded w-8 sm:w-20"></div>
+            <div className="h-4 bg-gray-300 rounded w-6 sm:w-20"></div>
           </td>
           <td className="px-4 py-4">
-            <div className="h-4 bg-gray-300 rounded w-8 sm:w-20"></div>
+            <div className="h-4 bg-gray-300 rounded w-6 sm:w-20"></div>
           </td>
         </tr>
       ))}
