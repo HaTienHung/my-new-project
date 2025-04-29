@@ -16,7 +16,7 @@
 //   }
 // }
 
-import { Product } from "./definitions";
+import { Category, Product } from "./definitions";
 
 export async function getLastestProducts() {
   try {
@@ -41,7 +41,7 @@ export async function getProductsByCategory(
   page: number
 ): Promise<{ products: Product[]; lastPage: number }> {
   try {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // await new Promise(resolve => setTimeout(resolve, 1000));
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${slug}?page=${page}`, {
       next: { revalidate: 3600 },
@@ -67,7 +67,7 @@ export async function getProductsByCategory(
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // await new Promise(resolve => setTimeout(resolve, 1000));
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${slug}`, {
       cache: "no-cache", // Luôn lấy dữ liệu mới từ API
@@ -84,9 +84,8 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   }
 }
 
-export const getCategories = async () => {
+export const getCategories = async (): Promise<Category[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {
-
     // Cập nhật mỗi 1 giờ
   });
   const data = await res.json();

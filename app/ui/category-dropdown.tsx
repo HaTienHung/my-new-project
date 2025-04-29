@@ -1,32 +1,14 @@
 'use client'
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import slugify from 'slugify';
 import unidecode from 'unidecode';
 import { Category } from "../lib/definitions";
 
-const CategoryDropdown = () => {
+const CategoryDropdown = ({ categories }: { categories: Category[] }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {
-          cache: "no-cache",
-        });
-        const data = await res.json();
-        setCategories(data?.data ?? []);
-      } catch (error) {
-        console.error("Lỗi khi lấy danh mục:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
   return (
     <>
       {/* Burger menu */}

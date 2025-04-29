@@ -49,7 +49,7 @@ const Header = () => {
             </Link>
             {/* Danh mục mobile */}
             <div className="flex items-center justify-center ">
-              <CategoryDropdown />
+              <CategoryDropdown categories={categories} />
               {/* Hiện logo Vercel trên mobile */}
               <Link href={"/"} className="curson-pointer">
                 <Image
