@@ -36,10 +36,10 @@ export default function ProductList({ products }: { products: Product[] }) {
 
                   {/* Thông tin sản phẩm */}
                   <div className="p-4">
-                    <h2 className="text-lg font-semibold truncate group-hover:underline underline-offset-4 transition-all duration-200">
+                    <h2 className="text-sm sm:text-base lg:text-lg font-semibold truncate group-hover:underline underline-offset-4 transition-all duration-200">
                       {product.name}
                     </h2>
-                    <p className="text-xl font-extralight mt-2">{Number(product.price).toLocaleString()} VNĐ</p>
+                    <p className="text-base sm:text-xl font-extralight mt-2">{Number(product.price).toLocaleString()} VNĐ</p>
                   </div>
                 </div>
               </Link>

@@ -1,4 +1,4 @@
-import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import { FaUserAstronaut, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 
 interface UserInfoProps {
   user: {
@@ -16,7 +16,7 @@ export default function UserInfo({ user, onLogout }: UserInfoProps) {
       <h2 className="text-xl font-semibold mb-4 text-center">Thông tin tài khoản</h2>
       <div className="p-4 bg-gray-100 rounded-lg">
         <div className="flex justify-center mb-4">
-          <FaUser className="text-6xl text-gray-500" />
+          <FaUserAstronaut className="text-6xl text-gray-700" />
         </div>
         <p className="text-lg font-semibold text-center">{user?.name ?? "Người dùng"}</p>
         <div className="mt-4 space-y-3 text-sm">

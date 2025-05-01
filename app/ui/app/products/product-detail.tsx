@@ -65,7 +65,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
 
         {/* Thông tin sản phẩm - chỉ chiếm 1/3 chiều rộng */}
         <div className="w-full md:w-1/3">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">{product.name}</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-2xl lg:text-3xl font-bold">{product.name}</h1>
           <p className="text-lg sm:text-xl md:text-2xl font-extralight mt-4">
             {Number(product.price).toLocaleString()} VNĐ
           </p>
@@ -74,16 +74,18 @@ const ProductDetail = ({ product }: { product: Product }) => {
           {/* Số lượng */}
           <div className="flex items-center mt-6">
             <span className="mr-4 font-medium">Quantity</span>
-            <div className="flex items-center border border-solid border-[rgb(121,100,73)] rounded-lg px-5 py-2 gap-2">
+            <div className="flex items-center border border-solid border-[rgb(121,100,73)] rounded-lg px-5 py-2 gap-2 justify-center">
               <button
-                className="text-primary hover:text-gray-900"
+                className="text-primary hover:text-gray-900 px-1"
                 onClick={handleDecrease}
               >
                 −
               </button>
-              <span className="mx-3 font-medium">{quantity}</span>
+              <span className="px-3 font-medium flex justify-center w-[24px]">
+                {quantity}
+              </span>
               <button
-                className="text-primary hover:text-gray-900"
+                className={`text-primary hover:text-gray-900 px-1`}
                 onClick={handleIncrease}
               >
                 +
