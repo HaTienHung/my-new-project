@@ -59,7 +59,7 @@ export default function RevenueChart() { // Make component async, remove the pro
 
 
   return (
-    <div className="w-full md:col-span-4 text-[rgb(121,100,73)]">
+    <div className="w-full md:col-span-4 text-primary">
       <h2 className={` mb-4 text-xl md:text-2xl`}>
         Doanh thu theo ngày
       </h2>
@@ -67,7 +67,7 @@ export default function RevenueChart() { // Make component async, remove the pro
       <div className="rounded-xl bg-gray-50 p-4">
         <div className="sm:grid-cols-8 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">
           <div
-            className="mb-6 hidden flex-col justify-between text-xs text-[rgb(121,100,73)] sm:flex "
+            className="mb-6 hidden flex-col justify-between text-xs text-primary sm:flex "
             style={{ height: `${chartHeight}px` }}
           >
             {yAxisLabels.map((label) => (
@@ -83,7 +83,7 @@ export default function RevenueChart() { // Make component async, remove the pro
                   height: `${(chartHeight / topLabel) * day.revenue}px`,
                 }}
               ></div>
-              <p className="-rotate-90 text-sm text-[rgb(121,100,73)] sm:rotate-0">
+              <p className="-rotate-90 text-sm text-primary sm:rotate-0">
                 {day.weekday.slice(0, 3)}
               </p>
             </div>

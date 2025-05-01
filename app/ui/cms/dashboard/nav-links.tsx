@@ -26,7 +26,7 @@ export default function NavLinks({ onClickLink }: { onClickLink?: () => void }) 
             href={link.href}
             onClick={onClickLink}
             className={clsx(
-              'flex h-[48px] items-center gap-3 rounded-md p-3 text-base font-medium hover:bg-gray-100 text-[rgb(121,100,73)]',
+              'flex h-[48px] items-center gap-3 rounded-md p-3 text-base font-medium hover:bg-gray-100 text-primary',
               { 'bg-gray-200 ': pathname === link.href }
             )}
           >

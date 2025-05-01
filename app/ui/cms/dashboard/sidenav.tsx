@@ -15,7 +15,7 @@ export default function SideNav() {
       <div className="lg:hidden p-4">
         <button
           onClick={() => setOpen(true)}
-          className="text-2xl text-[rgb(121,100,73)]"
+          className="text-2xl text-primary"
         >
           <FaBars />
         </button>
@@ -42,7 +42,7 @@ export default function SideNav() {
         <div className="md:hidden mb-4 flex justify-end">
           <button
             onClick={() => setOpen(false)}
-            className="text-2xl text-[rgb(121,100,73)]"
+            className="text-2xl text-primary"
           >
             <FaTimes />
           </button>

@@ -4,7 +4,7 @@ import { FaFileContract, FaInfoCircle, FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/lib/redux/store";
 import { openAuthModal } from "@/app/lib/redux/authModal-slice";
-import OrderDetailModal from "@/app/ui/modals/app/order/orderDetail-modal";
+import OrderDetailModal from "@/app/ui/modals/orderDetail-modal";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Cookies from "js-cookie";
 import { Order, OrderItem } from "@/app/lib/definitions";
@@ -70,7 +70,7 @@ const OrderModal = () => {
     <>
       <button
         onClick={() => handleClick()}
-        className="text-[rgb(121,100,73)] text-lg transition-transform duration-300 hover:scale-110"
+        className="text-primary text-lg transition-transform duration-300 hover:scale-110"
       >
         <FaFileContract />
       </button>
@@ -81,7 +81,7 @@ const OrderModal = () => {
         <div className="fixed inset-0 flex justify-center items-center p-4">
           <DialogPanel className="bg-white rounded-lg shadow-lg w-[90vw] md:w-[80vw] lg:w-[70vw] p-6">
             <div className="flex justify-between items-center mb-4">
-              <DialogTitle className="text-2xl font-semibold text-[rgb(121,100,73)]">Thông tin đơn hàng  </DialogTitle>
+              <DialogTitle className="text-2xl font-semibold text-primary">Thông tin đơn hàng  </DialogTitle>
               <button onClick={() => setModalState(null)}>
                 <FaTimes className="text-gray-600 text-xl hover:text-red-500" />
               </button>
@@ -94,7 +94,7 @@ const OrderModal = () => {
                   <p className="mt-2 text-sm text-gray-600">Đang tải đơn hàng...</p>
                 </div>
               ) : orders.length === 0 ? (
-                <p className="text-center text-[rgb(121,100,73)] ">Bạn không có đơn hàng nào</p>
+                <p className="text-center text-primary ">Bạn không có đơn hàng nào</p>
               ) : (
                 orders.map((item: Order) => (
                   <div key={item.id}>

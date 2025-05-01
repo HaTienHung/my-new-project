@@ -12,7 +12,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
   return (
     <Provider store={store}>
       <Header />
-      <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
+      <div className="container mx-auto px-4 py-10 text-primary">
         <h1 className="text-2xl font-bold mb-10">Danh Sách Sản Phẩm Mới Nhất</h1>
         <ProductList products={products} />
         <div className='flex items-center justify-center '>

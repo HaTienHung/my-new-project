@@ -80,7 +80,7 @@ export function Card({
   const Icon = iconMap[type];
 
   return (
-    <div className="rounded-xl bg-gray-50 p-2 shadow-sm text-[rgb(121,100,73)]">
+    <div className="rounded-xl bg-gray-50 p-2 shadow-sm text-primary">
       <div className="flex p-4">
         {Icon ? <Icon className="h-5 w-5  " /> : null}
         <h3 className="ml-2 text-sm font-medium ">{title}</h3>

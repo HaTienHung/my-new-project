@@ -1,6 +1,12 @@
 import { getProductsByCategory } from "@/app/lib/data";
 import ClientProductPagination from "./product-pagination";
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Danh mục',
+};
+
 type tParams = Promise<{ slug: string }>;
 type tSearchParams = Promise<Record<string, string>>;
 
@@ -17,7 +23,7 @@ export default async function Page({
   const initialData = await getProductsByCategory(slug, initialPage)
   // console.log(products);
   return (
-    <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
+    <div className="container mx-auto px-4 py-10 text-primary">
       <div>
         <ClientProductPagination
           slug={slug}

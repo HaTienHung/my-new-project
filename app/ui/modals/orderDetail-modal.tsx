@@ -1,4 +1,3 @@
-// components/ProductModal.tsx
 import { OrderItem } from "@/app/lib/definitions";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import React from "react";
@@ -24,7 +23,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
         <DialogPanel className="bg-white rounded-lg shadow-lg w-[90vw] md:w-[80vw] lg:w-[70vw] p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-4">
-            <DialogTitle className="text-2xl font-semibold text-[rgb(121,100,73)]">
+            <DialogTitle className="text-2xl font-semibold text-primary">
               Chi tiết đơn hàng
             </DialogTitle>
             <button onClick={onClose}>

@@ -54,7 +54,7 @@ export default function CMSLoginPage() {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 text-[rgb(121,100,73)]">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 text-primary">
       <form
         onSubmit={handleLogin}
         className="bg-white p-6 rounded-lg shadow-md w-[90vw] sm:w-[80vw] md:w-[450px]"

@@ -34,7 +34,7 @@ const Header = () => {
         </div>
 
         {/* Main header */}
-        <div className="bg-gray-100 text-[rgb(121,100,73)] py-3">
+        <div className="bg-gray-100 text-primary py-3">
           <div className="container mx-auto flex items-center justify-between px-4">
             {/* Hiện logo NextJS trên desktop */}
             <Link href={"/"} className="cursor-pointer hidden md:block">
@@ -97,7 +97,7 @@ const Header = () => {
           </div>
         </div>
         {/* Bottom Header */}
-        <div className="bg-gray-100 text-[rgb(121,100,73)] pb-3 hidden md:block">
+        <div className="bg-gray-100 text-primary pb-3 hidden md:block">
           <div className="container mx-auto items-center justify-between px-4">
             <div className="flex">
               {/* Danh mục trên desktop */}
@@ -112,7 +112,7 @@ const Header = () => {
                 <FaAngleDown className="text-sm" />
               </div>
               <div
-                className={`absolute top-full mt-1 w-56 bg-gray-100 text-[rgb(121,100,73)] p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-1
+                className={`absolute top-full mt-1 w-56 bg-gray-100 text-primary p-4 space-y-2 shadow-lg transition-transform duration-300 ease-in-out z-1
           ${showMenu ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"}`}
               >
                 {categories.map((category: Category) => (

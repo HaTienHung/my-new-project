@@ -57,7 +57,7 @@ export default function InventoryDetailModal({
       <div className="fixed inset-0 flex items-center justify-center px-4">
         <DialogPanel className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-lg bg-white p-4 shadow-lg relative">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-base md:text-lg font-semibold mb-4 text-[rgb(121,100,73)]">
+            <DialogTitle className="text-base md:text-lg font-semibold mb-4 text-primary">
               Chi tiết lịch sử kho
             </DialogTitle>
             <ExportButton onClick={() => { }} loading={false} className="mr-8 mb-4 text-xs sm:text-sm px-2 sm:px-4" />

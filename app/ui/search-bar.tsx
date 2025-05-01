@@ -27,13 +27,13 @@ export default function SearchBar() {
         placeholder="Nhập sản phẩm cần tìm..."
         value={formSearch.search}
         onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
-        className="flex-1 px-4 py-3 sm:py-2 h-full outline-none text-[rgb(121,100,73)] bg-transparent text-base md:text-sm"
+        className="flex-1 px-4 py-3 sm:py-2 h-full outline-none text-primary bg-transparent text-base md:text-sm"
       />
 
       {/* Button tìm kiếm */}
       <button
         type="submit"
-        className="text-[rgb(121,100,73)] px-4 md:py-2 py-4 flex items-center bg-gray-200 hover:bg-[rgb(121,100,73)] hover:text-white transition-all duration-300 "
+        className="text-primary px-4 md:py-2 py-4 flex items-center bg-gray-200 hover:bg-[rgb(121,100,73)] hover:text-white transition-all duration-300 "
       >
         <span className="hidden md:inline">Tìm kiếm</span>
         <FaSearch className="md:ml-2" />

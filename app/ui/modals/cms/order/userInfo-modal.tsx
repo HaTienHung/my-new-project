@@ -19,7 +19,7 @@ const UserInfoModal: React.FC<UserInfoModalProps> = ({ isOpen, onClose, user }) 
       <div className="flex items-center justify-center min-h-screen px-4">
         <DialogPanel className="w-full max-w-lg bg-white rounded-xl p-6 shadow-xl relative">
           <div className="flex justify-between items-center mb-4">
-            <DialogTitle className="text-2xl font-semibold text-[rgb(121,100,73)]">
+            <DialogTitle className="text-2xl font-semibold text-primary">
               Thông tin khách hàng
             </DialogTitle>
             <button onClick={onClose}>

@@ -53,7 +53,7 @@ export default function LatestInvoices() {
   if (isLoading) return <LatestInvoicesSkeleton />
 
   return (
-    <div className="flex w-full flex-col md:col-span-4 text-[rgb(121,100,73)]">
+    <div className="flex w-full flex-col md:col-span-4 text-primary">
       <h2 className={`mb-4 text-xl md:text-2xl`}>
         Danh sách đơn hàng mới nhất
       </h2>

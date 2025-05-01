@@ -39,12 +39,12 @@ export default function AllProducts() {
   }, [formSearch.page]);  // Theo dõi sự thay đổi của formSearch.page
 
   return (
-    <div className="container mx-auto px-4 py-10 text-[rgb(121,100,73)]">
+    <div className="container mx-auto px-4 py-10 text-primary">
       <div className="pb-4 flex justify-end">
         <div className="flex gap-2 border border-solid  rounded-lg cursor-pointer items-center p-2 box-border select-none" onClick={toggleDropdown}>
           <span className="text-sm md:text-base ">Lọc</span>
           <FaFilter
-            className="text-[rgb(121,100,73)] text-sm md:text-base cursor-pointer"
+            className="text-primary text-sm md:text-base cursor-pointer"
           />
         </div>
       </div>

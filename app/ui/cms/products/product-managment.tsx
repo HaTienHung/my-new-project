@@ -63,7 +63,7 @@ export default function ProductMagmamemt() {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold mb-4 text-[rgb(121,100,73)]">Quản lí sản phẩm</h1>
+      <h1 className="text-2xl font-semibold mb-4 text-primary">Quản lí sản phẩm</h1>
       <div className="mb-4">
         <form
           onSubmit={handleSubmit}
@@ -86,7 +86,7 @@ export default function ProductMagmamemt() {
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
             placeholder="Tìm kiếm theo tên sản phẩm..."
-            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-base sm:text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           {/* Danh mục */}
@@ -121,7 +121,7 @@ export default function ProductMagmamemt() {
             value={formSearch.minPrice || ""}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, minPrice: e.target.value }))}
             placeholder="Giá từ (VNĐ)"
-            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-base sm:text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           <input
@@ -129,7 +129,7 @@ export default function ProductMagmamemt() {
             value={formSearch.maxPrice || ""}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, maxPrice: e.target.value }))}
             placeholder="Giá đến (VNĐ)"
-            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-base sm:text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           {/* Nút tìm kiếm */}
@@ -185,13 +185,13 @@ export default function ProductMagmamemt() {
                   </td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3">
                     <button
-                      className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-blue-600 transition"
+                      className="flex items-center gap-1 text-primary hover:text-blue-600 transition"
                       onClick={() => handleEdit(product.id)}
                     >
                       <FaEdit className="text-sm" />
                       Sửa
                     </button>
-                    <button className="flex items-center gap-1 text-[rgb(121,100,73)] hover:text-red-600 transition"
+                    <button className="flex items-center gap-1 text-primary hover:text-red-600 transition"
                       onClick={() => handleDelete(product.id)}>
                       <FaTrash className="text-sm" />
                       Xoá

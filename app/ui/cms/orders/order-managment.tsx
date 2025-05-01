@@ -5,7 +5,7 @@ import { Order, OrderItem, User } from "@/app/lib/definitions";
 import { OrderTableSkeleton } from "@/app/ui/skeletons";
 import { useState } from "react";
 import UpdateOrderStatusModal from "../../modals/cms/order/updateStatus-modal";
-import OrderDetailModal from "../../modals/app/order/orderDetail-modal";
+import OrderDetailModal from "../../modals/orderDetail-modal";
 import UserInfoModal from "../../modals/cms/order/userInfo-modal";
 import { saveAs } from 'file-saver';
 import Cookies from "js-cookie";
@@ -80,7 +80,7 @@ export default function OrderManagment() {
   }
   return (
     <>
-      <h1 className="text-2xl font-semibold mb-4 text-[rgb(121,100,73)]">Quản lí đơn hàng</h1>
+      <h1 className="text-2xl font-semibold mb-4 text-primary">Quản lí đơn hàng</h1>
       <div className="mb-4">
         <form
           onSubmit={handleSubmit}
@@ -104,7 +104,7 @@ export default function OrderManagment() {
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
             placeholder="Tìm kiếm theo tên khách hàng..."
-            className=" border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className=" border border-solid border-gray-300 rounded-xl h-10 px-4 text-base sm:text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           {/* Danh mục */}
@@ -169,7 +169,7 @@ export default function OrderManagment() {
                       onClick={() => openUserInfo(order.user)}
                       className="inline-bloack md:hidden"
                     >
-                      <FaInfoCircle className="hover:scale-110 transition-transform text-[rgb(121,100,73)]" />
+                      <FaInfoCircle className="hover:scale-110 transition-transform text-primary" />
                     </button>
                   </div>
                 </td>
@@ -201,7 +201,7 @@ export default function OrderManagment() {
                     <span className="hidden sm:inline">Cập nhật</span>
                   </button>
                   <button onClick={() => openOrderDetailModal(order.items)}>
-                    <FaInfoCircle className="hover:scale-110 transition-transform text-[rgb(121,100,73)]" />
+                    <FaInfoCircle className="hover:scale-110 transition-transform text-primary" />
                   </button>
                 </td>
               </tr>

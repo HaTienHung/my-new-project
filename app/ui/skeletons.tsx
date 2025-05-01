@@ -191,7 +191,7 @@ export default function DashboardSkeleton() {
 }
 export function RevenueChartSkeleton() {
   return (
-    <div className="w-full md:col-span-4 text-[rgb(121,100,73)] animate-pulse">
+    <div className="w-full md:col-span-4 text-primary animate-pulse">
       <h2 className="mb-4 text-xl md:text-2xl bg-gray-300 h-6 w-48 rounded" />
 
       <div className="rounded-xl bg-gray-50 p-4">
