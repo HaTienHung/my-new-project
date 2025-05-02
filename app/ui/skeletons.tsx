@@ -29,7 +29,7 @@ export function LatestInvoicesSkeleton() {
       className={`relative flex w-full flex-col overflow-hidden md:col-span-4 animate-pulse`}
     >
       <div className="mb-4 h-6 w-36 rounded-md bg-gray-300" />
-      <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
+      <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         <div className="bg-white px-6">
           <InvoiceSkeleton />
           <InvoiceSkeleton />
@@ -195,7 +195,7 @@ export function RevenueChartSkeleton() {
       <h2 className="mb-4 text-xl md:text-2xl bg-gray-300 h-6 w-48 rounded" />
 
       <div className="rounded-xl bg-gray-50 p-4">
-        <div className="sm:grid-cols-8 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">
+        <div className="grid-cols-7 sm:grid-cols-8 mt-0 grid items-end gap-2 rounded-md bg-white p-4 md:gap-4">
           {/* Y-axis (ẩn ở mobile) */}
           <div
             className="mb-6 hidden flex-col justify-between sm:flex"
