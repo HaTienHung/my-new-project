@@ -80,7 +80,7 @@ const UpdateOrderStatusModal: React.FC<UpdateOrderStatusModalProps> = ({
     <Dialog open={true} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4">
         <DialogPanel className="w-full max-w-lg bg-white rounded-xl p-6 shadow-xl relative">
-          <DialogTitle className="text-lg font-semibold mb-4">Chỉnh sửa trạng thái</DialogTitle>
+          <DialogTitle className="text-base md:text-xl font-semibold mb-4">Chỉnh sửa trạng thái</DialogTitle>
 
           {loading ? (
             <div className="text-center py-10">Đang tải dữ liệu...</div>

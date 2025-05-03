@@ -6,7 +6,7 @@ import { CategoryTableSkeleton, } from "@/app/ui/skeletons";
 import { useState } from "react";
 import EditCategoryModal from "../../modals/cms/category/editCategory-modal";
 import CreateCategoryModal from "../../modals/cms/category/createCategory";
-import DeleteModal from "../../modals/cms/deleteProduct-modal";
+import DeleteModal from "../../modals/cms/delete-modal";
 import SubmitButton from "../../components/submit-button";
 import AddButton from "../../components/add-button";
 

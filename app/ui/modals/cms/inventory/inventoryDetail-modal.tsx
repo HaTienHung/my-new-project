@@ -56,18 +56,14 @@ export default function InventoryDetailModal({
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 flex items-center justify-center px-4">
         <DialogPanel className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-lg bg-white p-4 shadow-lg relative">
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-base md:text-lg font-semibold mb-4 text-primary">
+          <div className="flex justify-between items-center mb-4">
+            <DialogTitle className="text-base md:text-xl font-semibold text-primary">
               Chi tiết lịch sử kho
             </DialogTitle>
-            <ExportButton onClick={() => { }} loading={false} className="mr-8 mb-4 text-xs sm:text-sm px-2 sm:px-4" />
+            <button onClick={onClose}>
+              <FaTimes className="text-gray-600 text-xl hover:text-red-500" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition"
-          >
-            <FaTimes />
-          </button>
           {loading ? (
             <div className="text-center text-gray-600 py-10">
               Đang tải dữ liệu...
@@ -93,10 +89,10 @@ export default function InventoryDetailModal({
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {transactions.map((txn: Transaction, index) => (
-                    <tr key={index}>
+                    <tr key={index} className="text-xs sm:text-sm md:text-base">
                       <td className="px-4 py-2">{index + 1}</td>
-                      <td className="sm:px-4 px-1  py-2">{txn.quantity}</td>
-                      <td className="px-2 py-2">
+                      <td className="sm:px-4 px-1 py-2">{txn.quantity}</td>
+                      <td className="px-1 py-2">
                         <span
                           className={`px-2 py-1 rounded text-white sm:text-xs md:text-sm text-[10px] ${txn.type === "import"
                             ? "bg-green-500"

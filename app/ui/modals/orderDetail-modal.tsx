@@ -23,7 +23,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
         <DialogPanel className="bg-white rounded-lg shadow-lg w-[90vw] md:w-[80vw] lg:w-[70vw] p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-4">
-            <DialogTitle className="text-2xl font-semibold text-primary">
+            <DialogTitle className="text-base md:text-xl font-semibold text-primary">
               Chi tiết đơn hàng
             </DialogTitle>
             <button onClick={onClose}>
@@ -35,7 +35,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
           {products.length === 0 ? (
             <p className="text-center">Không có sản phẩm trong đơn này</p>
           ) : (
-            <table className="w-full border border-collapse text-sm sm:textbase ">
+            <table className="w-full border border-collapse text-xs sm:text-sm md:text-base ">
               <thead>
                 <tr className="bg-gray-100 text-primary">
                   <th className="p-2 border">STT</th>
@@ -46,7 +46,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ isOpen, onClose, pr
               </thead>
               <tbody>
                 {products.map((product: OrderItem, index: number) => (
-                  <tr key={index} className="hover:bg-gray-50 text-sm sm:textbase ">
+                  <tr key={index} className="hover:bg-gray-50 text-xs sm:text-sm md:text-base ">
                     <td className="p-2 border text-center">{index + 1}</td>
                     <td className="p-2 border">{product.product_name}</td>
                     <td className="p-2 border text-center">{product.quantity}</td>

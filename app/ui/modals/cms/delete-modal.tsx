@@ -49,7 +49,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
     <Dialog open={true} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4">
         <DialogPanel className="w-full max-w-md bg-white rounded-2xl p-6 shadow-2xl relative">
-          <DialogTitle className="text-xl font-bold text-gray-800 mb-4">
+          <DialogTitle className="text-base md:text-xl font-bold  mb-4 text-primary">
             {title}
           </DialogTitle>
           <p className="text-gray-600 mb-6">

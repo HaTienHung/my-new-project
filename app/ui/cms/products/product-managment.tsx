@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
 import CreateProductModal from "../../modals/cms/product/createProduct-modal";
 import Pagination from "../../pagination";
-import DeleteModal from "../../modals/cms/deleteProduct-modal";
+import DeleteModal from "../../modals/cms/delete-modal";
 import SubmitButton from "../../components/submit-button";
 import AddButton from "../../components/add-button";
 
