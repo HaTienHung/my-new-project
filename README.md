@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 My E-commerce Project
 
-## Getting Started
+Ứng dụng web thương mại điện tử full-stack với các tính năng quản lý người dùng, giỏ hàng, sản phẩm và theo dõi tồn kho.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔗 Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Frontend**: [My E-commerce Project - Frontend](https://my-new-project-three-phi.vercel.app) (Trang sản phẩm)
+- **Frontend**: [My E-commerce Project - Frontend](https://my-new-project-three-phi.vercel.app/cms/dashboard) (Trang quản lí)
+- **API Docs (Swagger)**: [Swagger API Docs](https://13022025-production.up.railway.app/docs)
+- 👉 Mở [Swagger Editor](https://editor.swagger.io), chọn "File > Import URL", rồi dán link JSON vào để test API.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 👤 Tài khoản demo
 
-## Learn More
+| **Role**  | **Email**         | **Mật khẩu** |
+| --------- | ----------------- | ------------ |
+| **Admin** | admin01@gmail.com | 12345678     |
+| **User**  | user01@gmail.com  | 12345678     |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧩 Tính năng chính
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- ✅ **Đăng nhập / Đăng ký**
+- ✅ **Phân quyền người dùng**: **Admin / User**
+- ✅ **Giỏ hàng**: Thêm, xoá, và sửa số lượng sản phẩm trong giỏ.
+- ✅ **Đặt hàng**: Người dùng đặt hàng từ giỏ hàng.
+- ✅ **Quản lý**:
+  - **Sản phẩm**
+  - **Đơn hàng**
+  - **Tồn kho** (inventory tracking)
+- ✅ **Tìm kiếm**, **Phân trang**, và **Lọc sản phẩm**
+- ✅ **Swagger API**: Được tích hợp để test API trực tiếp
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Công nghệ sử dụng
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend**: Next.js, Redux, TailwindCSS
+- **Backend**: Laravel 11, MySQL, REST API
+- **Authentication**: JWT
+- **Deployment**: Vercel (Frontend), Railway (Backend)
+- **API Documentation**: Swagger (OpenAPI 3)
+
+---
+
+## 📦 Kiến trúc hệ thống
+
+- **Frontend** và **Backend** được tách biệt rõ ràng
+- Backend sử dụng kiến trúc **Repository Pattern** kết hợp **Service Layer**
+- Frontend sử dụng **App Router** với **SSR (Server Side Rendering)** và **CSR (Client Side Rendering)**
+- Có **middleware** cho việc phân quyền người dùng
+- **Giỏ hàng** lưu trữ theo user, và được **convert thành đơn hàng** khi người dùng đặt hàng
+
+---
+
+## 📎 Ghi chú
+
+> Ứng dụng có thể hơi chậm do phải cold start. Mong anh/chị thông cảm.
+> """
