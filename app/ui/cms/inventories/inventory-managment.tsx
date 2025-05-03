@@ -10,12 +10,15 @@ import InventoryDetailModal from "../../modals/cms/inventory/inventoryDetail-mod
 import Pagination from "../../pagination";
 import SubmitButton from "@/app/ui/components/submit-button";
 import ExportButton from "../../components/export-button";
+import Cookies from "js-cookie";
+import { saveAs } from "file-saver";
+import { toast } from "react-toastify";
 
 export default function InventoryManagment() {
   const [productId, setProductId] = useState<number | null>(null);
   const [showInventoryDetail, setShowInventoryDetail] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  const litmit = 8;
+  const [loading, setLoading] = useState(false);
+  const perPage = 12;
 
   const handleViewDetail = (productId: number) => {
     setProductId(productId);
@@ -43,14 +46,10 @@ export default function InventoryManagment() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formSearch.page !== 1) {
-      // Reset page về 1 sẽ tự động trigger submitFilters từ useEffect
       setFormSearch((prev) => ({ ...prev, page: 1 }));
     } else {
-      // Nếu đã là page 1 thì submit luôn
-      // setLoading(true);
       submitFilters();
     }
-    // setLoading(false);
   };
 
   const handleAdd = (id: number) => {
@@ -62,6 +61,34 @@ export default function InventoryManagment() {
       ...prev,
       page // Cập nhật lại giá trị page
     }));
+  };
+
+  const handleExport = async () => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    const token = Cookies.get('token');
+    setLoading(true);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/inventories/stock-report/export-excel`, {
+        headers: {
+          method: "GET",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Export failed');
+      }
+
+      const blob = await response.blob();
+      saveAs(blob, `${formattedDate}-exported-data.xlsx`);
+      toast.success("Xuất file Exel thành công!"); // hoặc đổi tên file theo ý bạn
+    } catch (error) {
+      console.error(error);
+      alert('Có lỗi xảy ra khi export');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -102,7 +129,7 @@ export default function InventoryManagment() {
           </div>
         </form>
         <div className="sm:col-span-2 flex gap-4 justify-start  ">
-          <ExportButton onClick={() => { }} loading={false} />
+          <ExportButton onClick={handleExport} loading={loading} />
         </div>
       </div>
       <div className="overflow-x-auto rounded-xl shadow-md">
@@ -121,7 +148,7 @@ export default function InventoryManagment() {
             ) : (
               inventories.map((inventory: Inventory, i: number) => (
                 <tr key={inventory.product_id} className="hover:bg-gray-50 transition">
-                  <td className="px-4 py-3 text-sm">{(currentPage - 1) * litmit + i + 1}</td>
+                  <td className="px-4 py-3 text-sm">{(currentPage - 1) * perPage + i + 1}</td>
                   <td className="px-4 py-3 text-sm">{inventory.product_name}</td>
                   <td className="px-4 py-3 text-sm hidden md:table-cell">{inventory.stock}</td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3 items-center">
