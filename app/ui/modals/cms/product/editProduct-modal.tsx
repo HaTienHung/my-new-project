@@ -4,6 +4,7 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { Category, Product } from "@/app/lib/definitions";
+import Image from 'next/image'
 
 interface EditProductModalProps {
   id: number;
@@ -131,10 +132,12 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Ảnh hiện tại
                   </label>
-                  <img
+                  <Image
                     src={product.image_url}
                     alt="Ảnh sản phẩm"
-                    className="mx-auto h-32 md:h-34 object-contain rounded border shadow-lg"
+                    width={128}
+                    height={128} // tương đương h-32 (8rem)
+                    className="mx-auto rounded border border-solid border-primary shadow-lg"
                   />
                 </div>
               )}

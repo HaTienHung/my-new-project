@@ -8,6 +8,8 @@ import { RootState } from "@/app/lib/redux/store";
 import { openAuthModal } from "@/app/lib/redux/authModal-slice";
 import Cookies from "js-cookie";
 import { Product } from "@/app/lib/definitions";
+import Image from 'next/image';
+import { FaMinus, FaPlus } from "react-icons/fa6";
 
 
 const ProductDetail = ({ product }: { product: Product }) => {
@@ -55,9 +57,11 @@ const ProductDetail = ({ product }: { product: Product }) => {
         {/* Hình ảnh sản phẩm - mở rộng tối đa */}
         <div className="flex-1 rounded-lg flex justify-center items-center border-[1.5px] bg-white">
           <div className="max-w-[600px] w-full bg-white p-6 rounded-lg">
-            <img
+            <Image
               src={product.image_url}
               alt="Product Name"
+              width={500}
+              height={300}
               className="w-full h-auto rounded-lg object-cover"
             />
           </div>
@@ -74,21 +78,21 @@ const ProductDetail = ({ product }: { product: Product }) => {
           {/* Số lượng */}
           <div className="flex items-center mt-6">
             <span className="mr-4 font-medium">Quantity</span>
-            <div className="flex items-center border border-solid border-[rgb(121,100,73)] rounded-lg px-5 py-2 gap-2 justify-center">
+            <div className="flex items-center border border-solid border-[rgb(121,100,73)] rounded-lg px-6 py-2 gap-3 justify-center">
               <button
-                className="text-primary hover:text-gray-900 px-1"
+                className="text-primary "
                 onClick={handleDecrease}
               >
-                −
+                <FaMinus className="text-sm" />
               </button>
               <span className="px-3 font-medium flex justify-center w-[24px]">
                 {quantity}
               </span>
               <button
-                className={`text-primary hover:text-gray-900 px-1`}
+                className={`text-primary`}
                 onClick={handleIncrease}
               >
-                +
+                <FaPlus className="text-sm" />
               </button>
             </div>
           </div>

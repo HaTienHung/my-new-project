@@ -9,6 +9,7 @@ import { removeFromCart } from "@/app/lib/redux/cart-slice";
 import Cookies from "js-cookie";
 import { Product } from "@/app/lib/definitions";
 import Link from "next/link";
+import Image from 'next/image';
 
 
 const Cart = () => {
@@ -96,18 +97,31 @@ const Cart = () => {
     updateTimeoutRef.current = setTimeout(() => {
       // Gọi hàm updateCartOnSever để cập nhật giỏ hàng lên server
       updateCartOnSever(id, newQuantity);
-    }, 1500); // 1.5 giây
+    }, 1000); // 1 giây
   };
 
   const handleDecrease = (id: number) => {
-    const updatedCart = cartItems.map((item) =>
-      item.product.id === id && item.quantity > 1
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
-    );
+    let newQuantity = 0;
+    const updatedCart = cartItems.map((item) => {
+      if (item.product.id === id) {
+        newQuantity = item.quantity - 1;
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
     // console.log(updatedCart);
     setCartItems(updatedCart);
     dispatch(decreaseQuantity({ product_id: id }));
+    // Nếu có timeout cũ, hủy nó đi
+    if (updateTimeoutRef.current) {
+      clearTimeout(updateTimeoutRef.current);
+    }
+
+    // Đặt timeout mới để gọi updateCartOnSever sau 1.5 giây nếu không có thao tác nữa
+    updateTimeoutRef.current = setTimeout(() => {
+      // Gọi hàm updateCartOnSever để cập nhật giỏ hàng lên server
+      updateCartOnSever(id, newQuantity);
+    }, 1000); // 1 giây
   };
   const updateCartOnSever = async (productId: number, quantity: number) => {
     try {
@@ -128,7 +142,7 @@ const Cart = () => {
       });
 
       if (res.ok) {
-        toast.success("Sản phẩm đã được cập nhật thành công!");
+        toast.success("Cập nhật số lượng thành công!");
         // Sau khi xóa thành công, cập nhật lại giỏ hàng
         // setCartItems(cartItems.filter(item => item.product.id !== productId));
         // dispatch(removeFromCart({ product_id: productId }));
@@ -202,20 +216,26 @@ const Cart = () => {
           {/* Danh sách sản phẩm */}
           <section className="py-4 flex flex-col space-y-14 border-t border-b">
             {cartItems.map((item) => (
-              <div key={item.id} className="flex container mb-10">
+              <div key={item.id} className="flex container mx-auto mb-10">
                 {/* Hình ảnh sản phẩm */}
                 <div className="w-20 min-h-[100px] flex flex-col">
                   <div>
-                    <img src={"https://13demarzo.net/cdn/shop/files/FR25X18551.png?v=1742525628&width=600"} className="object-cover border rounded" />
+                    <Image
+                      src={item.product.image_url}
+                      alt={item.product.name || 'Product image'}
+                      width={300}
+                      height={300}
+                      className="border rounded border-solid border-primary"
+                    />
                   </div>
                   <div className="flex justify-center cursor-pointer mt-2">
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-center">
                       <button
                         onClick={() => handleDelete(item.product.id)}
                         disabled={loading}
-                        className="flex items-center cursor-pointer"
+                        className="flex items-center cursor-pointer text-sm sm:text-base"
                       >
-                        <FaTrashCan className="mr-2" />
+                        <FaTrashCan className="mr-2 text-sm sm:text-base" />
                         {loading ? "Đang xóa..." : "Xóa"}
                       </button>
                     </div>
@@ -225,14 +245,14 @@ const Cart = () => {
                 {/* Thông tin sản phẩm */}
                 <div className="ml-2 flex flex-grow">
                   {/* Phần mô tả sản phẩm (70%) */}
-                  <div className="w-[70%] pr-5">
-                    <h1 className="truncate font-bold text-lg">{item.product.name} </h1>
+                  <div className="w-[70%] pr-4">
+                    <h1 className="font-bold text-sm sm:text-lg leading-tight">{item.product.name}</h1>
                   </div>
 
                   {/* Phần giá và nút tăng giảm (30%) */}
                   <div className="w-[30%] flex flex-col items-end">
-                    <h1 className="mb-4 font-light">{item.product.price} VNĐ</h1>
-                    <div className="flex items-center space-x-2 border p-1 rounded-md">
+                    <h1 className="mb-4 font-light text-sm sm:text-base">{Number(item.product.price).toLocaleString()} VNĐ</h1>
+                    <div className="flex items-center space-x-1 sm:space-x-2 border sm:p-1 rounded-md justify-center ">
                       {/* Nút Giảm (-) */}
                       <button
                         className={`w-8 h-8 flex items-center justify-center rounded-md transition
@@ -248,7 +268,7 @@ const Cart = () => {
                       </button>
 
                       {/* Hiển thị số lượng */}
-                      <span className="text-lg font-semibold">{item.quantity}</span>
+                      <span className="text-sm sm:text-lg font-semibold flex justify-center w-4">{item.quantity}</span>
 
                       {/* Nút Tăng (+) */}
                       <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200"
@@ -265,10 +285,10 @@ const Cart = () => {
           {/* Tổng tiền và nút thanh toán */}
           <section className="">
             <div className="flex items-center justify-between mt-6">
-              <h2 className="text-xl font-semibold">
-                Tổng cộng: {cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0).toLocaleString()} VND
+              <h2 className="text-base md:text-xl font-semibold">
+                Tổng cộng: {cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0).toLocaleString()} VNĐ
               </h2>
-              <button className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600"
+              <button className="px-3 sm:px-6 py-3 text-sm sm:text-base bg-green-500 text-white rounded-md hover:bg-green-600 box-border"
                 onClick={() => handleCheckout()}>
                 Thanh toán
               </button>

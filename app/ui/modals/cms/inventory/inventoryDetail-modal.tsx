@@ -4,9 +4,9 @@ import { Transaction } from "@/app/lib/definitions";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
-import { FaTimes } from "react-icons/fa"; // Giả sử bạn có type riêng
+import { FaTimes } from "react-icons/fa"; 
 import Cookies from "js-cookie";
-import ExportButton from "@/app/ui/components/export-button";
+
 
 interface InventoryDetailModalProps {
   id: number,
