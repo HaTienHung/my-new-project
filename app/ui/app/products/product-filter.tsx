@@ -58,7 +58,7 @@ export default function ProductFilter({
         value={formSearch.minPrice || ""}
         onChange={(e) => setFormSearch((prev) => ({ ...prev, minPrice: e.target.value }))}
         placeholder="Giá từ (VNĐ)"
-        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-base sm:text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
       />
 
       {/* Giá đến */}
@@ -67,7 +67,7 @@ export default function ProductFilter({
         value={formSearch.maxPrice || ""}
         onChange={(e) => setFormSearch((prev) => ({ ...prev, maxPrice: e.target.value }))}
         placeholder="Giá đến (VNĐ)"
-        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-base sm:text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+        className="border border-solid  border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
       />
 
       {/* Nút tìm kiếm */}

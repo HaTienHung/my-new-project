@@ -42,7 +42,7 @@ export default function CategoryManament() {
       <div className="mb-4">
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mb-4"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mb-4 text-primary"
         >
           {/* Từ khoá tìm kiếm */}
           <input
@@ -50,7 +50,7 @@ export default function CategoryManament() {
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
             placeholder="Tìm kiếm theo tên danh mục..."
-            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-base sm:text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm  shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
           />
 
           {/* Sắp xếp */}
