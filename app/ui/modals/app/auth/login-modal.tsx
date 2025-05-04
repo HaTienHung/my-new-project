@@ -36,6 +36,7 @@ export default function LoginForm({
           e.preventDefault();
           onSubmit();
         }}
+        className="space-y-4"
       >
         <input
           ref={emailRef}
@@ -43,14 +44,14 @@ export default function LoginForm({
           placeholder="Email"
           value={email}
           onChange={(e) => onEmailChange(e.target.value)}
-          className="w-full p-2 border border-solid  border-gray-300 rounded mb-3 focus:ring-2 focus:ring-[rgb(121,100,73)] outline-none text-base"
+          className="w-full py-2 px-4 text-sm border border-solid  border-gray-300 rounded  focus:ring-2 focus:ring-[rgb(121,100,73)] outline-none "
         />
         <input
           type="password"
           placeholder="Mật khẩu"
           value={password}
           onChange={(e) => onPasswordChange(e.target.value)}
-          className="w-full p-2 border border-solid  border-gray-300 rounded mb-3 focus:ring-2 focus:ring-[rgb(121,100,73)] outline-none text-base"
+          className="w-full py-2 px-4 text-sm border border-solid  border-gray-300 rounded  focus:ring-2 focus:ring-[rgb(121,100,73)] outline-none "
         />
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
         <button className="w-full bg-primary text-white p-2 rounded" type="submit" disabled={loading}>
