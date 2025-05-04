@@ -3,6 +3,7 @@ import { inter } from "@/app/ui/font";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import type { Viewport } from 'next';
 
 
 
@@ -40,4 +41,9 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
