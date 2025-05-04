@@ -150,6 +150,7 @@ export default function AuthModal() {
                   onSubmit={(updatedData) => handleUpdateUser(user!.id, updatedData)}
                   onClose={() => setIsEditingUser(false)}
                   error={error}
+                  loading={loading}
                 />
               ) : (
                 <UserInfo

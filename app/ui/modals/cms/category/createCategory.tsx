@@ -97,7 +97,7 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-[rgb(121,100,73)] text-white hover:opacity-90"
+                className="px-4 py-2 rounded bg-primary text-white hover:opacity-90"
               >
                 Thêm
               </button>

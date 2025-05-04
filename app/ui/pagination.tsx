@@ -34,7 +34,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         <button
           key={index}
           className={`px-3 py-1 rounded-md border text-sm ${page === currentPage
-            ? 'bg-[rgb(121,100,73)] text-white'
+            ? 'bg-primary text-white'
             : typeof page === 'number'
               ? 'bg-white text-gray-800 hover:bg-gray-100'
               : 'bg-transparent text-gray-500 cursor-default'

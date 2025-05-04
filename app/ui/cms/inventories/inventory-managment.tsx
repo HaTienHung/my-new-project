@@ -153,7 +153,7 @@ export default function InventoryManagment() {
                   <td className="px-4 py-3 text-sm hidden md:table-cell">{inventory.stock}</td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3 items-center">
                     <button
-                      className="inline-flex items-center gap-1 bg-white text-sm text-primary font-medium px-3 py-2 rounded cursor-pointer transition border border-solid hover:bg-[rgb(121,100,73)] hover:text-white"
+                      className="inline-flex items-center gap-1 bg-white text-sm text-primary font-medium px-3 py-2 rounded cursor-pointer transition border border-solid hover:bg-primary hover:text-white"
                       onClick={() => handleAdd(inventory.product_id)}
                     >
                       Thêm vào kho

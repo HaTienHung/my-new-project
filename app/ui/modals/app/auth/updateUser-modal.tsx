@@ -6,9 +6,10 @@ interface UpdateUserFormProps {
   onSubmit: (updatedData: User) => void;
   onClose: () => void;
   error: string
+  loading: boolean;
 }
 
-export default function UpdateUserForm({ user, onSubmit, onClose, error }: UpdateUserFormProps) {
+export default function UpdateUserForm({ user, onSubmit, onClose, error, loading }: UpdateUserFormProps) {
   const [form, setForm] = useState({
     id: user.id,
     name: user.name,
@@ -63,8 +64,10 @@ export default function UpdateUserForm({ user, onSubmit, onClose, error }: Updat
         </div>
       </div>
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-      <button type="submit" className="w-full bg-primary text-white p-2 rounded">Lưu</button>
-      <button type="button" className="w-full bg-gray-300 text-black p-2 rounded" onClick={onClose}>Huỷ</button>
+      <button className="w-full  bg-primary text-white p-2 rounded" type="submit" disabled={loading}>
+        {loading ? "Đang cập nhật..." : "Cập nhật"}
+      </button>
+      <button type="button" className="w-full bg-gray-300 text-primary p-2 rounded" onClick={onClose}>Huỷ</button>
     </form>
   );
 }

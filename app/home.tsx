@@ -17,7 +17,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
         <ProductList products={products} />
         <div className='flex items-center justify-center '>
           <Link href="/products" className='box-border'>
-            <button className="border border-solid rounded-lg px-4 py-2 mt-10 hover:bg-[rgb(121,100,73)] hover:text-white">
+            <button className="border border-solid rounded-lg px-4 py-2 mt-10 hover:bg-primary hover:text-white">
               Xem toàn bộ
             </button>
           </Link>

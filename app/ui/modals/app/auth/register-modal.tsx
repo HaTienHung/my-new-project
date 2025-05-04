@@ -77,7 +77,7 @@ export default function RegisterForm({
         className="w-full p-2 border border-gray-300 rounded mb-3 focus:ring-2 focus:ring-[rgb(121,100,73)] outline-none"
       />
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-      <button className="w-full  bg-[rgb(121,100,73)] text-white p-2 rounded" onClick={onSubmit} disabled={loading}>
+      <button className="w-full  bg-primary text-white p-2 rounded" onClick={onSubmit} disabled={loading}>
         {loading ? "Đang đăng ký..." : "Đăng ký"}
       </button>
       <p className="text-center mt-2 text-sm">

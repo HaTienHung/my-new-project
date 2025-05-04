@@ -87,7 +87,7 @@ export default function CMSLoginPage() {
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <button
           type="submit"
-          className="w-full bg-[rgb(121,100,73)] text-white py-2 rounded hover:scale-102 transition-all duration-300"
+          className="w-full bg-primary text-white py-2 rounded hover:scale-102 transition-all duration-300"
           disabled={loading}
         >
           {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}

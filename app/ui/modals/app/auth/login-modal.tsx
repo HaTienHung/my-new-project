@@ -53,7 +53,7 @@ export default function LoginForm({
           className="w-full p-2 border border-solid  border-gray-300 rounded mb-3 focus:ring-2 focus:ring-[rgb(121,100,73)] outline-none text-base"
         />
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        <button className="w-full bg-[rgb(121,100,73)] text-white p-2 rounded" type="submit" disabled={loading}>
+        <button className="w-full bg-primary text-white p-2 rounded" type="submit" disabled={loading}>
           {loading ? "Đang đăng nhập..." : "Đăng nhập"}
         </button>
         <p className="text-center mt-2 text-sm">

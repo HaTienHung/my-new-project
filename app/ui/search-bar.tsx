@@ -33,7 +33,7 @@ export default function SearchBar() {
       {/* Button tìm kiếm */}
       <button
         type="submit"
-        className="text-primary px-4 md:py-2 py-4 flex items-center bg-gray-200 hover:bg-[rgb(121,100,73)] hover:text-white transition-all duration-300 "
+        className="text-primary px-4 md:py-2 py-4 flex items-center bg-gray-200 hover:bg-primary hover:text-white transition-all duration-300 "
       >
         <span className="hidden md:inline">Tìm kiếm</span>
         <FaSearch className="md:ml-2" />

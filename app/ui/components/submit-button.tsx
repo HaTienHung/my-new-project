@@ -14,7 +14,7 @@ const SubmitButton = ({
   return (
     <button
       type="submit"
-      className={`bg-[rgb(121,100,73)] hover:bg-opacity-90 text-white text-sm px-5 py-2 rounded-xl shadow transition-all duration-200 hover:underline cursor-pointer ${className} ${loading ? "disable" : " "}`}
+      className={`bg-primary hover:bg-opacity-90 text-white text-sm px-5 py-2 rounded-xl shadow transition-all duration-200 hover:underline cursor-pointer ${className} ${loading ? "disable" : " "}`}
     >
       {label}
     </button>

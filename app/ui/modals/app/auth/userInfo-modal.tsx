@@ -40,7 +40,7 @@ export default function UserInfo({ user, onLogout, onEdit }: UserInfoProps) {
           </div>
         </div>
       </div>
-      <button className="w-full bg-[rgb(121,100,73)] text-white p-2 rounded mt-4" onClick={onLogout}>
+      <button className="w-full bg-primary text-white p-2 rounded mt-4" onClick={onLogout}>
         Đăng xuất
       </button>
     </>
