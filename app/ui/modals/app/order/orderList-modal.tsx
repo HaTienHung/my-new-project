@@ -81,7 +81,7 @@ const OrderModal = () => {
         <div className="fixed inset-0 flex justify-center items-center p-4">
           <DialogPanel className="bg-white rounded-lg shadow-lg w-[90vw] md:w-[80vw] lg:w-[70vw] p-6">
             <div className="flex justify-between items-center mb-4">
-              <DialogTitle className="text-2xl font-semibold text-primary">Thông tin đơn hàng  </DialogTitle>
+              <DialogTitle className="text-base sm:text-xl  font-semibold text-primary">Thông tin đơn hàng  </DialogTitle>
               <button onClick={() => setModalState(null)}>
                 <FaTimes className="text-gray-600 text-xl hover:text-red-500" />
               </button>
@@ -98,7 +98,7 @@ const OrderModal = () => {
               ) : (
                 orders.map((item: Order) => (
                   <div key={item.id}>
-                    <table className="w-full border-collapse text-sm">
+                    <table className="w-full border-collapse text-sm ">
                       <thead>
                         <tr className="bg-gray-100 text-left">
                           <th className="p-2 border text-primary">Mã đơn hàng</th>
@@ -108,7 +108,7 @@ const OrderModal = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="hover:bg-gray-50">
+                        <tr className="hover:bg-gray-50 ">
                           <td className="p-2 border">{item.id}</td>
                           <td className="p-2 border">{Number(item.total_price).toLocaleString()} VNĐ</td>
                           <td className="p-2 border capitalize">{item.status}</td>

@@ -1,0 +1,70 @@
+import { User } from "@/app/lib/definitions";
+import { useState } from "react";
+
+interface UpdateUserFormProps {
+  user: User;
+  onSubmit: (updatedData: User) => void;
+  onClose: () => void;
+  error: string
+}
+
+export default function UpdateUserForm({ user, onSubmit, onClose, error }: UpdateUserFormProps) {
+  const [form, setForm] = useState({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    phone_number: user.phone_number ?? "",
+    address: user.address ?? "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(form);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-xl font-semibold text-center">Cập nhật thông tin</h2>
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="name">Tên</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Tên"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="phone_number">Số điện thoại</label>
+          <input
+            id="phone_number"
+            type="text"
+            placeholder="Số điện thoại"
+            value={form.phone_number}
+            onChange={(e) => setForm({ ...form, phone_number: e.target.value })}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="address">Địa chỉ</label>
+          <input
+            id="address"
+            type="text"
+            placeholder="Địa chỉ"
+            value={form.address}
+            onChange={(e) => setForm({ ...form, address: e.target.value })}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+      </div>
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+      <button type="submit" className="w-full bg-primary text-white p-2 rounded">Lưu</button>
+      <button type="button" className="w-full bg-gray-300 text-black p-2 rounded" onClick={onClose}>Huỷ</button>
+    </form>
+  );
+}

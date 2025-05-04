@@ -57,6 +57,7 @@ export type OrderItem = {
 };
 
 export type User = {
+  id: string,
   name: string;
   phone_number: string,
   address: string;

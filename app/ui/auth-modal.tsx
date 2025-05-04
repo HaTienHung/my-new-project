@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import LoginForm from "@/app/ui/modals/app/auth/login-modal";
 import RegisterForm from "@/app/ui/modals/app/auth/register-modal";
 import UserInfo from "@/app/ui/modals/app/auth/userInfo-modal";
+import EditUserForm from "@/app/ui/modals/app/auth/updateUser-modal";
 import { FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,16 +12,16 @@ import { loginSuccess, logout } from "../lib/redux/auth-slice";
 import { RootState } from "../lib/redux/store";
 import { closeAuthModal, openAuthModal } from "../lib/redux/authModal-slice";
 import Cookies from "js-cookie";
-
+import { User } from "../lib/definitions";
 
 export default function AuthModal() {
   const isOpen = useSelector((state: RootState) => state.authModal.isOpen);
   const [isLogin, setIsLogin] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isEditingUser, setIsEditingUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-
 
   const [form, setForm] = useState({
     name: "",
@@ -31,7 +32,7 @@ export default function AuthModal() {
     password_confirmation: "",
   });
 
-  const [user, setUser] = useState<null | typeof form>(null);
+  const [user, setUser] = useState<null | User>(null);
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -53,20 +54,16 @@ export default function AuthModal() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      // localStorage.setItem("token", data.data.token);
-      // localStorage.setItem("user", JSON.stringify(data.data.user));
-      const token = data.data.token;
-      const roleId = data.data.user.role_id;  // Lấy role_id từ response
-      const user = data.data.user;
 
-      // Lưu vào cookie
+      const token = data.data.token;
+      const user = data.data.user;
       Cookies.set("token", token);
-      Cookies.set("role_id", roleId.toString());
+      Cookies.set("role_id", user.role_id.toString());
       Cookies.set("user", JSON.stringify(user));
 
-      setUser(data.data.user);
+      setUser(user);
       setIsLoggedIn(true);
-      dispatch(loginSuccess({ user: data.data.user, token: data.data.token }));
+      dispatch(loginSuccess({ user, token }));
       toast.success("Đăng nhập thành công");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Có lỗi xảy ra!");
@@ -100,8 +97,36 @@ export default function AuthModal() {
     Cookies.remove("user");
     setUser(null);
     setIsLoggedIn(false);
-    toast.success("Đăng xuất thành công");
     dispatch(logout());
+    toast.success("Đăng xuất thành công");
+  };
+
+  const handleUpdateUser = async (id: string, updatedData: User) => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/users/update/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      toast.success("Cập nhật thông tin thành công");
+
+      setUser(data.data);
+      Cookies.set("user", JSON.stringify(data.data));
+      setIsEditingUser(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Cập nhật thất bại!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -120,7 +145,20 @@ export default function AuthModal() {
             onClick={(e) => e.stopPropagation()}
           >
             {isLoggedIn ? (
-              <UserInfo user={user} onLogout={handleLogout} />
+              isEditingUser ? (
+                <EditUserForm
+                  user={user!}
+                  onSubmit={(updatedData) => handleUpdateUser(user!.id, updatedData)}
+                  onClose={() => setIsEditingUser(false)}
+                  error={error}
+                />
+              ) : (
+                <UserInfo
+                  user={user}
+                  onEdit={() => setIsEditingUser(true)}
+                  onLogout={handleLogout}
+                />
+              )
             ) : isLogin ? (
               <LoginForm
                 email={form.email}
@@ -142,7 +180,7 @@ export default function AuthModal() {
                 switchToLogin={() => setIsLogin(true)}
               />
             )}
-            <button className="w-full mt-3 bg-gray-300 p-2 rounded" onClick={() => dispatch(closeAuthModal())}>
+            <button className={`w-full mt-3 bg-gray-300 p-2 rounded ${isEditingUser ? "hidden" : ""} `} onClick={() => dispatch(closeAuthModal())}>
               Đóng
             </button>
           </div>
