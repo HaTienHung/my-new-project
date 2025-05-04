@@ -62,3 +62,10 @@
 
 > Ứng dụng có thể hơi chậm do phải cold start. Mong anh/chị thông cảm.
 > """
+
+---
+
+## 🌐 Hỗ trợ trình duyệt
+
+> Ứng dụng hỗ trợ các trình duyệt : Safari 16.4+ , Google Chorme , ...
+> 
