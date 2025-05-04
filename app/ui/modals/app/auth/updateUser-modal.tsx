@@ -35,7 +35,7 @@ export default function UpdateUserForm({ user, onSubmit, onClose, error, loading
             placeholder="Tên"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded text-base"
           />
         </div>
 
@@ -47,7 +47,7 @@ export default function UpdateUserForm({ user, onSubmit, onClose, error, loading
             placeholder="Số điện thoại"
             value={form.phone_number}
             onChange={(e) => setForm({ ...form, phone_number: e.target.value })}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded text-base"
           />
         </div>
 
@@ -59,7 +59,7 @@ export default function UpdateUserForm({ user, onSubmit, onClose, error, loading
             placeholder="Địa chỉ"
             value={form.address}
             onChange={(e) => setForm({ ...form, address: e.target.value })}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded text-base"
           />
         </div>
       </div>

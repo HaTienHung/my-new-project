@@ -60,9 +60,6 @@ export default function CMSLoginPage() {
         className="bg-white p-6 rounded-lg shadow-md w-[90vw] sm:w-[80vw] md:w-[450px]"
       >
         <h2 className="text-xl sm:text-2xl font-bold text-center">Đăng nhập CMS</h2>
-
-
-
         <div className="mb-4">
           <label className="block text-sm mb-1">Email</label>
           <input
