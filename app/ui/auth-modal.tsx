@@ -128,7 +128,6 @@ export default function AuthModal() {
       setLoading(false);
     }
   };
-
   return (
     <>
       <button className="flex items-center text-lg" onClick={() => dispatch(openAuthModal())}>

@@ -37,12 +37,7 @@ export type Order = {
   id: number;
   total_price: number;
   status: string;
-  user: {
-    name: string;
-    phone_number: string,
-    address: string;
-    email: string,
-  }
+  user: User;
   items: {
     quantity: number;
     product_name: string,
