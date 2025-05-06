@@ -5,7 +5,8 @@ import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-import { Category } from "@/app/lib/definitions";
+import { Category, ValidationErrorResponse } from "@/app/lib/definitions";
+import { AxiosError } from "axios";
 
 interface CreateProductModalProps {
   onClose: () => void;
@@ -25,7 +26,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
   });
 
   const [categories, setCategories] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -70,8 +71,13 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
       onCreated();
       onClose();
       toast.success("Thêm sản phẩm thành công !");
-    } catch (error) {
-      console.error("Lỗi khi thêm sản phẩm:", error);
+    } catch (err) {
+      const error = err as AxiosError<ValidationErrorResponse>;
+
+      if (error.response?.status === 422) {
+        const validationErrors = error.response.data.error;
+        setErrors(validationErrors); 
+      }
     }
   };
 
@@ -152,7 +158,13 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
                 accept="image/*"
               />
             </div>
-
+            {Object.entries(errors).length > 0 && (
+              <p style={{ color: "red" }}>
+                {Object.entries(errors)
+                  .flatMap(([_, messages]) => messages)
+                  .join(" , ")}
+              </p>
+            )}
             {/* Nút hành động */}
             <div className="flex justify-end gap-2 pt-4">
               <button
@@ -170,7 +182,6 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
               </button>
             </div>
           </form>
-
         </DialogPanel>
       </div>
     </Dialog>

@@ -5,6 +5,8 @@ import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { ValidationErrorResponse } from "@/app/lib/definitions";
+import { AxiosError } from "axios";
 
 interface CreateCategoryModalProps {
   onClose: () => void;
@@ -20,7 +22,7 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({
     slug: "",
   });
 
-  // const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -49,9 +51,13 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({
       onCreated();
       onClose();
       toast.success("Tạo danh mục thành công !");
-    } catch (error) {
-      console.error('Đã có lỗi:', error);
-      throw new Error('Thêm danh mục thất bại.');
+    } catch (err) {
+      const error = err as AxiosError<ValidationErrorResponse>;
+
+      if (error.response?.status === 422) {
+        const validationErrors = error.response.data.error;
+        setErrors(validationErrors);
+      }
     }
   };
 
@@ -85,7 +91,13 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({
                 required
               />
             </div>
-
+            {Object.entries(errors).length > 0 && (
+              <p style={{ color: "red" }}>
+                {Object.entries(errors)
+                  .flatMap(([_, messages]) => messages)
+                  .join(" , ")}
+              </p>
+            )}
             {/* Nút hành động */}
             <div className="flex justify-end gap-2 pt-4">
               <button

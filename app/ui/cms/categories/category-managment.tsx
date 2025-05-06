@@ -1,5 +1,5 @@
 'use client';
-import { useCategories } from "@/app/hooks/useCategories"; // nhớ import đúng path nhé
+import { useCategories } from "@/app/hooks/useCategories"; 
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { Category } from "@/app/lib/definitions";
 import { CategoryTableSkeleton, } from "@/app/ui/skeletons";
@@ -50,14 +50,14 @@ export default function CategoryManament() {
             value={formSearch.search}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, search: e.target.value }))}
             placeholder="Tìm kiếm theo tên danh mục..."
-            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm  shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm  shadow-sm focus:border-primary outline-none w-full"
           />
 
           {/* Sắp xếp */}
           <select
             value={formSearch.sortBy}
             onChange={(e) => setFormSearch((prev) => ({ ...prev, sortBy: e.target.value }))}
-            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:ring-[rgb(121,100,73)] focus:border-[rgb(121,100,73)] w-full appearance-none"
+            className="border border-solid border-gray-300 rounded-xl h-10 px-4 text-sm shadow-sm focus:border-primary outline-none w-full appearance-none"
           >
             <option value="">-- Sắp xếp --</option>
             <option value="+name">Tên A-Z</option>
@@ -104,7 +104,7 @@ export default function CategoryManament() {
                   <td className="px-4 py-3 text-sm">{cat.name}</td>
                   <td className="px-4 py-3 text-sm hidden md:table-cell">{cat.slug}</td>
                   <td className="px-4 py-3 text-sm flex flex-col md:flex-row gap-2 md:gap-3">
-                    <button className="flex items-center gap-1 text-primary hover:text-blue-600 transition justify-center"
+                    <button className="flex items-center gap-1 text-primary hover:text-secondary transition justify-center"
                       onClick={() => handleEdit(cat.id)}>
                       <FaEdit className="text-sm" />
                       Sửa

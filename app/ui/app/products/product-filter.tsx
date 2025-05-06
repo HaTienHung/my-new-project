@@ -16,7 +16,7 @@ export default function ProductFilter({
 }: ProductFilterProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formSearch);
+    // console.log(formSearch);
     submitFilters();
   };
 

@@ -3,8 +3,9 @@ import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-import { Category, Product } from "@/app/lib/definitions";
+import { Category, Product, ValidationErrorResponse } from "@/app/lib/definitions";
 import Image from 'next/image'
+import { AxiosError } from "axios";
 
 interface EditProductModalProps {
   id: number;
@@ -33,6 +34,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState<Product | null>(null);
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -109,9 +111,13 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
       toast.success("Sửa sản phẩm thành công !");
       onUpdated();
       onClose();
-    } catch (error) {
-      console.error('Đã có lỗi:', error);
-      throw new Error('Cập nhật sản phẩm thất bại.');
+    } catch (err) {
+      const error = err as AxiosError<ValidationErrorResponse>;
+
+      if (error.response?.status === 422) {
+        const validationErrors = error.response.data.error;
+        setErrors(validationErrors);
+      }
     }
   };
 
@@ -218,7 +224,13 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
                   accept="image/*"
                 />
               </div>
-
+              {Object.entries(errors).length > 0 && (
+                <p style={{ color: "red" }}>
+                  {Object.entries(errors)
+                    .flatMap(([_, messages]) => messages)
+                    .join(" , ")}
+                </p>
+              )}
               {/* Nút hành động */}
               <div className="flex justify-end gap-2 pt-4">
                 <button

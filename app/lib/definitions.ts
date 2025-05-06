@@ -69,5 +69,10 @@ export type FormSearch = {
   page: number;
 }
 
-
+export type ValidationErrorResponse = {
+  error: {
+    [field: string]: string[];
+  };
+  status_code: number;
+}
 

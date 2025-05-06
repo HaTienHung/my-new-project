@@ -3,6 +3,8 @@ import axios from "axios";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { ValidationErrorResponse } from "@/app/lib/definitions";
+import { AxiosError } from "axios";
 
 interface EditCategoryModalProps {
   id: number;
@@ -24,6 +26,7 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
     slug: "",
   });
   const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -66,7 +69,6 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
-            // Không cần Content-Type, Axios tự set là application/json
           },
         }
       );
@@ -74,9 +76,13 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
       onUpdated();
       onClose();
       toast.success("Sửa danh mục thành công !");
-    } catch (error) {
-      console.error('Đã có lỗi:', error);
-      throw new Error('Cập nhật danh mục thất bại.');
+    } catch (err) {
+      const error = err as AxiosError<ValidationErrorResponse>;
+
+      if (error.response?.status === 422) {
+        const validationErrors = error.response.data.error;
+        setErrors(validationErrors);
+      }
     }
   };
 
@@ -114,7 +120,13 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
                   required
                 />
               </div>
-
+              {Object.entries(errors).length > 0 && (
+                <p style={{ color: "red" }}>
+                  {Object.entries(errors)
+                    .flatMap(([_, messages]) => messages)
+                    .join(" , ")}
+                </p>
+              )}
               {/* Nút hành động */}
               <div className="flex justify-end gap-2 pt-4">
                 <button
