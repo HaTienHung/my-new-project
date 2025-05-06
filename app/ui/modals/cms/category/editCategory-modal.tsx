@@ -123,7 +123,7 @@ const EditCategoryModal: React.FC<EditCategoryModalProps> = ({
               {Object.entries(errors).length > 0 && (
                 <p style={{ color: "red" }}>
                   {Object.entries(errors)
-                    .flatMap(([_, messages]) => messages)
+                    .flatMap(([, messages]) => messages)
                     .join(" , ")}
                 </p>
               )}
