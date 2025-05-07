@@ -1,6 +1,6 @@
 'use client'; // Đảm bảo là Client Component
 
-import { FaShoppingCart } from "react-icons/fa";
+import { RiShoppingBag2Fill } from "react-icons/ri";
 import { RootState } from "@/app/lib/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "@/app/lib/redux/authModal-slice";
@@ -21,11 +21,11 @@ export default function CartQuantity() {
   return (
     <Link
       href={isAuthenticated ? "/cart" : "#"}
-      className="relative text-lg transition-transform duration-300 hover:scale-110 flex items-center"
+      className="relative text-xl transition-transform duration-300 hover:scale-110 flex items-center"
       passHref
       onClick={handleCartClick}
     >
-      <FaShoppingCart />
+      <RiShoppingBag2Fill />
       {quantity > 0 && (
         <span className="absolute -top-2 -right-3 text-white bg-primary text-xs px-1.5 h-4 min-w-[10px] flex items-center justify-center rounded-lg leading-none">
           {quantity}
