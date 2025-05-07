@@ -8,6 +8,8 @@ import OrderDetailModal from "@/app/ui/modals/orderDetail-modal";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Cookies from "js-cookie";
 import { Order, OrderItem } from "@/app/lib/definitions";
+import { FaTrash } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 
 type ModalState = "orderList" | "productDetail" | null;
@@ -63,9 +65,32 @@ const OrderModal = () => {
       return;
     }
     else {
+      fetchOrders();
       setModalState("orderList");
     }
   }
+
+  const handleDelete = async (orderId: number) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/orders/delete/${orderId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${Cookies.get('token')}`,
+        },
+      });
+
+      if (res.ok) {
+        fetchOrders();
+        toast.success("Đơn hàng đã được xoá thành công!");
+      } else {
+        throw new Error("Không thể xóa đơn hàng");
+      }
+    } catch (error) {
+      toast.error("Xóa đơn hàng thất bại");
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <button
@@ -96,32 +121,53 @@ const OrderModal = () => {
               ) : orders.length === 0 ? (
                 <p className="text-center text-primary ">Bạn không có đơn hàng nào</p>
               ) : (
-                orders.map((item: Order) => (
-                  <div key={item.id}>
-                    <table className="w-full border-collapse text-sm ">
-                      <thead>
-                        <tr className="bg-gray-100 text-left">
-                          <th className="p-2 border text-primary">Mã đơn hàng</th>
-                          <th className="p-2 border text-primary">Tổng tiền</th>
-                          <th className="p-2 border text-primary">Trạng thái</th>
-                          <th className="p-2 border text-primary">Chi tiết</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="hover:bg-gray-50 ">
-                          <td className="p-2 border">{item.id}</td>
-                          <td className="p-2 border">{Number(item.total_price).toLocaleString()} VNĐ</td>
-                          <td className="p-2 border capitalize">{item.status}</td>
-                          <td className="p-2 border text-center">
-                            <button onClick={() => openProductModal(item.items)}>
-                              <FaInfoCircle className="hover:scale-110 transition-transform text-blue-600" />
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                ))
+                <table className="w-full border-collapse text-sm ">
+                  <thead>
+                    <tr className="bg-gray-100 text-left">
+                      <th className="p-2 border text-primary">Mã đơn hàng</th>
+                      <th className="p-2 border text-primary">Tổng tiền</th>
+                      <th className="p-2 border text-primary">Trạng thái</th>
+                      <th className="p-2 border text-primary text-center ">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((item: Order) => (
+                      <tr key={item.id} className="hover:bg-gray-50">
+                        <td className="p-2 border">{item.id}</td>
+                        <td className="p-2 border">
+                          {Number(item.total_price).toLocaleString()} VNĐ
+                        </td>
+                        <td className="p-2 border text-sm capitalize">
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${item.status === "completed"
+                              ? "bg-green-100 text-green-700"
+                              : item.status === "pending"
+                                ? "bg-yellow-100 text-yellow-700"
+                                : item.status === "canceled"
+                                  ? "bg-red-100 text-red-700"
+                                  : "bg-gray-100 text-gray-700"
+                              }`}
+                          >
+                            {item.status}
+                          </span>
+                        </td>
+                        <td className="p-2 border text-center space-x-2 md:space-x-3">
+                          <button onClick={() => openProductModal(item.items)}>
+                            <FaInfoCircle className="hover:scale-110 transition-transform text-blue-600" />
+                          </button>
+                          <button
+                            className={`${item.status === "completed" ? "cursor-not-allowed" : ""
+                              }`}
+                            disabled={item.status === "completed"}
+                            onClick={() => handleDelete(item.id)}
+                          >
+                            <FaTrash className="hover:scale-110 transition-transform text-primary hover:text-red-600" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               )}
             </div>
           </DialogPanel>
