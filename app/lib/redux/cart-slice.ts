@@ -39,46 +39,62 @@ export const cartSlice = createSlice({
     },
     setCartQuantity: (state, action) => {
       state.quantity = action.payload;
-      console.log('hello');
+      // console.log('hello');
     },
+
+    setItemQuantity: (state, action: PayloadAction<{ product_id: number; quantity: number }>) => {
+      const { product_id, quantity } = action.payload;
+      state.items = state.items.map((item) =>
+        item.product_id === product_id
+          ? { ...item, quantity } // tạo object mới
+          : item
+      );
+      state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
+    },
+
     resetCart: (state) => {
       state.items = [];
       state.quantity = 0;
     },
-    increaseQuantity: (state, action) => {
-      const { product_id } = action.payload;
-      // Tìm sản phẩm trong giỏ hàng
-      const item = state.items.find(item => item.product_id === product_id);
 
-      // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
-      if (item) {
-        item.quantity += 1;
-      }
 
-      // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
-      state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
+//     increaseQuantity: (state, action) => {
+//       const { product_id } = action.payload;
+//       // Tìm sản phẩm trong giỏ hàng
+//       const item = state.items.find(item => item.product_id === product_id);
+// 
+//       // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
+//       if (item) {
+//         item.quantity += 1;
+//       }
+// 
+//       // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
+//       state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
+// 
+//       // Log để kiểm tra
+//       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
+//       // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
+//     },
 
-      // Log để kiểm tra
-      // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
-      // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
-    },
-    decreaseQuantity: (state, action) => {
-      const { product_id } = action.payload;
-      // Tìm sản phẩm trong giỏ hàng
-      const item = state.items.find(item => item.product_id === product_id);
+//     decreaseQuantity: (state, action) => {
+//       const { product_id } = action.payload;
+//       // Tìm sản phẩm trong giỏ hàng
+//       const item = state.items.find(item => item.product_id === product_id);
+// 
+//       // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
+//       if (item) {
+//         item.quantity -= 1;
+//       }
+// 
+//       // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
+//       state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
+// 
+//       // Log để kiểm tra
+//       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
+//       // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
+//     },
 
-      // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
-      if (item) {
-        item.quantity -= 1;
-      }
 
-      // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
-      state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
-
-      // Log để kiểm tra
-      // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
-      // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
-    },
     removeFromCart(state, action) {
 
       const { product_id } = action.payload;
@@ -94,5 +110,5 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, resetCart, setCartQuantity, removeFromCart, increaseQuantity, decreaseQuantity } = cartSlice.actions;
+export const { addToCart, resetCart, setCartQuantity, removeFromCart, setItemQuantity } = cartSlice.actions;
 export default cartSlice.reducer;

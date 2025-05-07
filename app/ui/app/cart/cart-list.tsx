@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaMinus, FaPlus, FaTrashCan } from "react-icons/fa6";
 import { CartItemsSkeleton } from "@/app/ui/skeletons";
 import { useDispatch } from "react-redux";
-import { decreaseQuantity, increaseQuantity } from "@/app/lib/redux/cart-slice";
+import { setItemQuantity } from "@/app/lib/redux/cart-slice";
 import { toast } from "react-toastify";
 import { removeFromCart } from "@/app/lib/redux/cart-slice";
 import Cookies from "js-cookie";
@@ -15,6 +15,7 @@ import Image from 'next/image';
 const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState<{ id: number; product: Product; quantity: number }[]>([]);
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
 
@@ -72,46 +73,64 @@ const Cart = () => {
     }
   };
   const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Khởi tạo 1 ref lưu lại số lượng hợp lệ gần nhất từ server
+  const validQuantityRef = useRef<Record<number, number>>({});
+
   const handleIncrease = (id: number) => {
-    let newQuantity = 0;
+    const currentItem = cartItems.find((item) => item.product.id === id);
+    if (!currentItem) return;
 
-    // Cập nhật số lượng trong giỏ hàng
-    const updatedCart = cartItems.map((item) => {
-      if (item.product.id === id) {
-        newQuantity = item.quantity + 1;
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
+    const currentQuantity = currentItem.quantity;
+    const newQuantity = currentQuantity + 1;
 
-    // Cập nhật UI giỏ hàng
+    // Cập nhật UI tạm thời
+    const updatedCart = cartItems.map((item) =>
+      item.product.id === id ? { ...item, quantity: newQuantity } : item
+    );
     setCartItems(updatedCart);
-    dispatch(increaseQuantity({ product_id: id }));
+    // dispatch(increaseQuantity({ product_id: id }));
 
-    // Nếu có timeout cũ, hủy nó đi
+    // Xóa timeout cũ nếu có
     if (updateTimeoutRef.current) {
       clearTimeout(updateTimeoutRef.current);
     }
 
-    // Đặt timeout mới để gọi updateCartOnSever sau 1.5 giây nếu không có thao tác nữa
-    updateTimeoutRef.current = setTimeout(() => {
-      // Gọi hàm updateCartOnSever để cập nhật giỏ hàng lên server
-      updateCartOnSever(id, newQuantity);
-    }, 1000); // 1 giây
+    updateTimeoutRef.current = setTimeout(async () => {
+      const success = await updateCartOnSever(id, newQuantity);
+      if (success) {
+        // Lưu lại số lượng hợp lệ gần nhất
+        validQuantityRef.current[id] = newQuantity;
+        dispatch(setItemQuantity({ product_id: id, quantity: newQuantity }));
+      } else {
+        // Lấy lại quantity trước đó đã xác nhận
+        const validQuantity = validQuantityRef.current[id] ?? currentQuantity;
+
+        // Rollback UI + Redux
+        const rolledBackCart = cartItems.map((item) =>
+          item.product.id === id ? { ...item, quantity: validQuantity } : item
+        );
+        setCartItems(rolledBackCart);
+        dispatch(setItemQuantity({ product_id: id, quantity: validQuantity }));
+      }
+    }, 1000);
   };
+
+
 
   const handleDecrease = (id: number) => {
-    let newQuantity = 0;
-    const updatedCart = cartItems.map((item) => {
-      if (item.product.id === id) {
-        newQuantity = item.quantity - 1;
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
-    // console.log(updatedCart);
+    const currentItem = cartItems.find((item) => item.product.id === id);
+    if (!currentItem) return;
+
+    const currentQuantity = currentItem.quantity;
+    const newQuantity = currentQuantity - 1;
+
+    // Cập nhật UI tạm thời
+    const updatedCart = cartItems.map((item) =>
+      item.product.id === id ? { ...item, quantity: newQuantity } : item
+    );
     setCartItems(updatedCart);
-    dispatch(decreaseQuantity({ product_id: id }));
+    dispatch(setItemQuantity({ product_id: id, quantity: newQuantity }));
     // Nếu có timeout cũ, hủy nó đi
     if (updateTimeoutRef.current) {
       clearTimeout(updateTimeoutRef.current);
@@ -123,7 +142,10 @@ const Cart = () => {
       updateCartOnSever(id, newQuantity);
     }, 1000); // 1 giây
   };
-  const updateCartOnSever = async (productId: number, quantity: number) => {
+
+
+
+  const updateCartOnSever = async (productId: number, quantity: number): Promise<boolean> => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/update`, {
         method: 'PUT',
@@ -131,27 +153,27 @@ const Cart = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${Cookies.get('token')}`,
         },
-        body: JSON.stringify({
-          items: [
-            {
-              product_id: productId,
-              quantity: quantity,
-            },
-          ],
-        }),
+        body: JSON.stringify(
+          {
+            product_id: productId,
+            quantity: quantity,
+          }
+        ),
       });
-
+      const data = await res.json();
       if (res.ok) {
         toast.success("Cập nhật số lượng thành công!");
         // Sau khi xóa thành công, cập nhật lại giỏ hàng
         // setCartItems(cartItems.filter(item => item.product.id !== productId));
         // dispatch(removeFromCart({ product_id: productId }));
+        setError("");
       } else {
-        throw new Error("Không thể cập nhật sản phẩm");
+        throw new Error(data.message || "Có lỗi xảy ra!");
       }
-    } catch (error) {
-      toast.error("Cập nhật sản phẩm thất bại");
-      console.error(error);
+      return true
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Cập nhật sản phẩm thất bại!");
+      return false;
     } finally {
       setLoading(false);
     }
@@ -271,8 +293,9 @@ const Cart = () => {
                       <span className="text-sm sm:text-lg font-semibold flex justify-center w-4">{item.quantity}</span>
 
                       {/* Nút Tăng (+) */}
-                      <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200"
-                        onClick={() => handleIncrease(item.product.id)}>
+                      <button className={`w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200 `}
+                        onClick={() => handleIncrease(item.product.id)}
+                      >
                         <FaPlus className="text-sm" />
                       </button>
                     </div>
@@ -281,7 +304,7 @@ const Cart = () => {
               </div>
             ))}
           </section>
-
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           {/* Tổng tiền và nút thanh toán */}
           <section className="">
             <div className="flex items-center justify-between mt-6">

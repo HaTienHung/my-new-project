@@ -12,9 +12,11 @@ import Image from 'next/image';
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
 
+
 const ProductDetail = ({ product }: { product: Product }) => {
   const [quantity, setQuantity] = useState(1); // Quản lý số lượng tại component này
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const [error, setError] = useState("");
 
   const handleIncrease = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
@@ -36,8 +38,10 @@ const ProductDetail = ({ product }: { product: Product }) => {
         },
         body: JSON.stringify({ product_id: product.id, quantity }),
       });
+      const data = await res.json();
 
-      if (!res.ok) throw new Error("Failed to add to cart");
+      if (!res.ok) throw new Error(data.message || "Có lỗi xảy ra!");
+
 
       // console.log("API response:", data);
 
@@ -45,9 +49,8 @@ const ProductDetail = ({ product }: { product: Product }) => {
       dispatch(addToCartAction({ product_id: product.id, quantity }));
 
       toast.success("Thêm vào giỏ hàng thành công!");
-    } catch (error) {
-      console.error("Lỗi khi thêm giỏ hàng:", error);
-      toast.error("Thêm giỏ hàng thất bại");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Cập nhật sản phẩm thất bại!");
     }
   };
 
@@ -96,7 +99,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
               </button>
             </div>
           </div>
-
+          {error && <p className="text-red-500 text-sm mb-2 mt-2">{error}</p>}
           {/* Nút mua hàng */}
           <button className="w-full mt-6 py-3 text-lg font-semibold border border-solid border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)]" onClick={addToCart}>
             Add to cart

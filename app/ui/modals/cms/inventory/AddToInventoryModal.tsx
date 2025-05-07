@@ -58,7 +58,7 @@ const AddToInventoryModal: React.FC<AddToInventoryModalProps> = ({
       if (error.response?.status === 422) {
         const validationErrors = error.response.data.error;
         setErrors(validationErrors);
-        console.log(validationErrors);
+        // console.log(validationErrors);
       }
     }
   };
