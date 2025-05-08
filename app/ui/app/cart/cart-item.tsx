@@ -67,7 +67,7 @@ const CartItem = ({
           product_id: item.product.id,
           quantity: newQuantity
         }));
-
+        onSetError(item.product.id, result.message);
 
       } else {
         // Rollback UI nếu cập nhật thất bại
