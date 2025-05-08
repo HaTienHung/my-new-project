@@ -27,7 +27,7 @@ export default function CartQuantity() {
     >
       <RiShoppingBag2Fill />
       {quantity > 0 && (
-        <span className="absolute -top-2 -right-3 text-white bg-primary text-xs px-1.5 h-4 min-w-[10px] flex items-center justify-center rounded-lg leading-none">
+        <span className="absolute -bottom-2 -right-2 text-white bg-primary text-xs px-1.5 h-4 min-w-[10px] flex items-center justify-center rounded-lg leading-none">
           {quantity}
         </span>
       )}
