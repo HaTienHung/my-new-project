@@ -104,7 +104,8 @@ const Cart = () => {
         dispatch(setItemQuantity({ product_id: id, quantity: newQuantity }));
       } else {
         // Lấy lại quantity trước đó đã xác nhận
-        const validQuantity = validQuantityRef.current[id] ?? currentQuantity;
+        const validQuantity = validQuantityRef.current[id] !== undefined ? validQuantityRef.current[id] : 1;
+
 
         // Rollback UI + Redux
         const rolledBackCart = cartItems.map((item) =>
