@@ -97,7 +97,8 @@ const Cart = () => {
       }
       toast.success("Cập nhật số lượng thành công !");
       return { success: true, message: "" };
-    } catch (error) {
+    } catch (err) {
+      console.error("Lỗi khi lấy giỏ hàng:", err);
       return { success: false, message: "Lỗi kết nối server" };
     } finally {
       setLoadingTotal(false);
