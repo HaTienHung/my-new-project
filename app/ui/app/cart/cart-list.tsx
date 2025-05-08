@@ -1,21 +1,23 @@
 'use client';
-import { useEffect, useRef, useState } from "react";
-import { FaMinus, FaPlus, FaTrashCan } from "react-icons/fa6";
+import { useEffect, useMemo, useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { CartItemsSkeleton } from "@/app/ui/skeletons";
 import { useDispatch } from "react-redux";
-import { setItemQuantity } from "@/app/lib/redux/cart-slice";
 import { toast } from "react-toastify";
 import { removeFromCart } from "@/app/lib/redux/cart-slice";
-import Cookies from "js-cookie";
 import { Product } from "@/app/lib/definitions";
+import Cookies from "js-cookie";
 import Link from "next/link";
-import Image from 'next/image';
-
+import CartItem from "./cart-item";
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
+  const [loadingTotal, setLoadingTotal] = useState(false);
   const [cartItems, setCartItems] = useState<{ id: number; product: Product; quantity: number }[]>([]);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState<Record<number, string>>({});
+  const totalPrice = useMemo(() => {
+    return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  }, [cartItems]);
 
   const dispatch = useDispatch();
 
@@ -72,84 +74,10 @@ const Cart = () => {
       setLoading(false);
     }
   };
-  const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Khởi tạo 1 ref lưu lại số lượng hợp lệ gần nhất từ server
-  const validQuantityRef = useRef<Record<number, number>>({});
-
-  const handleIncrease = (id: number) => {
-    const currentItem = cartItems.find((item) => item.product.id === id);
-    if (!currentItem) return;
-
-    const currentQuantity = currentItem.quantity;
-    const newQuantity = currentQuantity + 1;
-
-    // Cập nhật UI tạm thời
-    const updatedCart = cartItems.map((item) =>
-      item.product.id === id ? { ...item, quantity: newQuantity } : item
-    );
-    setCartItems(updatedCart);
-    // dispatch(increaseQuantity({ product_id: id }));
-
-    // Xóa timeout cũ nếu có
-    if (updateTimeoutRef.current) {
-      clearTimeout(updateTimeoutRef.current);
-    }
-
-    updateTimeoutRef.current = setTimeout(async () => {
-      const success = await updateCartOnSever(id, newQuantity);
-      if (success) {
-        // Lưu lại số lượng hợp lệ gần nhất
-        validQuantityRef.current[id] = newQuantity;
-        dispatch(setItemQuantity({ product_id: id, quantity: newQuantity }));
-      } else {
-        // Lấy lại quantity trước đó đã xác nhận
-        const validQuantity = validQuantityRef.current[id] !== undefined
-          ? validQuantityRef.current[id]
-          : currentQuantity;
-
-
-        // Rollback UI + Redux
-        const rolledBackCart = cartItems.map((item) =>
-          item.product.id === id ? { ...item, quantity: validQuantity } : item
-        );
-        setCartItems(rolledBackCart);
-        dispatch(setItemQuantity({ product_id: id, quantity: validQuantity }));
-      }
-    }, 1000);
-  };
-
-
-
-  const handleDecrease = (id: number) => {
-    const currentItem = cartItems.find((item) => item.product.id === id);
-    if (!currentItem) return;
-
-    const currentQuantity = currentItem.quantity;
-    const newQuantity = currentQuantity - 1;
-
-    // Cập nhật UI tạm thời
-    const updatedCart = cartItems.map((item) =>
-      item.product.id === id ? { ...item, quantity: newQuantity } : item
-    );
-    setCartItems(updatedCart);
-    dispatch(setItemQuantity({ product_id: id, quantity: newQuantity }));
-    // Nếu có timeout cũ, hủy nó đi
-    if (updateTimeoutRef.current) {
-      clearTimeout(updateTimeoutRef.current);
-    }
-
-    // Đặt timeout mới để gọi updateCartOnSever sau 1.5 giây nếu không có thao tác nữa
-    updateTimeoutRef.current = setTimeout(() => {
-      // Gọi hàm updateCartOnSever để cập nhật giỏ hàng lên server
-      updateCartOnSever(id, newQuantity);
-    }, 1000); // 1 giây
-  };
-
-
-
-  const updateCartOnSever = async (productId: number, quantity: number): Promise<boolean> => {
+  const updateCartOnServer = async (productId: number, quantity: number): Promise<{ success: boolean; message: string }> => {
     try {
+      setLoadingTotal(true);
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/update`, {
         method: 'PUT',
         headers: {
@@ -164,23 +92,19 @@ const Cart = () => {
         ),
       });
       const data = await res.json();
-      if (res.ok) {
-        toast.success("Cập nhật số lượng thành công!");
-        // Sau khi xóa thành công, cập nhật lại giỏ hàng
-        // setCartItems(cartItems.filter(item => item.product.id !== productId));
-        // dispatch(removeFromCart({ product_id: productId }));
-        setError("");
-      } else {
-        throw new Error(data.message || "Có lỗi xảy ra!");
+      if (!res.ok) {
+        return { success: false, message: data.message || "Có lỗi xảy ra" };
       }
-      return true
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Cập nhật sản phẩm thất bại!");
-      return false;
+      toast.success("Cập nhật số lượng thành công !");
+      return { success: true, message: "" };
+    } catch (error) {
+      return { success: false, message: "Lỗi kết nối server" };
     } finally {
-      setLoading(false);
+      setLoadingTotal(false);
     }
   }
+
+
   const handleCheckout = async () => {
     const productIds = cartItems.map(item => item.product.id);
     // console.log(productIds);
@@ -241,78 +165,37 @@ const Cart = () => {
           {/* Danh sách sản phẩm */}
           <section className="py-4 flex flex-col space-y-14 border-t border-b">
             {cartItems.map((item) => (
-              <div key={item.id} className="flex container mx-auto mb-10">
-                {/* Hình ảnh sản phẩm */}
-                <div className="w-20 min-h-[100px] flex flex-col">
-                  <div>
-                    <Image
-                      src={item.product.image_url}
-                      alt={item.product.name || 'Product image'}
-                      width={300}
-                      height={300}
-                      className="border rounded border-solid border-primary"
-                    />
-                  </div>
-                  <div className="flex justify-center cursor-pointer mt-2">
-                    <div className="flex items-center justify-center">
-                      <button
-                        onClick={() => handleDelete(item.product.id)}
-                        disabled={loading}
-                        className="flex items-center cursor-pointer text-sm sm:text-base"
-                      >
-                        <FaTrashCan className="mr-2 text-sm sm:text-base" />
-                        {loading ? "Đang xóa..." : "Xóa"}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Thông tin sản phẩm */}
-                <div className="ml-2 flex flex-grow">
-                  {/* Phần mô tả sản phẩm (70%) */}
-                  <div className="w-[70%] pr-4">
-                    <h1 className="font-bold text-sm sm:text-lg leading-tight">{item.product.name}</h1>
-                  </div>
-
-                  {/* Phần giá và nút tăng giảm (30%) */}
-                  <div className="w-[30%] flex flex-col items-end">
-                    <h1 className="mb-4 font-light text-sm sm:text-base">{Number(item.product.price).toLocaleString()} VNĐ</h1>
-                    <div className="flex items-center space-x-1 sm:space-x-2 border sm:p-1 rounded-md justify-center ">
-                      {/* Nút Giảm (-) */}
-                      <button
-                        className={`w-8 h-8 flex items-center justify-center rounded-md transition
-                            ${item.quantity <= 1
-                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed opacity-50'
-                            : 'hover:bg-gray-200 '}
-                            `}
-                        onClick={() => handleDecrease(item.product.id)}
-                        disabled={item.quantity <= 1}
-                        title={item.quantity <= 1 ? "Số lượng tối thiểu là 1" : ""}
-                      >
-                        <FaMinus className="text-sm" />
-                      </button>
-
-                      {/* Hiển thị số lượng */}
-                      <span className="text-sm sm:text-lg font-semibold flex justify-center w-4">{item.quantity}</span>
-
-                      {/* Nút Tăng (+) */}
-                      <button className={`w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200 `}
-                        onClick={() => handleIncrease(item.product.id)}
-                      >
-                        <FaPlus className="text-sm" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <CartItem
+                error={errors[item.product.id]}
+                key={item.id}
+                item={item}
+                onDelete={(productId) => handleDelete(productId)}
+                updateCartOnServer={updateCartOnServer}
+                onChangeQuantity={(productId, newQuantity) => {
+                  const updated = cartItems.map((i) =>
+                    i.product.id === productId ? { ...i, quantity: newQuantity } : i
+                  );
+                  setCartItems(updated);
+                }}
+                onSetError={(productId, message) => {
+                  setErrors(prev => ({
+                    ...prev,
+                    [productId]: message,
+                  }));
+                }}
+              />
             ))}
           </section>
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           {/* Tổng tiền và nút thanh toán */}
           <section className="">
             <div className="flex items-center justify-between mt-6">
-              <h2 className="text-base md:text-xl font-semibold">
-                Tổng cộng: {cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0).toLocaleString()} VNĐ
+              <h2 className="text-base md:text-xl font-semibold flex items-center gap-2">
+                Tổng cộng:
+                {loadingTotal ? (
+                  <AiOutlineLoading3Quarters className="animate-spin text-primary" />
+                ) : (
+                  <span>{totalPrice.toLocaleString()} VNĐ</span>
+                )}
               </h2>
               <button className="px-3 sm:px-6 py-3 text-sm sm:text-base bg-green-500 text-white rounded-md hover:bg-green-600 box-border"
                 onClick={() => handleCheckout()}>
