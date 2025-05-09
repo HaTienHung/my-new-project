@@ -81,21 +81,21 @@ const ProductDetail = ({ product }: { product: Product }) => {
           {/* Số lượng */}
           <div className="flex items-center mt-6">
             <span className="mr-4 font-medium">Quantity</span>
-            <div className="flex items-center border border-solid border-[rgb(121,100,73)] rounded-lg px-6 py-2 gap-3 justify-center">
+            <div className="flex items-center border border-solid border-[rgb(121,100,73)] rounded-lg px-3 py-1 gap-2 justify-center">
               <button
-                className="text-primary "
+                className="text-primary hover:bg-gray-200 p-2 rounded-md "
                 onClick={handleDecrease}
               >
-                <FaMinus className="text-sm" />
+                <FaMinus className="text-sm hover:bg-gray-200" />
               </button>
               <span className="px-3 font-medium flex justify-center w-[24px]">
                 {quantity}
               </span>
               <button
-                className={`text-primary`}
+                className={`text-primary hover:bg-gray-200 p-2 rounded-md`}
                 onClick={handleIncrease}
               >
-                <FaPlus className="text-sm" />
+                <FaPlus className="text-sm " />
               </button>
             </div>
           </div>
