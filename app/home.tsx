@@ -1,7 +1,7 @@
 'use client';
 
-import { Provider } from 'react-redux';
-import { store } from '@/app/lib/redux/store';
+// import { Provider } from 'react-redux';
+// import { store } from '@/app/lib/redux/store';
 import ProductList from '@/app/ui/app/products/product-list';
 import Header from './ui/app/header/header';
 import Footer from './ui/app/footer/footer';
@@ -10,7 +10,7 @@ import { Product } from './lib/definitions';
 
 export default function HomeContent({ products }: { products: Product[] }) {
   return (
-    <Provider store={store}>
+    <>
       <Header />
       <div className="container mx-auto px-4 py-10 text-primary">
         <h1 className="text-xl sm:text-2xl font-bold mb-10">Danh Sách Sản Phẩm Mới Nhất</h1>
@@ -24,6 +24,6 @@ export default function HomeContent({ products }: { products: Product[] }) {
         </div>
       </div>
       <Footer />
-    </Provider>
+    </>
   );
 }
