@@ -2,7 +2,7 @@ import { getLastestProducts } from "@/app/lib/data";
 import HomeContent from "./home";
 import { Providers } from "./providers";
 import { Metadata } from 'next';
-
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: 'Trang chủ',
