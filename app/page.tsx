@@ -1,4 +1,3 @@
-// import { getLastestProducts } from "@/app/lib/data";
 import HomeContent from "./home";
 import { getLastestProducts } from "./lib/data";
 import { Providers } from "./providers";

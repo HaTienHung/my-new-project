@@ -24,6 +24,7 @@ const AddToInventoryModal: React.FC<AddToInventoryModalProps> = ({
   });
 
   const [errors, setErrors] = useState<Record<string, string[]>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -36,6 +37,7 @@ const AddToInventoryModal: React.FC<AddToInventoryModalProps> = ({
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/cms/inventories/create`,
         {
@@ -60,6 +62,8 @@ const AddToInventoryModal: React.FC<AddToInventoryModalProps> = ({
         setErrors(validationErrors);
         // console.log(validationErrors);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,7 +105,7 @@ const AddToInventoryModal: React.FC<AddToInventoryModalProps> = ({
                 type="submit"
                 className="px-4 py-2 rounded bg-primary text-white hover:opacity-90"
               >
-                Thêm
+                {isLoading ? "Đang thêm ..." : "Thêm"}
               </button>
             </div>
           </form>
