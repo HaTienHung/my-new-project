@@ -18,6 +18,7 @@ type Props = {
   updateCartOnServer: (productId: number, quantity: number) => Promise<{ success: boolean, message: string }>;
   error?: string;
   onSetError: (productId: number, message: string) => void;
+  deletingId: number | null;
 };
 
 const CartItem = ({
@@ -26,7 +27,8 @@ const CartItem = ({
   onChangeQuantity,
   updateCartOnServer,
   error,
-  onSetError
+  onSetError,
+  deletingId
 }: Props) => {
   const [tempQuantity, setTempQuantity] = useState(item.quantity);
   const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -95,6 +97,7 @@ const CartItem = ({
             <button
               onClick={() => onDelete(item.product.id)}
               className="flex items-center text-sm sm:text-base box-border cursor-pointer "
+              disabled={item.product.id !== deletingId && deletingId !== null}
             >
               <FaTrashCan className="mr-2" />
               Xóa

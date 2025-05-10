@@ -18,6 +18,7 @@ const Cart = () => {
   const totalPrice = useMemo(() => {
     return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
   }, [cartItems]);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const dispatch = useDispatch();
 
@@ -52,6 +53,10 @@ const Cart = () => {
 
   const handleDelete = async (productId: number) => {
     try {
+      if (deletingId !== null) return; // Prevent multiple delete actions; disable others while one is in progress
+
+      setDeletingId(productId);
+      setLoadingTotal(true);
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/delete/${productId}`, {
         method: 'DELETE',
         headers: {
@@ -71,7 +76,8 @@ const Cart = () => {
       toast.error("Xóa sản phẩm thất bại");
       console.error(error);
     } finally {
-      setLoading(false);
+      setLoadingTotal(false);
+      setDeletingId(null);
     }
   };
 
@@ -171,6 +177,7 @@ const Cart = () => {
                 key={item.id}
                 item={item}
                 onDelete={(productId) => handleDelete(productId)}
+                deletingId={deletingId}
                 updateCartOnServer={updateCartOnServer}
                 onChangeQuantity={(productId, newQuantity) => {
                   const updated = cartItems.map((i) =>

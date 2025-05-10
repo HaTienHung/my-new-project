@@ -13,6 +13,7 @@ import { RootState } from "../lib/redux/store";
 import { closeAuthModal, openAuthModal } from "../lib/redux/authModal-slice";
 import Cookies from "js-cookie";
 import { User } from "../lib/definitions";
+import { resetCart } from "../lib/redux/cart-slice";
 
 export default function AuthModal() {
   const isOpen = useSelector((state: RootState) => state.authModal.isOpen);
@@ -97,6 +98,7 @@ export default function AuthModal() {
     Cookies.remove("user");
     setUser(null);
     setIsLoggedIn(false);
+    dispatch(resetCart());
     dispatch(logout());
     toast.success("Đăng xuất thành công");
   };
