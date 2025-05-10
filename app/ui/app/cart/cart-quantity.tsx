@@ -8,6 +8,7 @@ import Link from "next/link";
 
 export default function CartQuantity() {
   const quantity = useSelector((state: RootState) => state.cart.quantity);
+  // console.log(quantity);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 

@@ -22,6 +22,14 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    setCartItems: (
+      state,
+      action: PayloadAction<{ items: { product_id: number; quantity: number }[] }>
+    ) => {
+      state.items = action.payload.items;
+      state.quantity = state.items.reduce((acc, item) => acc + item.quantity, 0);
+    },
+
     addToCart: (
       state,
       action: PayloadAction<{ product_id: number; quantity: number }>
@@ -36,10 +44,6 @@ export const cartSlice = createSlice({
       }
 
       state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
-    },
-    setCartQuantity: (state, action) => {
-      state.quantity = action.payload;
-      // console.log('hello');
     },
 
     setItemQuantity: (state, action: PayloadAction<{ product_id: number; quantity: number }>) => {
@@ -57,42 +61,46 @@ export const cartSlice = createSlice({
       state.quantity = 0;
     },
 
+    // setCartQuantity: (state, action) => {
+    //   state.quantity = action.payload;
+    //   // console.log('hello');
+    // },
 
-//     increaseQuantity: (state, action) => {
-//       const { product_id } = action.payload;
-//       // Tìm sản phẩm trong giỏ hàng
-//       const item = state.items.find(item => item.product_id === product_id);
-// 
-//       // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
-//       if (item) {
-//         item.quantity += 1;
-//       }
-// 
-//       // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
-//       state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
-// 
-//       // Log để kiểm tra
-//       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
-//       // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
-//     },
+    //     increaseQuantity: (state, action) => {
+    //       const { product_id } = action.payload;
+    //       // Tìm sản phẩm trong giỏ hàng
+    //       const item = state.items.find(item => item.product_id === product_id);
+    // 
+    //       // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
+    //       if (item) {
+    //         item.quantity += 1;
+    //       }
+    // 
+    //       // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
+    //       state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
+    // 
+    //       // Log để kiểm tra
+    //       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
+    //       // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
+    //     },
 
-//     decreaseQuantity: (state, action) => {
-//       const { product_id } = action.payload;
-//       // Tìm sản phẩm trong giỏ hàng
-//       const item = state.items.find(item => item.product_id === product_id);
-// 
-//       // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
-//       if (item) {
-//         item.quantity -= 1;
-//       }
-// 
-//       // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
-//       state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
-// 
-//       // Log để kiểm tra
-//       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
-//       // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
-//     },
+    //     decreaseQuantity: (state, action) => {
+    //       const { product_id } = action.payload;
+    //       // Tìm sản phẩm trong giỏ hàng
+    //       const item = state.items.find(item => item.product_id === product_id);
+    // 
+    //       // Nếu sản phẩm tồn tại trong giỏ hàng, tăng quantity lên 1
+    //       if (item) {
+    //         item.quantity -= 1;
+    //       }
+    // 
+    //       // Cập nhật lại tổng số lượng giỏ hàng sau khi thay đổi
+    //       state.quantity = state.items.reduce((total, item) => total + item.quantity, 0);
+    // 
+    //       // Log để kiểm tra
+    //       // console.log('Updated cart items:', JSON.parse(JSON.stringify(state.items)));
+    //       // console.log('Updated quantity for product_id', product_id, ':', item?.quantity);
+    //     },
 
 
     removeFromCart(state, action) {
@@ -110,5 +118,5 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, resetCart, setCartQuantity, removeFromCart, setItemQuantity } = cartSlice.actions;
+export const { addToCart, resetCart, removeFromCart, setItemQuantity, setCartItems } = cartSlice.actions;
 export default cartSlice.reducer;

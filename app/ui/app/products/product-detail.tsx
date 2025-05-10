@@ -19,6 +19,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const [error, setError] = useState("");
   const [isloading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleIncrease = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
@@ -28,7 +29,6 @@ const ProductDetail = ({ product }: { product: Product }) => {
     setQuantity(prevQuantity => Math.max(1, prevQuantity - 1)); // Giới hạn số lượng >= 1
   };
 
-  const dispatch = useDispatch();
   const addToCart = async () => {
     if (!isAuthenticated) return dispatch(openAuthModal())
     try {
@@ -49,7 +49,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
       // console.log("API response:", data);
 
       //  Gọi dispatch ở đây, SAU khi API thành công
-      console.log(quantity);
+      // console.log("quantity add to cart", quantity);
       dispatch(addToCartAction({ product_id: product.id, quantity }));
 
       toast.success("Thêm vào giỏ hàng thành công!");
