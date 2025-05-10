@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { Product } from "@/app/lib/definitions";
 import Image from 'next/image';
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
 
@@ -17,6 +18,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
   const [quantity, setQuantity] = useState(1); // Quản lý số lượng tại component này
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const [error, setError] = useState("");
+  const [isloading, setIsLoading] = useState(false);
 
   const handleIncrease = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
@@ -30,6 +32,7 @@ const ProductDetail = ({ product }: { product: Product }) => {
   const addToCart = async () => {
     if (!isAuthenticated) return dispatch(openAuthModal())
     try {
+      setIsLoading(true);
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/cart/store`, {
         method: 'POST',
         headers: {
@@ -51,6 +54,8 @@ const ProductDetail = ({ product }: { product: Product }) => {
       toast.success("Thêm vào giỏ hàng thành công!");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Cập nhật sản phẩm thất bại!");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,11 +106,17 @@ const ProductDetail = ({ product }: { product: Product }) => {
           </div>
           {error && <p className="text-red-500 text-sm mb-2 mt-2">{error}</p>}
           {/* Nút mua hàng */}
-          <button className="w-full mt-6 py-3 text-lg font-semibold border border-solid border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)]" onClick={addToCart}>
-            Add to cart
+          <button
+            className="w-full mt-6 py-3 text-lg font-semibold border border-solid border-gray-400 rounded-lg transition duration-300 hover:border-[rgb(121,100,73)] flex justify-center items-center h-12"
+            onClick={addToCart}
+          >
+            {
+              isloading
+                ? <AiOutlineLoading3Quarters className="animate-spin text-primary text-xl" />
+                : "Add to cart"
+            }
           </button>
-
-          <button className="w-full mt-3 py-3 text-lg font-semibold bg-yellow-400 rounded-lg transition hover:bg-yellow-500"
+          <button className="w-full h-12 mt-3 py-3 text-lg font-semibold bg-yellow-400 rounded-lg transition hover:bg-yellow-500"
             onClick={() => { toast.info("Xin thứ lỗi , chúng tôi đang phát triển tính năng này !") }}
           >
             Pay with <span className="font-bold">PayPal</span>
