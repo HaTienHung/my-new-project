@@ -48,7 +48,8 @@ const ProductDetail = ({ product }: { product: Product }) => {
 
       // console.log("API response:", data);
 
-      // ✅ Gọi dispatch ở đây, SAU khi API thành công
+      //  Gọi dispatch ở đây, SAU khi API thành công
+      console.log(quantity);
       dispatch(addToCartAction({ product_id: product.id, quantity }));
 
       toast.success("Thêm vào giỏ hàng thành công!");

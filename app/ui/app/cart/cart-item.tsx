@@ -83,13 +83,13 @@ const CartItem = ({
     <>
       <div className="flex container mx-auto mb-5">
         {/* Hình ảnh */}
-        <div className="w-20 min-h-[100px] flex flex-col">
+        <div className="w-20 min-h-[100px] flex flex-col flex-shrink-0">
           <Image
             src={item.product.image_url}
             alt={item.product.name || "Product image"}
-            width={300}
-            height={300}
-            className="border rounded border-solid border-primary"
+            width={80}
+            height={80}
+            className="border rounded border-solid border-primary aspect-square"
           />
           <div className="flex justify-center  mt-2 ">
             <button
