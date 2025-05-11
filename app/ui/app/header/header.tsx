@@ -58,7 +58,6 @@ const Header = () => {
                   alt="Vercel logo"
                   width={40}
                   height={30}
-                  priority
                 />
               </Link>
             </div>

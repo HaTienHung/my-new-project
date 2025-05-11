@@ -1,6 +1,5 @@
-import HomeContent from "./home";
-import { getLastestProducts } from "./lib/data";
-import { Providers } from "./providers";
+import HomeContent from "../home";
+import { getLastestProducts } from "../lib/data";
 import { Metadata } from 'next';
 export const dynamic = "force-dynamic";
 
@@ -11,8 +10,6 @@ export const metadata: Metadata = {
 export default async function ProductPage() {
   const lastestProducts = await getLastestProducts();
   return (
-    <Providers>
-      <HomeContent products={lastestProducts} />
-    </Providers>
+    <HomeContent products={lastestProducts} />
   );
 }

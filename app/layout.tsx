@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { inter } from "@/app/ui/font";
-import "./globals.css";
+import "@/app/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import type { Viewport } from 'next';
-
 
 
 export const metadata: Metadata = {
