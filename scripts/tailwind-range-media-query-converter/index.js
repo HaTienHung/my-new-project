@@ -2,10 +2,11 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import fs from "fs/promises";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Lấy thư mục gốc của dự án (không phụ thuộc vào script)
+const projectRoot = process.cwd();
 
-const cssFilePath = join(__dirname, "css output path");
+// Đường dẫn tới file CSS trong thư mục .next/static/css
+const cssFilePath = join(projectRoot, "/app/output.css");
 
 function convertRangeMediaQueries(cssContent) {
   const greaterThanOrEqualPattern =
