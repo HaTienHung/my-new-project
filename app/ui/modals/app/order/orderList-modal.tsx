@@ -9,7 +9,6 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Cookies from "js-cookie";
 import { Order, OrderItem } from "@/app/lib/definitions";
 import { FaTrash } from "react-icons/fa6";
-import { toast } from "react-toastify";
 import DeleteModal from "../../delete-modal";
 
 
