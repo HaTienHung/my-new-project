@@ -29,7 +29,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
     setLoading(true);
     try {
 
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/cms/${endpoint}/delete/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/${endpoint}/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`
         },

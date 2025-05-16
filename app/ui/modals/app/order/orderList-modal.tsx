@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { Order, OrderItem } from "@/app/lib/definitions";
 import { FaTrash } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import DeleteModal from "../../delete-modal";
 
 
 type ModalState = "orderList" | "productDetail" | null;
@@ -19,6 +20,7 @@ const OrderModal = () => {
   const [loading, setLoading] = useState(true);
   const [modalState, setModalState] = useState<ModalState>(null); // Sử dụng 1 state
   const [productsInOrder, setProductsInOrder] = useState<OrderItem[]>([]);
+  const [deleteOrderId, setDeleteOrderId] = useState<number | null>(null);
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
@@ -71,24 +73,25 @@ const OrderModal = () => {
   }
 
   const handleDelete = async (orderId: number) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/orders/delete/${orderId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${Cookies.get('token')}`,
-        },
-      });
-
-      if (res.ok) {
-        fetchOrders();
-        toast.success("Đơn hàng đã được xoá thành công!");
-      } else {
-        throw new Error("Không thể xóa đơn hàng");
-      }
-    } catch (error) {
-      toast.error("Xóa đơn hàng thất bại");
-      console.error(error);
-    }
+    //     try {
+    //       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/orders/delete/${orderId}`, {
+    //         method: 'DELETE',
+    //         headers: {
+    //           'Authorization': `Bearer ${Cookies.get('token')}`,
+    //         },
+    //       });
+    // 
+    //       if (res.ok) {
+    //         fetchOrders();
+    //         toast.success("Đơn hàng đã được xoá thành công!");
+    //       } else {
+    //         throw new Error("Không thể xóa đơn hàng");
+    //       }
+    //     } catch (error) {
+    //       toast.error("Xóa đơn hàng thất bại");
+    //       console.error(error);
+    //     }
+    setDeleteOrderId(orderId);
   };
 
   return (
@@ -180,6 +183,16 @@ const OrderModal = () => {
         onClose={() => setModalState("orderList")}
         products={productsInOrder}
       />
+      {deleteOrderId && (
+        <DeleteModal
+          id={deleteOrderId}
+          onClose={() => setDeleteOrderId(null)}
+          onDeleted={fetchOrders}
+          title="Xoá đơn hàng"
+          message="Bạn có chắc chắn muốn xoá đơn hàng này không ?"
+          endpoint="app/orders"
+        />
+      )}
     </>
   );
 };

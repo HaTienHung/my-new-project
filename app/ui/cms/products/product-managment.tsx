@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import EditProductModal from "@/app/ui/modals/cms/product/editProduct-modal";
 import CreateProductModal from "../../modals/cms/product/createProduct-modal";
 import Pagination from "../../pagination";
-import DeleteModal from "../../modals/cms/delete-modal";
+import DeleteModal from "../../modals/delete-modal";
 import SubmitButton from "../../components/submit-button";
 import AddButton from "../../components/add-button";
 
@@ -216,7 +216,7 @@ export default function ProductMagmamemt() {
             onDeleted={refetch}
             title="Xoá sản phẩm"
             message="Bạn có chắc chắn muốn xoá sản phẩm này không ?"
-            endpoint="products"
+            endpoint="cms/products"
           />
         )}
       </div>

@@ -1,12 +1,12 @@
 'use client';
-import { useCategories } from "@/app/hooks/useCategories"; 
+import { useCategories } from "@/app/hooks/useCategories";
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { Category } from "@/app/lib/definitions";
 import { CategoryTableSkeleton, } from "@/app/ui/skeletons";
 import { useState } from "react";
 import EditCategoryModal from "../../modals/cms/category/editCategory-modal";
 import CreateCategoryModal from "../../modals/cms/category/createCategory";
-import DeleteModal from "../../modals/cms/delete-modal";
+import DeleteModal from "../../modals/delete-modal";
 import SubmitButton from "../../components/submit-button";
 import AddButton from "../../components/add-button";
 
@@ -134,7 +134,7 @@ export default function CategoryManament() {
             onDeleted={refetch}
             title="Xoá danh mục"
             message="Bạn có chắc chắn muốn xoá danh mục này không ?"
-            endpoint="categories"
+            endpoint="cms/categories"
           />
         )}
       </div>

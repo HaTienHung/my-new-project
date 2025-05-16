@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "build:css": "pnpm dlx @tailwindcss/cli -i ./app/globals.css -o app/output.css --minify && node scripts/tailwind-range-media-query-converter/index.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
